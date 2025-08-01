@@ -1,5 +1,6 @@
 @import url('./fonts.scss');
 @import url('./palette.scss');
+@import url('./animations.scss');
 
 *,
 *::before,
@@ -13,10 +14,10 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background-soft);
+  background: var(--color-background);
   transition:
-    color 0.5s,
-    background-color 0.5s;
+    color var(--duration-regular),
+    background-color var(--duration-regular);
   line-height: 1.6;
   font-family: var(--font-sans);
   font-size: 15px;
@@ -79,10 +80,6 @@ button {
   background: var(--color-selection);
 }
 
-#logo {
-  fill: var(--color-text);
-}
-
 :is(h1, h2, h3, h4, h5, h6) {
   font-weight: bold;
 }
@@ -93,4 +90,8 @@ button {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+#logo {
+  fill: var(--tint);
 }

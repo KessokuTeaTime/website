@@ -33,17 +33,17 @@ const hasFooter = true
     padding: 0.75rem;
     border-bottom: 1px dashed var(--color-border);
     background: var(--color-background-transparent);
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(var(--blur-radius-thick));
   }
 
   .content-container {
     min-height: 100vh;
-    background: var(--color-background);
     border-top: 1px solid var(--color-background-soft);
   }
 
   footer {
     color: var(--color-text-soft);
     padding: 2rem 3rem;
+    border-top: 1px dashed var(--color-border);
   }
 </style>

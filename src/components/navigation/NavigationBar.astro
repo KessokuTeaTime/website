@@ -1,13 +1,36 @@
+---
+import ColoredBars from '@/components/decorations/ColoredBars.vue'
+import NavigationSwitcher from './NavigationSwitcher.vue'
+import Logo from '@/components/icons/Logo.astro'
+---
+
 <div class="container">
-  <div class="left">Left</div>
-  <div class="center">Center</div>
-  <div class="right">Right</div>
+  <div class="left">
+    <div class="logo">
+      <a href="/"><Logo /></a>
+    </div>
+  </div>
+  <div class="center disable-scrollbars">
+    <NavigationSwitcher />
+  </div>
+  <div class="right">
+    <div class="bars">
+      <ColoredBars />
+    </div>
+  </div>
 </div>
 
 <style lang="scss">
   .container {
-    display: flex;
+    display: grid;
+    grid-template-areas: 'left center right';
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto;
     align-items: center;
+
+    a {
+      text-decoration: none;
+    }
   }
 
   .left,
@@ -15,11 +38,30 @@
     white-space: nowrap;
   }
 
+  .left {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
   .center {
-    margin: 0 auto;
-    min-width: none;
-    max-width: 100%;
     text-align: center;
     overflow: scroll;
+  }
+
+  .logo {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .bars {
+    display: flex;
+    flex-direction: row;
+    width: 5rem;
+    height: 0.25rem;
   }
 </style>
