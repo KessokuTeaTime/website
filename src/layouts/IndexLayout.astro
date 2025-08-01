@@ -1,0 +1,49 @@
+---
+import NavigationBar from '@/components/navigation/NavigationBar.astro'
+import Layout from './Layout.astro'
+import Footer from '@/components/Footer.astro'
+
+const hasFooter = true
+---
+
+<Layout>
+  <header>
+    <nav>
+      <NavigationBar />
+    </nav>
+  </header>
+  <div class="page-container">
+    <div class="content-container">
+      <slot />
+    </div>
+    {
+      hasFooter && (
+        <footer>
+          <Footer />
+        </footer>
+      )
+    }
+  </div>
+</Layout>
+
+<style lang="scss">
+  header {
+    position: sticky;
+    top: 0;
+    padding: 0.75rem;
+    border-bottom: 1px dashed var(--color-border);
+    background: var(--color-background-transparent);
+    backdrop-filter: blur(16px);
+  }
+
+  .content-container {
+    min-height: 100vh;
+    background: var(--color-background);
+    border-top: 1px solid var(--color-background-soft);
+  }
+
+  footer {
+    color: var(--color-text-soft);
+    padding: 2rem 3rem;
+  }
+</style>

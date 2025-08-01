@@ -1,4 +1,4 @@
-/* color palette from <https://github.com/vuejs/theme> */
+/* color palette referencing <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8db;
@@ -10,18 +10,17 @@
   --vt-c-black-mute: #282828a4;
   --vt-c-black-transparent: rgba(0, 0, 0, 0.56);
 
-  --vt-c-indigo: #2c3e50;
-
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
   --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-1: var(--vt-c-black);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
+
 /* tints */
 :root {
   /* kita */
@@ -80,15 +79,7 @@
 }
 
 :root {
-  --color-tint: var(--vt-c-tint-pink-light);
-  --color-tint-soft: var(--vt-c-tint-pink-light-1);
-  --color-tint-mute: var(--vt-c-tint-pink-light-2);
-
-  --color-link: var(--vt-c-tint-pink-light);
-  --color-link-soft: var(--vt-c-tint-pink-light-1);
-  --color-link-mute: var(--vt-c-tint-pink-light-2);
-
-  --color-selection: var(--vt-c-tint-pink-light-2);
+  --color-selection: var(--vt-c-black-transparent);
 
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -98,8 +89,8 @@
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);
 
-  --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
+  --color-text-soft: var(--vt-c-text-light-2);
 
   --section-gap: 160px;
 }
@@ -124,15 +115,7 @@
   }
 
   :root {
-    --color-tint: var(--vt-c-tint-pink-dark);
-    --color-tint-soft: var(--vt-c-tint-pink-dark-1);
-    --color-tint-mute: var(--vt-c-tint-pink-dark-2);
-
-    --color-link: var(--vt-c-tint-pink-dark);
-    --color-link-soft: var(--vt-c-tint-pink-dark-1);
-    --color-link-mute: var(--vt-c-tint-pink-dark-2);
-
-    --color-selection: var(--vt-c-tint-pink-dark-2);
+    --color-selection: var(--vt-c-white-transparent);
 
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
@@ -142,7 +125,7 @@
     --color-border: var(--vt-c-divider-dark-2);
     --color-border-hover: var(--vt-c-divider-dark-1);
 
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+    --color-text: var(--vt-c-text-dark-1);
+    --color-text-soft: var(--vt-c-text-dark-2);
   }
 }

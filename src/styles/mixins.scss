@@ -1,0 +1,15 @@
+@mixin layout($level) {
+  @if $level == compact {
+    @media screen and (max-width: 646px) {
+      @content;
+    }
+  } @else if $level == mobile {
+    @media screen and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $level == desktop {
+    @media screen and (min-width: 1024px) {
+      @content;
+    }
+  }
+}

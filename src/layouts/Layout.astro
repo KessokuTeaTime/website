@@ -1,15 +1,18 @@
 ---
 import '@/styles/global.css'
+
+const title = 'Kessoku Tea Time'
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
   <head>
+    <slot name="head" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Kessoku Tea Time</title>
+    <title>{title}</title>
   </head>
   <body>
     <slot />

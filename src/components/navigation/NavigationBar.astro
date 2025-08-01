@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="left">Left</div>
+  <div class="center">Center</div>
+  <div class="right">Right</div>
+</div>
+
+<style lang="scss">
+  .container {
+    display: flex;
+    align-items: center;
+  }
+
+  .left,
+  .right {
+    white-space: nowrap;
+  }
+
+  .center {
+    margin: 0 auto;
+    min-width: none;
+    max-width: 100%;
+    text-align: center;
+    overflow: scroll;
+  }
+</style>

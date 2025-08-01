@@ -1,0 +1,33 @@
+<div class="footer-container">
+  <div class="footer-content">Content</div>
+  <div class="footer-links">Links</div>
+</div>
+
+<style lang="scss">
+  @use '@/styles/mixins' as *;
+
+  .footer-container {
+    display: grid;
+    grid-template-areas:
+      'footer-content'
+      'footer-links';
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+  }
+
+  @include layout(desktop) {
+    .footer-container {
+      grid-template-areas: 'footer-content footer-links';
+      grid-template-columns: auto auto;
+      grid-template-rows: auto;
+    }
+  }
+
+  .footer-content {
+    grid-area: footer-content;
+  }
+
+  .footer-links {
+    grid-area: footer-links;
+  }
+</style>

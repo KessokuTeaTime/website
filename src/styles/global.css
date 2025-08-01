@@ -13,7 +13,7 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background);
+  background: var(--color-background-soft);
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -26,21 +26,13 @@ body {
 }
 
 a {
-  text-decoration: none;
-  color: var(--color-link);
-  transition: 0.4s;
-  padding: 3px;
+  text-decoration: underline;
 }
 
 button {
   color: var(--color-text);
   background: transparent;
   border: none;
-}
-
-.tint {
-  --tint: var(--color-tint);
-  color: var(--tint);
 }
 
 .tint-kita {
@@ -100,15 +92,5 @@ button {
 
   &::-webkit-scrollbar {
     display: none;
-  }
-}
-
-@media (hover: hover) {
-  a {
-    border-bottom: 0.1em solid var(--color-link-mute);
-
-    &:hover {
-      border-bottom: 0.1em solid var(--color-link-soft);
-    }
   }
 }
