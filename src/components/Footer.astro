@@ -13,11 +13,9 @@
       '.'
       'footer-links';
     grid-template-columns: auto;
-    grid-template-rows: auto 2rem auto;
-  }
+    grid-template-rows: auto 1rem auto;
 
-  @include layout(desktop) {
-    .footer-container {
+    @include layout(desktop) {
       grid-template-areas: 'footer-content footer-links';
       grid-template-columns: auto auto;
       grid-template-rows: auto;
