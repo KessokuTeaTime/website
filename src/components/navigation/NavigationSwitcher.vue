@@ -1,1 +1,1 @@
-<template>Navigation Switcher</template>
+<template><p>Navigation Switcher</p></template>

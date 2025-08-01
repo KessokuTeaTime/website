@@ -1,7 +1,7 @@
 ---
 import ColoredBars from '@/components/decorations/ColoredBars.vue'
 import NavigationSwitcher from './NavigationSwitcher.vue'
-import Logo from '@/components/icons/Logo.astro'
+import Logo from '@/assets/logo.svg'
 ---
 
 <div class="container">
@@ -11,7 +11,7 @@ import Logo from '@/components/icons/Logo.astro'
     </div>
   </div>
   <div class="center disable-scrollbars">
-    <NavigationSwitcher />
+    <NavigationSwitcher class="switcher" />
   </div>
   <div class="right">
     <div class="bars">
@@ -63,5 +63,9 @@ import Logo from '@/components/icons/Logo.astro'
     flex-direction: row;
     width: 5rem;
     height: 0.25rem;
+  }
+
+  .switcher {
+    font-stretch: condensed;
   }
 </style>

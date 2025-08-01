@@ -7,19 +7,24 @@ const { title, description } = Astro.props
 ---
 
 <Layout title={title} description={description}>
-  <div class="page-container">
-    <header>
-      <nav>
-        <NavigationBar />
-      </nav>
-    </header>
-    <div class="content-container">
-      <slot />
+  <Fragment slot="background">
+    <slot name="background" />
+  </Fragment>
+  <Fragment>
+    <div class="page-container">
+      <header>
+        <nav>
+          <NavigationBar />
+        </nav>
+      </header>
+      <div class="content-container">
+        <slot />
+      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
-    <footer>
-      <Footer />
-    </footer>
-  </div>
+  </Fragment>
 </Layout>
 
 <style lang="scss">
@@ -30,10 +35,11 @@ const { title, description } = Astro.props
   }
 
   .content-container {
+    margin: 2rem;
     display: flex;
     flex-grow: 1;
+    flex-direction: column;
     justify-content: center;
-    border-top: 1px solid var(--color-background-soft);
   }
   header {
     position: sticky;
@@ -46,7 +52,7 @@ const { title, description } = Astro.props
 
   footer {
     color: var(--color-text-soft);
-    padding: 2rem 3rem;
+    padding: 2rem;
     border-top: 1px dashed var(--color-border);
   }
 </style>
