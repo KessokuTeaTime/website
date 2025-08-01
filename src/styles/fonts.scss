@@ -7,3 +7,17 @@
     Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --font-mono: 'Liga SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
+
+* {
+  font-family: var(--font-sans);
+}
+
+code,
+pre,
+kbd,
+samp,
+tt,
+var {
+  font-family: var(--font-mono);
+  font-variant-ligatures: contextual common-ligatures discretionary-ligatures;
+}

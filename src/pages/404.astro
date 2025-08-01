@@ -4,7 +4,8 @@ import IndexLayout from '@/layouts/IndexLayout.astro'
 
 <IndexLayout title="404 - Kessoku Tea Time" description="Page not found">
   <div class="error-container">
-    <p class="error">404</p>
+    <h1>404</h1>
+    <p>Not our band.</p>
   </div>
 </IndexLayout>
 
@@ -12,12 +13,17 @@ import IndexLayout from '@/layouts/IndexLayout.astro'
   .error-container {
     display: flex;
     flex-grow: 1;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
 
-  .error {
-    font-size: 2rem;
-    font-stretch: expanded;
+    h1 {
+      font-size: 2.5rem;
+      font-stretch: extra-expanded;
+    }
+
+    p {
+      color: var(--color-text-soft);
+    }
   }
 </style>

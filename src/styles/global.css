@@ -19,7 +19,6 @@ body {
     color var(--duration-regular),
     background-color var(--duration-regular);
   line-height: 1.6;
-  font-family: var(--font-sans);
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
