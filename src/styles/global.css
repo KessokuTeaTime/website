@@ -1,1 +1,114 @@
 @import url('./fonts.scss');
+@import url('./palette.scss');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-link);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+button {
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+}
+
+.tint {
+  --tint: var(--color-tint);
+  color: var(--tint);
+}
+
+.tint-kita {
+  --tint: var(--color-tint-red);
+  color: var(--tint);
+
+  &::selection,
+  *::selection {
+    background: var(--color-tint-red-mute);
+  }
+}
+
+.tint-ryo {
+  --tint: var(--color-tint-blue);
+  color: var(--tint);
+
+  &::selection,
+  *::selection {
+    background: var(--color-tint-blue-mute);
+  }
+}
+
+.tint-bocchi {
+  --tint: var(--color-tint-pink);
+  color: var(--tint);
+
+  &::selection,
+  *::selection {
+    background: var(--color-tint-pink-mute);
+  }
+}
+
+.tint-nijika {
+  --tint: var(--color-tint-yellow);
+  color: var(--tint);
+
+  &::selection,
+  *::selection {
+    background: var(--color-tint-yellow-mute);
+  }
+}
+
+::selection {
+  background: var(--color-selection);
+}
+
+#logo {
+  fill: var(--color-text);
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+  font-weight: bold;
+}
+
+.disable-scrollbars {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (hover: hover) {
+  a {
+    border-bottom: 0.1em solid var(--color-link-mute);
+
+    &:hover {
+      border-bottom: 0.1em solid var(--color-link-soft);
+    }
+  }
+}
