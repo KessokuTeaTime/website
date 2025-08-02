@@ -45,11 +45,13 @@ onMounted(() => {
   updateCount()
   startWindowMoveDetection()
   window.addEventListener('resize', updateCount)
+  window.addEventListener('resize', offsetLerp.value.complete)
 })
 
 onUnmounted(() => {
   stopWindowMoveDetection()
   window.removeEventListener('resize', updateCount)
+  window.removeEventListener('resize', offsetLerp.value.complete)
 })
 
 // Functions

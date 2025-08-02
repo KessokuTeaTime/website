@@ -12,4 +12,8 @@ export class Lerp {
   update() {
     this.value += (this.target - this.value) * this.factor
   }
+
+  complete() {
+    this.value = this.target
+  }
 }
