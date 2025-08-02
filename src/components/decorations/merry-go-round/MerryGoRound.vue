@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
 import TextKessoku from './TextKessoku.vue'
-import TextTeaTime from './TextTeaTime.vue'
+import TextTea from './TextTea.vue'
+import TextTime from './TextTime.vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { remToPx } from '@/utils/conversion'
 import { Lerp } from '@/utils/lerp'
 
 // Constants
 
-const kessokuLengthFactor = 159.55
-const kessokuThicknessFactor = 76.24
+const kessokuLengthFactor = 146.76
+const kessokuThicknessFactor = 70.17
 
-const teaTimeLengthFactor = 486.06
-const teaTimeThicknessFactor = 75.76
+const teaLengthFactor = 220.51
+const teaThicknessFactor = 69.72
+
+const timeLengthFactor = 220.94
+const timeThicknessFactor = 69.72
 
 const aspectRatio =
-  (kessokuLengthFactor + teaTimeLengthFactor) /
-  Math.max(kessokuThicknessFactor, teaTimeThicknessFactor)
+  (kessokuLengthFactor + teaLengthFactor + timeLengthFactor) /
+  Math.max(kessokuThicknessFactor, teaThicknessFactor, timeThicknessFactor)
 
 const navBarHeight = '3.8rem'
 
@@ -83,12 +87,17 @@ function stopWindowMoveDetection() {
   <div class="container">
     <div class="text-container">
       <template v-for="i in count + 2" :key="i">
-        <TextTeaTime class="stroke" id="tea-time" :style="`--index: ${i}`" />
+        <TextTime class="stroke" :style="`--index: ${i}`" text="time" />
       </template>
     </div>
     <div class="text-container">
       <template v-for="i in count + 2" :key="i">
-        <TextKessoku class="stroke" id="kessoku" :style="`--index: ${i}`" />
+        <TextTea class="stroke" :style="`--index: ${i}`" text="tea" />
+      </template>
+    </div>
+    <div class="text-container">
+      <template v-for="i in count + 2" :key="i">
+        <TextKessoku class="stroke" :style="`--index: ${i}`" text="kessoku" />
       </template>
     </div>
   </div>
@@ -117,17 +126,20 @@ function stopWindowMoveDetection() {
   transform: translateX(calc(var(--offset) - 2 * var(--text-width)));
   animation-composition: add;
 
-  &:has(#kessoku) {
-    animation: move 1s linear infinite normal;
+  &:has([text='kessoku']) {
+    animation: move 0.68s linear infinite normal;
   }
 
-  &:has(#tea-time) {
+  &:has([text='tea']) {
     animation: move 1s linear infinite reverse;
+  }
+
+  &:has([text='time']) {
+    animation: move 1.67s linear infinite normal;
   }
 }
 
-#kessoku,
-#tea-time {
+[text] {
   width: var(--text-width);
 }
 
