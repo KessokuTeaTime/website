@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import TextKessoku from './TextKessoku.vue'
 import TextTeaTime from './TextTeaTime.vue'
 import { remToPx } from '@/utils/conversion'
@@ -12,14 +12,11 @@ const kessokuThicknessFactor = 76.24
 const teaTimeLengthFactor = 486.06
 const teaTimeThicknessFactor = 75.76
 
-const kessokuAspectRatio = kessokuLengthFactor / kessokuThicknessFactor
-const teaTimeAspectRatio = teaTimeLengthFactor / teaTimeThicknessFactor
-
 const aspectRatio =
   (kessokuLengthFactor + teaTimeLengthFactor) /
   Math.max(kessokuThicknessFactor, teaTimeThicknessFactor)
 
-const navBarHeight = '4rem'
+const navBarHeight = '3.8rem'
 
 // Variables
 
@@ -30,7 +27,9 @@ let lastScreenPos = { x: 0, y: 0 }
 // Reactives
 
 const count = ref(1)
-const horizontalOffset = ref('0')
+const horizontalOffsetPxTarget = ref(0)
+const horizontalOffsetPx = ref(0)
+const horizontalOffset = computed(() => `${horizontalOffsetPx.value}px`)
 
 // Hooks
 
@@ -40,13 +39,11 @@ onMounted(() => {
   updateCount()
   startWindowMoveDetection()
   window.addEventListener('resize', updateCount)
-  window.addEventListener('resize', updateOffset)
 })
 
 onUnmounted(() => {
   stopWindowMoveDetection()
   window.removeEventListener('resize', updateCount)
-  window.removeEventListener('resize', updateOffset)
 })
 
 // Functions
@@ -59,15 +56,17 @@ function updateCount() {
 }
 
 function updateOffset() {
-  horizontalOffset.value = `${window.screenX - originScreenPos.x}px`
+  if (lastScreenPos.x !== window.screenX || lastScreenPos.y !== window.screenY) {
+    lastScreenPos = { x: window.screenX, y: window.screenY }
+    horizontalOffsetPxTarget.value = window.screenX - originScreenPos.x
+  }
+
+  horizontalOffsetPx.value += (horizontalOffsetPxTarget.value - horizontalOffsetPx.value) * 0.1
 }
 
 function startWindowMoveDetection() {
   const detectMove = () => {
-    if (lastScreenPos.x !== window.screenX || lastScreenPos.y !== window.screenY) {
-      lastScreenPos = { x: window.screenX, y: window.screenY }
-      updateOffset()
-    }
+    updateOffset()
     rafId = requestAnimationFrame(detectMove)
   }
   rafId = requestAnimationFrame(detectMove)
@@ -84,13 +83,12 @@ function stopWindowMoveDetection() {
 <template>
   <div class="container">
     <div class="text-container">
-      <!--`count + 1` is for the infinite cycling effect-->
-      <template v-for="i in count + 1" :key="i">
+      <template v-for="i in count + 2" :key="i">
         <TextTeaTime class="stroke" id="tea-time" :style="`--index: ${i}`" />
       </template>
     </div>
     <div class="text-container">
-      <template v-for="i in count + 1" :key="i">
+      <template v-for="i in count + 2" :key="i">
         <TextKessoku class="stroke" id="kessoku" :style="`--index: ${i}`" />
       </template>
     </div>
@@ -99,10 +97,15 @@ function stopWindowMoveDetection() {
 
 <style scoped lang="scss">
 .container {
-  width: 100%;
-  height: 100%;
-  padding-top: v-bind(navBarHeight);
+  width: 100vw;
+  height: calc(100vh - v-bind(navBarHeight));
+  overflow: hidden;
+  margin-top: v-bind(navBarHeight);
   --text-width: calc((100vh - v-bind(navBarHeight)) / v-bind(aspectRatio));
+  --offset: mod(
+    calc(mod(calc(-1 * v-bind(horizontalOffset)), var(--text-width)) + var(--text-width)),
+    var(--text-width)
+  );
 }
 
 .stroke {
@@ -112,16 +115,26 @@ function stopWindowMoveDetection() {
 
 .text-container {
   white-space: nowrap;
-  overflow: hidden;
-  --offset: mod(
-    calc(mod(calc(-1 * v-bind(horizontalOffset)), var(--text-width)) + var(--text-width)),
-    var(--text-width)
-  );
+  transform: translateX(calc(var(--offset) - 2 * var(--text-width)));
+  animation-composition: add;
+
+  &:has(#kessoku) {
+    animation: move 1s linear infinite normal;
+  }
+
+  &:has(#tea-time) {
+    animation: move 1s linear infinite reverse;
+  }
 }
 
 #kessoku,
 #tea-time {
   width: var(--text-width);
-  transform: translateX(calc(var(--offset) - var(--text-width)));
+}
+
+@keyframes move {
+  100% {
+    transform: translateX(var(--text-width));
+  }
 }
 </style>
