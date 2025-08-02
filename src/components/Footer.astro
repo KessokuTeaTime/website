@@ -1,49 +1,73 @@
 ---
 import FooterContent from '@/components/attachments/index/FooterContent.mdx'
+import FooterFootnote from '@/components/attachments/index/FooterFootnote.mdx'
+import Logo from '@/assets/logo.svg'
 ---
 
-<div class="footer-container">
-  <div class="footer-content">
+<div class="container">
+  <div class="background">
+    <Logo />
+  </div>
+  <div class="content">
     <FooterContent />
   </div>
-  <div class="footer-note">Footer Links</div>
+  <div class="footnote">
+    <FooterFootnote />
+  </div>
 </div>
 
 <style lang="scss">
   @use '@/styles/mixins' as *;
 
-  p {
-    margin: 0;
-  }
-
-  .footer-container {
+  .container {
+    position: relative;
     display: grid;
     font-size: 0.6rem;
     grid-template-areas:
-      'footer-content'
+      'content'
       '.'
-      'footer-note';
+      'footnote';
     grid-template-columns: auto;
     grid-template-rows: auto 1rem auto;
+    padding: 2rem 12rem 2rem 2rem;
+    overflow: hidden;
 
     @include layout(desktop) {
-      grid-template-areas: 'footer-content footer-note';
+      grid-template-areas: 'content footnote';
       grid-template-columns: auto auto;
       grid-template-rows: auto;
     }
   }
 
-  .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    grid-area: footer-content;
+  .background {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateX(1.5rem) translateY(-50%);
+    height: 12.5rem;
+    aspect-ratio: 1/1;
+    pointer-events: none;
+    --tint: var(--color-border);
   }
 
-  .footer-note {
+  .content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    grid-area: footer-note;
+    grid-area: content;
+    z-index: 1;
+  }
+
+  .footnote {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    grid-area: footnote;
+    z-index: 1;
+
+    @include layout(desktop) {
+      flex-direction: column-reverse;
+      align-items: flex-end;
+    }
   }
 </style>
