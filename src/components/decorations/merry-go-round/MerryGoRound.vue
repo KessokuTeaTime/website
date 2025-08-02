@@ -20,8 +20,7 @@ const timeThicknessFactor = 69.72
 const aspectRatio =
   (kessokuLengthFactor + teaLengthFactor + timeLengthFactor) /
   Math.max(kessokuThicknessFactor, teaThicknessFactor, timeThicknessFactor)
-
-const navBarHeight = '3.8rem'
+const marginSemantic = `3.2rem`
 
 // Variables
 
@@ -31,9 +30,12 @@ let lastScreenPos = { x: 0, y: 0 }
 
 // Reactives
 
+const height = ref(0)
 const count = ref(1)
 const offsetLerp = ref(new Lerp())
-const offset = computed(() => `${offsetLerp.value.value}px`)
+
+const heightSemantic = computed(() => `${height.value}px`)
+const offsetSemantic = computed(() => `${offsetLerp.value.value}px`)
 
 // Hooks
 
@@ -53,9 +55,9 @@ onUnmounted(() => {
 // Functions
 
 function updateCount() {
-  const navBarHeightPx = remToPx(parseFloat(navBarHeight))
-  count.value =
-    Math.floor(window.innerWidth / ((window.innerHeight - navBarHeightPx) / aspectRatio)) + 1
+  let margin = remToPx(marginSemantic)
+  height.value = window.innerHeight - margin
+  count.value = Math.floor(window.innerWidth / ((window.innerHeight - margin) / aspectRatio)) + 1
 }
 
 function updateOffset() {
@@ -105,13 +107,13 @@ function stopWindowMoveDetection() {
 
 <style scoped lang="scss">
 .container {
-  width: 100vw;
-  height: calc(100vh - v-bind(navBarHeight));
+  width: 100%;
+  height: v-bind(heightSemantic);
   overflow: hidden;
-  margin-top: v-bind(navBarHeight);
-  --text-width: calc((100vh - v-bind(navBarHeight)) / v-bind(aspectRatio));
+  margin-top: v-bind(marginSemantic);
+  --text-width: calc(v-bind(heightSemantic) / v-bind(aspectRatio));
   --offset: mod(
-    calc(mod(calc(-1 * v-bind(offset)), var(--text-width)) + var(--text-width)),
+    calc(mod(calc(-1 * v-bind(offsetSemantic)), var(--text-width)) + var(--text-width)),
     var(--text-width)
   );
 }
@@ -135,7 +137,7 @@ function stopWindowMoveDetection() {
   }
 
   &:has([text='time']) {
-    animation: move 1.67s linear infinite normal;
+    animation: move 1.85s linear infinite normal;
   }
 }
 

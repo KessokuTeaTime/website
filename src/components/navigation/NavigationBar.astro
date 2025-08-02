@@ -1,6 +1,6 @@
 ---
 import ColoredBars from '@/components/decorations/ColoredBars.vue'
-import NavigationSwitcher from './NavigationSwitcher.vue'
+import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
 ---
 
@@ -11,7 +11,7 @@ import Logo from '@/assets/logo.svg'
     </div>
   </div>
   <div class="center disable-scrollbars">
-    <NavigationSwitcher class="switcher" />
+    <NavigationMenu class="menu" />
   </div>
   <div class="right">
     <div class="bars">
@@ -79,7 +79,7 @@ import Logo from '@/assets/logo.svg'
     height: 0.25rem;
   }
 
-  .switcher {
+  .menu {
     font-stretch: expanded;
   }
 </style>
