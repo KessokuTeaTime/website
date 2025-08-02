@@ -29,7 +29,6 @@ const aspectRatio = (kessokuWidth + teaTimeWidth) / Math.max(kessokuHeight, teaT
 .container {
   width: 100%;
   height: 100%;
-  border: 1px solid red;
 }
 
 .stroke {

@@ -3,7 +3,13 @@ import NavigationBar from '@/components/navigation/NavigationBar.astro'
 import Layout from './Layout.astro'
 import Footer from '@/components/Footer.astro'
 
-const { title, description } = Astro.props
+interface Props {
+  title?: string
+  description?: string
+  hasFooter?: boolean
+}
+
+const { title, description, hasFooter = true } = Astro.props
 ---
 
 <Layout title={title} description={description}>
@@ -20,9 +26,13 @@ const { title, description } = Astro.props
       <div class="content-container">
         <slot />
       </div>
-      <footer>
-        <Footer />
-      </footer>
+      {
+        hasFooter && (
+          <footer>
+            <Footer />
+          </footer>
+        )
+      }
     </div>
   </Fragment>
 </Layout>
@@ -35,7 +45,6 @@ const { title, description } = Astro.props
   }
 
   .content-container {
-    margin: 2rem;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
@@ -53,6 +62,7 @@ const { title, description } = Astro.props
   footer {
     color: var(--color-text-soft);
     padding: 2rem;
+    background: var(--color-background);
     border-top: 1px dashed var(--color-border);
   }
 </style>

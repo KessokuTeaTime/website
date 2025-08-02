@@ -1,8 +1,9 @@
 ---
 import IndexLayout from '@/layouts/IndexLayout.astro'
+import { makeTitle } from '@/config'
 ---
 
-<IndexLayout title="404 - Kessoku Tea Time" description="Page not found">
+<IndexLayout title={makeTitle('404')} description="Page not found">
   <div class="error-container">
     <h1>404</h1>
     <p>Not our band.</p>
