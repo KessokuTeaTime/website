@@ -21,13 +21,23 @@ import Logo from '@/assets/logo.svg'
 </div>
 
 <style lang="scss">
+  @use '@/styles/mixins' as *;
+
   .container {
     display: grid;
-    grid-template-areas: 'left center right';
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: auto;
+    grid-template-areas:
+      'left right'
+      'left center';
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
     align-items: center;
     font-size: 0.72rem;
+
+    @include layout(desktop) {
+      grid-template-areas: 'left center right';
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-rows: auto;
+    }
 
     a {
       text-decoration: none;
@@ -42,14 +52,17 @@ import Logo from '@/assets/logo.svg'
   .left {
     display: flex;
     flex-direction: row;
+    grid-area: left;
   }
 
   .right {
     display: flex;
     flex-direction: row-reverse;
+    grid-area: right;
   }
 
   .center {
+    grid-area: center;
     text-align: center;
     overflow: scroll;
   }
@@ -67,6 +80,6 @@ import Logo from '@/assets/logo.svg'
   }
 
   .switcher {
-    font-stretch: condensed;
+    font-stretch: expanded;
   }
 </style>

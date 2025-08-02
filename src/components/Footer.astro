@@ -1,32 +1,49 @@
+---
+import FooterContent from '@/components/attachments/index/FooterContent.mdx'
+---
+
 <div class="footer-container">
-  <div class="footer-content">Footer Content</div>
-  <div class="footer-links">Footer Links</div>
+  <div class="footer-content">
+    <FooterContent />
+  </div>
+  <div class="footer-note">Footer Links</div>
 </div>
 
 <style lang="scss">
   @use '@/styles/mixins' as *;
 
+  p {
+    margin: 0;
+  }
+
   .footer-container {
     display: grid;
+    font-size: 0.6rem;
     grid-template-areas:
       'footer-content'
       '.'
-      'footer-links';
+      'footer-note';
     grid-template-columns: auto;
     grid-template-rows: auto 1rem auto;
 
     @include layout(desktop) {
-      grid-template-areas: 'footer-content footer-links';
+      grid-template-areas: 'footer-content footer-note';
       grid-template-columns: auto auto;
       grid-template-rows: auto;
     }
   }
 
   .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     grid-area: footer-content;
   }
 
-  .footer-links {
-    grid-area: footer-links;
+  .footer-note {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    grid-area: footer-note;
   }
 </style>

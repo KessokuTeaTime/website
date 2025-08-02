@@ -4,15 +4,15 @@
       @content;
     }
   } @else if $level == mobile {
-    @media screen and (max-width: 768px) {
+    @media screen and (min-width: 428px) {
       @content;
     }
   } @else if $level == desktop {
-    @media screen and (max-width: 1024px) {
+    @media screen and (min-width: 768px) {
       @content;
     }
   } @else if $level == wide {
-    @media screen {
+    @media screen and (min-width: 1024px) {
       @content;
     }
   }

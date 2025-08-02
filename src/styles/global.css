@@ -1,6 +1,7 @@
 @import url('./fonts.scss');
 @import url('./palette.scss');
 @import url('./animations.scss');
+@import url('./main.scss');
 
 *,
 *::before,
@@ -23,70 +24,4 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  text-decoration: underline;
-}
-
-button {
-  color: var(--color-text);
-  background: transparent;
-  border: none;
-}
-
-.tint-kita {
-  --tint: var(--color-tint-red);
-  color: var(--tint);
-
-  &::selection,
-  *::selection {
-    background: var(--color-tint-red-mute);
-  }
-}
-
-.tint-ryo {
-  --tint: var(--color-tint-blue);
-  color: var(--tint);
-
-  &::selection,
-  *::selection {
-    background: var(--color-tint-blue-mute);
-  }
-}
-
-.tint-bocchi {
-  --tint: var(--color-tint-pink);
-  color: var(--tint);
-
-  &::selection,
-  *::selection {
-    background: var(--color-tint-pink-mute);
-  }
-}
-
-.tint-nijika {
-  --tint: var(--color-tint-yellow);
-  color: var(--tint);
-
-  &::selection,
-  *::selection {
-    background: var(--color-tint-yellow-mute);
-  }
-}
-
-::selection {
-  background: var(--color-selection);
-}
-
-:is(h1, h2, h3, h4, h5, h6) {
-  font-weight: bold;
-}
-
-.disable-scrollbars {
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }

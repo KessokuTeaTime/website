@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import TextKessoku from './TextKessoku.vue'
 import TextTeaTime from './TextTeaTime.vue'
 import { remToPx } from '@/utils/conversion'
+import { Lerp } from '@/utils/lerp'
 
 // Constants
 
@@ -27,9 +28,8 @@ let lastScreenPos = { x: 0, y: 0 }
 // Reactives
 
 const count = ref(1)
-const horizontalOffsetPxTarget = ref(0)
-const horizontalOffsetPx = ref(0)
-const horizontalOffset = computed(() => `${horizontalOffsetPx.value}px`)
+const offsetLerp = ref(new Lerp())
+const offset = computed(() => `${offsetLerp.value.value}px`)
 
 // Hooks
 
@@ -52,16 +52,15 @@ function updateCount() {
   const navBarHeightPx = remToPx(parseFloat(navBarHeight))
   count.value =
     Math.floor(window.innerWidth / ((window.innerHeight - navBarHeightPx) / aspectRatio)) + 1
-  console.log(`Count updated: ${count.value}, navBarHeight: ${navBarHeightPx}px`)
 }
 
 function updateOffset() {
   if (lastScreenPos.x !== window.screenX || lastScreenPos.y !== window.screenY) {
     lastScreenPos = { x: window.screenX, y: window.screenY }
-    horizontalOffsetPxTarget.value = window.screenX - originScreenPos.x
+    offsetLerp.value.target = window.screenX - originScreenPos.x
   }
 
-  horizontalOffsetPx.value += (horizontalOffsetPxTarget.value - horizontalOffsetPx.value) * 0.1
+  offsetLerp.value.update()
 }
 
 function startWindowMoveDetection() {
@@ -103,7 +102,7 @@ function stopWindowMoveDetection() {
   margin-top: v-bind(navBarHeight);
   --text-width: calc((100vh - v-bind(navBarHeight)) / v-bind(aspectRatio));
   --offset: mod(
-    calc(mod(calc(-1 * v-bind(horizontalOffset)), var(--text-width)) + var(--text-width)),
+    calc(mod(calc(-1 * v-bind(offset)), var(--text-width)) + var(--text-width)),
     var(--text-width)
   );
 }
