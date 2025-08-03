@@ -1,6 +1,6 @@
 @mixin layout($level) {
   @if $level == compact {
-    @media screen and (max-width: 428px) {
+    @media screen and (max-width: 427px) {
       @content;
     }
   } @else if $level == mobile {

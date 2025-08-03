@@ -88,7 +88,7 @@ function stopWindowMoveDetection() {
 </script>
 
 <template>
-  <div class="container">
+  <div class="merry-go-round-container">
     <div class="text-container">
       <template v-for="i in count + 2" :key="i">
         <TextTime class="stroke" :style="`--index: ${i}`" text="time" />
@@ -108,7 +108,7 @@ function stopWindowMoveDetection() {
 </template>
 
 <style scoped lang="scss">
-.container {
+.merry-go-round-container {
   width: 100%;
   height: v-bind(heightSemantic);
   overflow: hidden;

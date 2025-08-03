@@ -4,14 +4,14 @@ import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
 ---
 
-<div class="container">
+<div class="nav-container">
   <div class="left">
     <div class="logo">
       <a href="/"><Logo /></a>
     </div>
   </div>
   <div class="center disable-scrollbars">
-    <NavigationMenu class="menu" client:load />
+    <NavigationMenu client:load />
   </div>
   <div class="right">
     <div class="bars">
@@ -23,7 +23,7 @@ import Logo from '@/assets/logo.svg'
 <style lang="scss">
   @use '@/styles/mixins' as *;
 
-  .container {
+  .nav-container {
     display: grid;
     grid-template-areas:
       'left right'
@@ -35,7 +35,7 @@ import Logo from '@/assets/logo.svg'
 
     @include layout(desktop) {
       grid-template-areas: 'left center right';
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: 5rem auto 5rem;
       grid-template-rows: auto;
     }
 
@@ -62,14 +62,7 @@ import Logo from '@/assets/logo.svg'
   }
 
   .center {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-start;
     grid-area: center;
-
-    @include layout(desktop) {
-      justify-content: center;
-    }
   }
 
   .logo {
@@ -82,5 +75,9 @@ import Logo from '@/assets/logo.svg'
     flex-direction: row;
     width: 5rem;
     height: 0.25rem;
+
+    @include layout(desktop) {
+      width: 100%;
+    }
   }
 </style>
