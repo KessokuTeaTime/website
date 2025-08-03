@@ -2,6 +2,12 @@
 import ColoredBars from '@/components/decorations/ColoredBars.vue'
 import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
+
+interface Props {
+  slug?: string
+}
+
+const { slug } = Astro.props
 ---
 
 <div class="nav-container">
@@ -11,7 +17,7 @@ import Logo from '@/assets/logo.svg'
     </div>
   </div>
   <div class="center disable-scrollbars">
-    <NavigationMenu client:load />
+    <NavigationMenu client:load slug={slug} />
   </div>
   <div class="right">
     <div class="bars">

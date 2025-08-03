@@ -1,15 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import NavigationPalette from './NavigationPalette.vue'
+import { type PageInfo, type PageInfoTargetSlug, type PageInfoTargetLink } from '@/types'
+import { config } from '@/config'
+
+const props = defineProps({
+  slug: {
+    type: String,
+    required: false
+  }
+})
 
 const isExpanded = ref(false)
+
+const pageInfo = computed(() => {
+  if (!props.slug || !config.pageInfo) return undefined
+
+  return config.pageInfo.find((info) => {
+    if (info.target.type == 'slug') {
+      return info.target.slug === props.slug
+    } else {
+      return false
+    }
+  })
+})
 </script>
 
 <template>
   <div class="menu-container">
     <Transition name="fade">
-      <button @click="isExpanded = true" v-if="!isExpanded">Navigation Menu</button>
-      <NavigationPalette v-else class="palette" @back="isExpanded = false" />
+      <button v-if="!isExpanded" @click="isExpanded = true">Navigation Menu</button>
+      <NavigationPalette :page-info="pageInfo" v-else class="palette" @back="isExpanded = false" />
     </Transition>
   </div>
 </template>
@@ -61,6 +82,34 @@ button {
 
   &:active {
     scale: 0.95;
+  }
+
+  &:before {
+    content: '<>';
+    display: inline;
+    font-family: var(--font-mono);
+    font-variant-ligatures: none;
+    color: var(--color-text-soft);
+    margin-right: 2px;
+
+    @include layout(desktop) {
+      content: '<';
+      display: inline;
+    }
+  }
+
+  &:after {
+    content: none;
+    display: none;
+    font-family: var(--font-mono);
+    font-variant-ligatures: none;
+    color: var(--color-text-soft);
+    margin-left: 2px;
+
+    @include layout(desktop) {
+      content: '>';
+      display: inline;
+    }
   }
 }
 
