@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { size } from '@/utils/const'
+import NavigationPalette from './NavigationPalette.vue'
 
 const isExpanded = ref(false)
 </script>
 
 <template>
-  <div class="menu-container disable-scrollbars">
-    <button @click="isExpanded = true">Navigation Menu</button>
+  <div class="menu-container">
+    <Transition name="fade">
+      <button @click="isExpanded = true" v-if="!isExpanded">Navigation Menu</button>
+      <NavigationPalette v-else class="palette" @back="isExpanded = false" />
+    </Transition>
   </div>
 </template>
 
@@ -17,10 +20,10 @@ const isExpanded = ref(false)
 .menu-container {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 1rem;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
-  overflow: scroll;
   mask: linear-gradient(
     to right,
     transparent 0%,
@@ -28,6 +31,7 @@ const isExpanded = ref(false)
     white calc(100% - 4px),
     transparent 100%
   );
+  border: 1px solid red;
 
   @include layout(desktop) {
     justify-content: center;
@@ -40,7 +44,11 @@ const isExpanded = ref(false)
       transparent 100%
     );
   }
-  border: 1px solid red;
+}
+
+.palette {
+  position: absolute;
+  width: 100%;
 }
 
 button {
@@ -54,5 +62,15 @@ button {
   &:active {
     scale: 0.95;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--duration-fast) ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

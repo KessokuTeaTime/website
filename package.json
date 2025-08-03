@@ -16,6 +16,7 @@
     "@astrojs/mdx": "^4.3.2",
     "@astrojs/vue": "^5.1.0",
     "@astropub/md": "^1.0.0",
+    "@vueuse/core": "^13.6.0",
     "astro": "^5.12.6",
     "vue": "^3.5.18"
   },
