@@ -52,3 +52,10 @@ jobs:
         with:
           name: dist
           path: dist
+
+      - name: Notify the server
+        uses: KessokuTeaTime/Private.CI@fbe5bb77157a136f6aa8329ecdee476fa728208b
+        with:
+          auth: ${{ secrets.KTT_API_TOKEN }}
+          endpoint: ${{ secrets.API_ENDPOINT }}
+          run-id: ${{ env.GITHUB_RUN_ID }}
