@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css'
 import { config } from '@/config'
+import { ClientRouter, fade } from 'astro:transitions'
 
 interface Props {
   title?: string
@@ -11,7 +12,7 @@ const { title = config.siteInfo.title, description = undefined } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en-US">
+<html lang="en-US" transition:animate={fade({ duration: '0.5s' })}>
   <head>
     <slot name="head" />
     <meta charset="UTF-8" />
@@ -25,13 +26,12 @@ const { title = config.siteInfo.title, description = undefined } = Astro.props
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <ClientRouter />
   </head>
   <body>
     <slot name="background" />
     <slot />
-  </body>
-
-  <style>
+  </body><style>
     html,
     body {
       margin: 0;

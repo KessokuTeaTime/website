@@ -19,17 +19,17 @@ const { title, description, slug, hasFooter = true } = Astro.props
   </Fragment>
   <Fragment>
     <div class="page-container">
-      <header>
+      <header transition:name="header">
         <nav>
           <NavigationBar slug={slug} />
         </nav>
       </header>
-      <div class="content-container">
+      <div class="content-container" transition:name="content">
         <slot />
       </div>
       {
         hasFooter && (
-          <footer>
+          <footer transition:name="footer">
             <Footer />
           </footer>
         )
