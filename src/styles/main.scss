@@ -80,11 +80,17 @@ a {
   }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
   line-height: 1.5;
 
   .prose & {
-    margin: 1.75em 0;
+    margin: 1.25em 0;
   }
 }
 
