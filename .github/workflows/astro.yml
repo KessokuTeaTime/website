@@ -54,7 +54,7 @@ jobs:
           path: dist
 
       - name: Notify the server
-        uses: KessokuTeaTime/Private.CI@aedcdbfe540aa38540ad029bcea2ce03f23e1e0e
+        uses: KessokuTeaTime/Private.CI@cd406309738801488b4022354d515c94d1811c66
         with:
           auth: ${{ secrets.KTT_API_TOKEN }}
           endpoint: ${{ secrets.API_ENDPOINT }}
