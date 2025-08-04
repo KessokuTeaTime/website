@@ -15,7 +15,12 @@ import { commitHash, commitHashShort } from '@/utils/consts'
   </div>
   <div class="footnote">
     <FooterFootnote />
-    <a href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`} class="commit-hash">
+    <a
+      href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`}
+      target="_blank"
+      rel="noopener"
+      class="commit-hash"
+    >
       {commitHashShort}
     </a>
   </div>
