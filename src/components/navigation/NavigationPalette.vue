@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { remToPx } from '@/utils/conversion'
-import { computed, type PropType } from 'vue'
+import { computed, onMounted, ref, useTemplateRef, watchEffect, type PropType } from 'vue'
 import { type PageInfo } from '@/types'
 import { config } from '@/config'
+import { useWindowSize } from '@vueuse/core'
+import { layoutWidth } from '@/utils/const'
+
+// Definitions
 
 const props = defineProps({
   pageInfo: {
@@ -15,16 +19,59 @@ const emit = defineEmits({
   back: null
 })
 
+// Constants
+
 const gapSemantic = '1rem'
-const gap = computed(() => remToPx(gapSemantic))
+
+// Reactives
+
+const links = useTemplateRef('links')
+const sortedLinks = computed(() => {
+  if (links.value) {
+    return Array.from(links.value).sort((a, b) => {
+      const indexA = parseInt(a.dataset.index || '0')
+      const indexB = parseInt(b.dataset.index || '0')
+      return indexA - indexB
+    })
+  } else {
+    return []
+  }
+})
+
+const leadingLinkWidth = computed(() => {
+  if (sortedLinks.value && sortedLinks.value.length > 0) {
+    return sortedLinks.value[0].clientWidth
+  } else {
+    return 0
+  }
+})
+const leadingLinkWidthSemantic = computed(() => {
+  return `${leadingLinkWidth.value}px`
+})
+
+const trailingLinkWidth = computed(() => {
+  if (sortedLinks.value && sortedLinks.value.length > 0) {
+    return sortedLinks.value[sortedLinks.value.length - 1].clientWidth
+  } else {
+    return 0
+  }
+})
+const trailingLinkWidthSemantic = computed(() => {
+  return `${trailingLinkWidth.value}px`
+})
 
 const selectedIndex = computed(() => {
   if (props.pageInfo) {
     return config.pageInfo.indexOf(props.pageInfo)
   } else {
-    return 0
+    return undefined
   }
 })
+const alignmentIndex = computed(() => {
+  return selectedIndex.value ?? 0
+})
+
+// Functions
 
 function getHref(pageInfo: PageInfo): string {
   switch (pageInfo.target.type) {
@@ -38,12 +85,21 @@ function getHref(pageInfo: PageInfo): string {
 
 <template>
   <div class="links-container disable-scrollbars">
-    <div spacer="left"></div>
-    <template v-for="(pageInfo, index) in config.pageInfo">
-      <button v-if="index == selectedIndex" class="selected">{{ pageInfo.name }}</button>
+    <div spacer="leading"></div>
+    <div
+      v-for="(pageInfo, index) in config.pageInfo"
+      class="target"
+      :key="index"
+      ref="links"
+      :data-index="index"
+      :type="pageInfo.target.type"
+    >
+      <button v-if="index == selectedIndex" class="selected" @click="$emit('back')">
+        {{ pageInfo.name }}
+      </button>
       <a :href="getHref(pageInfo)" v-else>{{ pageInfo.name }}</a>
-    </template>
-    <div spacer="right"></div>
+    </div>
+    <div spacer="trailing"></div>
   </div>
 </template>
 
@@ -53,23 +109,41 @@ function getHref(pageInfo: PageInfo): string {
 .links-container {
   overflow: auto;
   display: flex;
+  flex-direction: row-reverse;
   gap: v-bind(gapSemantic);
 
-  > [spacer='left'] {
-    padding-right: calc(100% - v-bind(gapSemantic));
+  @include layout(desktop) {
+    flex-direction: row;
+    --padding-spacer: calc((100% - v-bind(gapSemantic)) / 2);
+  }
+
+  > [spacer='leading'] {
+    display: none;
+    padding-right: calc(100% - v-bind(leadingLinkWidthSemantic) - v-bind(gapSemantic));
 
     @include layout(desktop) {
-      padding-right: calc(50% - v-bind(gapSemantic));
+      display: inline;
+      padding-right: calc((100% - v-bind(leadingLinkWidthSemantic)) / 2 - v-bind(gapSemantic));
     }
   }
 
-  > [spacer='right'] {
-    padding-left: calc(100% - v-bind(gapSemantic));
+  > [spacer='trailing'] {
+    display: inline;
+    padding-left: calc(100% - v-bind(trailingLinkWidthSemantic) - v-bind(gapSemantic));
 
     @include layout(desktop) {
-      padding-left: calc(50% - v-bind(gapSemantic));
+      padding-left: calc((100% - v-bind(trailingLinkWidthSemantic)) / 2 - v-bind(gapSemantic));
     }
   }
+}
+
+.target[type='link']::after {
+  content: '↗';
+  display: inline;
+  font-family: var(--font-mono);
+  font-variant-ligatures: none;
+  color: var(--color-text-soft);
+  margin-right: 2px;
 }
 
 button,

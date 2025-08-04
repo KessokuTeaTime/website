@@ -27,7 +27,7 @@ const pageInfo = computed(() => {
 </script>
 
 <template>
-  <div class="menu-container">
+  <div class="menu-container" :class="{ masked: isExpanded }">
     <Transition name="fade">
       <button v-if="!isExpanded" @click="isExpanded = true">Navigation Menu</button>
       <NavigationPalette :page-info="pageInfo" v-else class="palette" @back="isExpanded = false" />
@@ -45,7 +45,7 @@ const pageInfo = computed(() => {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  mask: linear-gradient(
+  --mask: linear-gradient(
     to right,
     transparent 0%,
     white 2rem,
@@ -57,13 +57,17 @@ const pageInfo = computed(() => {
   @include layout(desktop) {
     justify-content: center;
 
-    mask: linear-gradient(
+    --mask: linear-gradient(
       to right,
       transparent 0%,
       white 2rem,
       white calc(100% - 2rem),
       transparent 100%
     );
+  }
+
+  &.masked {
+    mask: var(--mask);
   }
 }
 
