@@ -54,8 +54,8 @@ jobs:
           path: dist
 
       - name: Notify the server
-        uses: KessokuTeaTime/Private.CI@cd406309738801488b4022354d515c94d1811c66
+        uses: KessokuTeaTime/Private.CI@master
         with:
           auth: ${{ secrets.KTT_API_TOKEN }}
           endpoint: ${{ secrets.API_ENDPOINT }}
-          run-id: ${{ github.event.workflow_run.id  }}
+          github_run_id: ${{ github.event.workflow_run.id }}
