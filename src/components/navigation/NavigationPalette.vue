@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { remToPx } from '@/utils/conversion'
-import { computed, onMounted, ref, useTemplateRef, watchEffect, type PropType } from 'vue'
+import { computed, onMounted, useTemplateRef, type PropType } from 'vue'
 import { type PageInfo } from '@/types'
 import { config } from '@/config'
 import { useWindowSize } from '@vueuse/core'
 import { layoutWidth } from '@/utils/const'
+import { remToPx } from '@/utils/conversion'
 
 // Definitions
 
@@ -25,6 +25,7 @@ const gapSemantic = '1rem'
 
 // Reactives
 
+const linksContainer = useTemplateRef('links-container')
 const links = useTemplateRef('links')
 const sortedLinks = computed(() => {
   if (links.value) {
@@ -70,6 +71,19 @@ const selectedIndex = computed(() => {
 const alignmentIndex = computed(() => {
   return selectedIndex.value ?? 0
 })
+const alignmentElement = computed(() => {
+  if (links.value && links.value.length > 0) {
+    return links.value[alignmentIndex.value]
+  } else {
+    return undefined
+  }
+})
+
+// Hooks
+
+onMounted(() => {
+  scrollToAlignmentElement()
+})
 
 // Functions
 
@@ -81,10 +95,25 @@ function getHref(pageInfo: PageInfo): string {
       return pageInfo.target.link
   }
 }
+
+function scrollToAlignmentElement() {
+  if (linksContainer.value && alignmentElement.value && alignmentIndex.value > 0) {
+    const gapsWidth = alignmentIndex.value * remToPx(1)
+    const linksWidth = sortedLinks.value
+      .slice(0, alignmentIndex.value)
+      .reduce((sum, element) => sum + element.clientWidth, 0)
+
+    if (useWindowSize().width.value <= layoutWidth.mobile.maxExcluding) {
+      linksContainer.value.scrollLeft = -(gapsWidth + linksWidth)
+    } else {
+      linksContainer.value.scrollLeft = gapsWidth + linksWidth
+    }
+  }
+}
 </script>
 
 <template>
-  <div class="links-container disable-scrollbars">
+  <div class="links-container disable-scrollbars" ref="links-container">
     <div spacer="leading"></div>
     <div
       v-for="(pageInfo, index) in config.pageInfo"

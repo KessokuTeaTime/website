@@ -29,7 +29,9 @@ const pageInfo = computed(() => {
 <template>
   <div class="menu-container" :class="{ masked: isExpanded }">
     <Transition name="fade">
-      <button v-if="!isExpanded" @click="isExpanded = true">Navigation Menu</button>
+      <button v-if="!isExpanded" @click="isExpanded = true">
+        {{ pageInfo?.name ?? 'Navigation Menu' }}
+      </button>
       <NavigationPalette :page-info="pageInfo" v-else class="palette" @back="isExpanded = false" />
     </Transition>
   </div>
@@ -52,7 +54,6 @@ const pageInfo = computed(() => {
     white calc(100% - 4px),
     transparent 100%
   );
-  border: 1px solid red;
 
   @include layout(desktop) {
     justify-content: center;
