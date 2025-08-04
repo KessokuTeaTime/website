@@ -1,7 +1,9 @@
 ---
-import FooterContent from '@/components/attachments/index/FooterContent.mdx'
-import FooterFootnote from '@/components/attachments/index/FooterFootnote.mdx'
+import FooterContent from '@/components/attachments/FooterContent.mdx'
+import FooterFootnote from '@/components/attachments/FooterFootnote.mdx'
 import Logo from '@/assets/logo.svg'
+
+import commit_hash from '/public/commit_hash?raw'
 ---
 
 <div class="container">
@@ -13,6 +15,9 @@ import Logo from '@/assets/logo.svg'
   </div>
   <div class="footnote">
     <FooterFootnote />
+    <a href={`https://github.com/KessokuTeaTime/website/commit/${commit_hash}`} class="commit-hash">
+      {commit_hash}
+    </a>
   </div>
 </div>
 
@@ -69,5 +74,11 @@ import Logo from '@/assets/logo.svg'
       flex-direction: column-reverse;
       align-items: flex-end;
     }
+  }
+
+  .commit-hash {
+    color: var(--color-border);
+    font-family: var(--font-mono);
+    text-decoration: none;
   }
 </style>
