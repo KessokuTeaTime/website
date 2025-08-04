@@ -58,4 +58,4 @@ jobs:
         with:
           auth: ${{ secrets.KTT_API_TOKEN }}
           endpoint: ${{ secrets.API_ENDPOINT }}
-          github_run_id: ${{ github.event.workflow_run.id }}
+          github_run_id: ${{ github.run_id }}
