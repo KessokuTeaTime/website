@@ -3,7 +3,7 @@ import FooterContent from '@/components/attachments/FooterContent.mdx'
 import FooterFootnote from '@/components/attachments/FooterFootnote.mdx'
 import Logo from '@/assets/logo.svg'
 
-import commit_hash from '/public/commit_hash?raw'
+import { commitHash, commitHashShort } from '@/utils/consts'
 ---
 
 <div class="container">
@@ -15,8 +15,8 @@ import commit_hash from '/public/commit_hash?raw'
   </div>
   <div class="footnote">
     <FooterFootnote />
-    <a href={`https://github.com/KessokuTeaTime/website/commit/${commit_hash}`} class="commit-hash">
-      {commit_hash}
+    <a href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`} class="commit-hash">
+      {commitHashShort}
     </a>
   </div>
 </div>

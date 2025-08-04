@@ -3,7 +3,7 @@ import { computed, onMounted, useTemplateRef, type PropType } from 'vue'
 import { type PageInfo } from '@/types'
 import { config } from '@/config'
 import { useWindowSize } from '@vueuse/core'
-import { layoutWidth } from '@/utils/const'
+import { layoutWidth } from '@/utils/consts'
 import { remToPx } from '@/utils/conversion'
 
 // Definitions
