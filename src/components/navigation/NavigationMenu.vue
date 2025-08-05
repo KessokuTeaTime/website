@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import NavigationPalette from './NavigationPalette.vue'
-import { type PageInfo, type PageInfoTargetSlug, type PageInfoTargetLink } from '@/types'
 import { config } from '@/config'
 
 const props = defineProps({

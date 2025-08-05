@@ -2,8 +2,10 @@
 import FooterContent from '@/components/attachments/FooterContent.mdx'
 import FooterFootnote from '@/components/attachments/FooterFootnote.mdx'
 import Logo from '@/assets/logo.svg'
+import * as child from 'child_process'
 
-import { commitHash, commitHashShort } from '@/utils/consts'
+const commitHash = child.execSync('git rev-parse HEAD').toString()
+const commitHashShort = child.execSync('git rev-parse --short HEAD').toString()
 ---
 
 <div class="container">

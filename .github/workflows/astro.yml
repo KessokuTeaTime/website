@@ -57,5 +57,5 @@ jobs:
         uses: KessokuTeaTime/action-deploy-website@main
         with:
           auth: ${{ secrets.KTT_API_TOKEN }}
-          endpoint: ${{ secrets.API_ENDPOINT }}
+          endpoint: ${{ vars.KTT_API_ENDPOINT }}
           github_run_id: ${{ github.run_id }}
