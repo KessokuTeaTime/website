@@ -1,0 +1,6 @@
+---
+import * as child from 'child_process'
+
+export const commitHash = child.execSync('git rev-parse HEAD').toString()
+export const commitHashShort = child.execSync('git rev-parse --short HEAD').toString()
+---

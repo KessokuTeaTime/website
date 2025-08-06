@@ -1,11 +1,8 @@
 ---
+import Logo from '@/assets/logo.svg'
 import FooterContent from '@/components/attachments/FooterContent.mdx'
 import FooterFootnote from '@/components/attachments/FooterFootnote.mdx'
-import Logo from '@/assets/logo.svg'
-import * as child from 'child_process'
-
-const commitHash = child.execSync('git rev-parse HEAD').toString()
-const commitHashShort = child.execSync('git rev-parse --short HEAD').toString()
+import { commitHash, commitHashShort } from '@/components/consts/CommitHash.astro'
 ---
 
 <div class="container">
