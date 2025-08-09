@@ -1,0 +1,16 @@
+<meta name="theme-color" content="#ffffff" />
+
+<script type="module" is:inline>
+  const updateThemeColor = () => {
+    const color = getComputedStyle(document.documentElement)
+      .getPropertyValue('--color-background')
+      .trim()
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (meta && color) {
+      meta.setAttribute('content', color)
+    }
+  }
+
+  updateThemeColor()
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeColor)
+</script>
