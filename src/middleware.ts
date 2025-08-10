@@ -3,26 +3,6 @@ import { defineMiddleware, sequence } from 'astro:middleware'
 import { config } from './config'
 import { useAstroI18n } from 'astro-i18n'
 
-export const redirectWithLocalMiddleware = defineMiddleware(async (context, next) => {
-  const locale = context.currentLocale
-  const defaultLocale = config.siteInfo.defaultLocale
-  const path = context.url.pathname
-
-  function matches(locale?: string): boolean {
-    if (locale == null) {
-      return false
-    } else {
-      return path.startsWith(`/${locale}`)
-    }
-  }
-
-  if (!matches(locale) && !matches(defaultLocale)) {
-    return context.redirect(getRelativeLocaleUrl(locale!, path))
-  } else {
-    return await next()
-  }
-})
-
 export const sluggingMiddleware = defineMiddleware(async (context, next) => {
   const locale = context.currentLocale
   const defaultLocale = config.siteInfo.defaultLocale
@@ -46,7 +26,6 @@ export const sluggingMiddleware = defineMiddleware(async (context, next) => {
 
 export const onRequest = sequence(
   useAstroI18n(),
-  // redirectWithLocalMiddleware,
   sluggingMiddleware,
   middleware({
     prefixDefaultLocale: true,
