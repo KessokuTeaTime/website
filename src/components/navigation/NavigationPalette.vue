@@ -93,7 +93,7 @@ onMounted(() => {
 
 // Functions
 
-function getHref(pageInfo: PageInfo): string {
+function getUrl(pageInfo: PageInfo): string {
   switch (pageInfo.target.type) {
     case 'slug':
       let path = pageInfo.target.slug
@@ -142,7 +142,7 @@ function getPageName(pageInfo: PageInfo): string {
       <button v-if="index == selectedIndex" class="selected" @click="$emit('back')">
         {{ getPageName(pageInfo) }}
       </button>
-      <a :href="getHref(pageInfo)" v-else>{{ getPageName(pageInfo) }}</a>
+      <a :href="getUrl(pageInfo)" v-else>{{ getPageName(pageInfo) }}</a>
     </div>
     <div spacer="trailing"></div>
   </div>

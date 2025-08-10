@@ -18,3 +18,8 @@ export function getLocalizedValue<T>(from: Localized<T>, locale?: string): T {
     return from
   }
 }
+
+export function getLanguageName(locale: string, displayLocale = 'en'): string | undefined {
+  const displayNames = new Intl.DisplayNames([displayLocale], { type: 'language' })
+  return displayNames.of(locale)
+}

@@ -31,7 +31,7 @@ export const config: Config = {
       },
       target: {
         type: 'slug',
-        slug: '/people'
+        slug: '/people/'
       }
     },
     {
@@ -44,7 +44,7 @@ export const config: Config = {
       },
       target: {
         type: 'slug',
-        slug: '/works'
+        slug: '/works/'
       }
     },
     {

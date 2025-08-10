@@ -5,13 +5,15 @@ import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.v
 import Overview from '@/components/attachments/index/Overview.mdx'
 
 interface Props {
+  title?: string
+  description?: string
   navigationLabel?: string
 }
 
-const { navigationLabel } = Astro.props
+const { title, description, navigationLabel } = Astro.props
 ---
 
-<IndexLayout slug="/" navigationLabel={navigationLabel}>
+<IndexLayout title={title} description={description} navigationLabel={navigationLabel}>
   <Fragment slot="background">
     <div class="background">
       <MerryGoRound client:only="vue" />

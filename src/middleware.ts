@@ -1,16 +1,11 @@
-import {
-  getRelativeLocaleUrl,
-  middleware,
-  redirectToDefaultLocale,
-  redirectToFallback
-} from 'astro:i18n'
+import { getRelativeLocaleUrl, middleware } from 'astro:i18n'
 import { defineMiddleware, sequence } from 'astro:middleware'
 import { config } from './config'
 
 export const redirectWithLocalMiddleware = defineMiddleware(async (context, next) => {
-  let locale = context.currentLocale
-  let defaultLocale = config.siteInfo.defaultLocale
-  let path = context.url.pathname
+  const locale = context.currentLocale
+  const defaultLocale = config.siteInfo.defaultLocale
+  const path = context.url.pathname
 
   function matches(locale?: string): boolean {
     if (locale == null) {
@@ -27,8 +22,24 @@ export const redirectWithLocalMiddleware = defineMiddleware(async (context, next
   }
 })
 
+export const sluggingMiddleware = defineMiddleware(async (context, next) => {
+  const locale = context.currentLocale
+  const path = context.url.pathname
+
+  if (locale != null) {
+    context.locals.root = getRelativeLocaleUrl(locale, '/')
+    context.locals.slug = path.replace(new RegExp(`^/${locale}`), '')
+  } else {
+    context.locals.root = '/'
+    context.locals.slug = path
+  }
+
+  return await next()
+})
+
 export const onRequest = sequence(
   redirectWithLocalMiddleware,
+  sluggingMiddleware,
   middleware({
     prefixDefaultLocale: true,
     redirectToDefaultLocale: false,

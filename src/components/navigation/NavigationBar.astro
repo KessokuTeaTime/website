@@ -6,28 +6,24 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 
 interface Props {
   label?: string
-  slug?: string
 }
 
-const { label = 'Navigation Menu', slug } = Astro.props
-
-function getRootHref(): string {
-  if (Astro.currentLocale != null) {
-    return getRelativeLocaleUrl(Astro.currentLocale, '/')
-  } else {
-    return '/'
-  }
-}
+const { label = 'Navigation Menu' } = Astro.props
 ---
 
 <div class="nav-container">
   <div class="left">
-    <div class="logo">
-      <a href={getRootHref()}><Logo /></a>
-    </div>
+    <di class="logo">
+      <a href={Astro.locals.root}><Logo /></a>
+    </di>
   </div>
   <div class="center disable-scrollbars">
-    <NavigationMenu client:load locale={Astro.currentLocale} label={label} slug={slug} />
+    <NavigationMenu
+      client:load
+      locale={Astro.currentLocale}
+      label={label}
+      slug={Astro.locals.slug}
+    />
   </div>
   <div class="right">
     <div class="bars">
