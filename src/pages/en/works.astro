@@ -1,5 +1,7 @@
 ---
 import Parent from '../works.astro'
+
+const props = Astro.props
 ---
 
-<Parent />
+<Parent {...props} />

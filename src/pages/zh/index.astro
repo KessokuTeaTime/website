@@ -1,15 +1,8 @@
 ---
 import Parent from '../index.astro'
-import Footer from '@/components/Footer.astro'
 import Overview from '@/components/attachments/index/zh/Overview.mdx'
-import FooterContent from '@/components/attachments/zh/FooterContent.mdx'
-import FooterFootnote from '@/components/attachments/zh/FooterFootnote.mdx'
 ---
 
-<Parent navigationLabel="导航菜单">
+<Parent>
   <Overview />
-  <Footer slot="footer">
-    <FooterContent slot="content" />
-    <FooterFootnote slot="footnote" />
-  </Footer>
 </Parent>

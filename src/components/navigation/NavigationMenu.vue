@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import NavigationPalette from './NavigationPalette.vue'
+import { ref, computed } from 'vue'
 import { config } from '@/config'
 import { getLocalizedValue } from '@/utils/i18n'
 

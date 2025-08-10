@@ -1,14 +1,15 @@
 ---
 import IndexLayout from '@/layouts/IndexLayout.astro'
 import { makeTitle } from '@/config'
+import { marked } from 'marked'
+import { t } from 'astro-i18n'
 ---
 
 <IndexLayout title={makeTitle('404')} description="Page not found">
   <div class="error-container">
-    <slot>
-      <h1>404</h1>
-      <p>Not our band.</p>
-    </slot>
+    <slot
+      set:html={marked.parse(t('page.404.content', undefined, { locale: Astro.currentLocale }))}
+    />
   </div>
 </IndexLayout>
 

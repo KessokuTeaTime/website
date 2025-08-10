@@ -6,11 +6,10 @@ import Footer from '@/components/Footer.astro'
 interface Props {
   title?: string
   description?: string
-  navigationLabel?: string
   hasFooter?: boolean
 }
 
-const { title, description, navigationLabel, hasFooter = true } = Astro.props
+const { title, description, hasFooter = true } = Astro.props
 ---
 
 <Layout title={title} description={description}>
@@ -21,7 +20,7 @@ const { title, description, navigationLabel, hasFooter = true } = Astro.props
     <div class="page-container">
       <header transition:name="header">
         <nav>
-          <NavigationBar label={navigationLabel} />
+          <NavigationBar />
         </nav>
       </header>
       <div class="content-container" transition:name="content">

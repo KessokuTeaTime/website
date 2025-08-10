@@ -1,8 +1,8 @@
 ---
 import Logo from '@/assets/logo.svg'
-import FooterContent from '@/components/attachments/FooterContent.mdx'
-import FooterFootnote from '@/components/attachments/FooterFootnote.mdx'
 import { commitHash, commitHashShort } from '@/components/consts/CommitHash.astro'
+import { t } from 'astro-i18n'
+import { marked } from 'marked'
 ---
 
 <div class="container">
@@ -10,10 +10,19 @@ import { commitHash, commitHashShort } from '@/components/consts/CommitHash.astr
     <Logo />
   </div>
   <div class="content">
-    <slot name="content"><FooterContent /></slot>
+    <p>&copy;{new Date().getFullYear()}&emsp;結束ティータイム</p>
+    <p
+      set:html={marked.parse(
+        t('component.footer.content', undefined, { locale: Astro.currentLocale })
+      )}
+    />
   </div>
   <div class="footnote">
-    <slot name="footnote"><FooterFootnote /></slot>
+    <p
+      set:html={marked.parse(
+        t('component.footer.footnote', undefined, { locale: Astro.currentLocale })
+      )}
+    />
     <a
       href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`}
       target="_blank"
