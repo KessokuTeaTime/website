@@ -155,6 +155,7 @@ function getPageName(pageInfo: PageInfo): string {
   overflow: auto;
   display: flex;
   flex-direction: row-reverse;
+  align-items: baseline;
   gap: v-bind(gapSemantic);
 
   @include layout(desktop) {
@@ -182,13 +183,19 @@ function getPageName(pageInfo: PageInfo): string {
   }
 }
 
-.target[type='link']::after {
-  content: '↗';
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-variant-ligatures: none;
-  color: var(--color-text-soft);
-  margin-right: 2px;
+.target {
+  display: flex;
+  height: fit-content;
+  width: fit-content;
+
+  &[type='link']::after {
+    content: '↗';
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-variant-ligatures: none;
+    color: var(--color-text-soft);
+    margin-right: 2px;
+  }
 }
 
 button,
