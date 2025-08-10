@@ -359,6 +359,32 @@ blockquote {
   }
 }
 
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  display: inline-block;
+  background: none;
+  border: 1px solid var(--color-selection);
+  padding: 2px 3px;
+  margin: -2px 0;
+  font: inherit;
+  color: inherit;
+  opacity: inherit;
+  line-height: normal;
+
+  outline: none;
+  transition:
+    border var(--duration-fast) ease,
+    background var(--duration-fast) ease;
+
+  &:hover {
+    background: var(--color-selection);
+    border: 1px solid transparent;
+  }
+}
+
 table {
   table-layout: fixed;
   width: 100%;

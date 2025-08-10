@@ -2,7 +2,10 @@
 import IndexLayout from '@/layouts/IndexLayout.astro'
 import Footer from '@/components/Footer.astro'
 import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.vue'
+import LanguageSelector from '@/components/navigation/LanguageSelector.astro'
 import Overview from '@/components/attachments/index/Overview.mdx'
+import { t } from 'astro-i18n'
+import { marked } from 'marked'
 
 interface Props {
   title?: string
@@ -14,13 +17,30 @@ const { title, description } = Astro.props
 
 <IndexLayout title={title} description={description}>
   <Fragment slot="background">
-    <div class="background">
-      <MerryGoRound client:only="vue" />
+    <div class="background" transition:name="background">
+      <MerryGoRound client:idle />
     </div>
   </Fragment>
   <Fragment>
     <div class="merry-go-round-placeholder"></div>
     <div class="content-container prose">
+      <h5 class="language-selector">
+        <p
+          set:html={marked.parse(
+            t('page.index.language_selector.pre', undefined, {
+              locale: Astro.currentLocale
+            })
+          )}
+        />
+        <LanguageSelector />
+        <p
+          set:html={marked.parse(
+            t('page.index.language_selector.post', undefined, {
+              locale: Astro.currentLocale
+            })
+          )}
+        />
+      </h5>
       <slot>
         <Overview />
       </slot>
@@ -57,5 +77,20 @@ const { title, description } = Astro.props
       var(--color-background) 4rem,
       var(--color-background) 100%
     );
+  }
+
+  .language-selector {
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    align-items: baseline;
+
+    color: var(--color-text-soft);
+    padding-top: 4rem;
+    margin-bottom: -2.75rem;
+
+    & > * {
+      display: inline-block;
+    }
   }
 </style>

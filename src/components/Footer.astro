@@ -1,5 +1,6 @@
 ---
 import Logo from '@/assets/logo.svg'
+import LanguageSelector from './navigation/LanguageSelector.astro'
 import { commitHash, commitHashShort } from '@/components/consts/CommitHash.astro'
 import { t } from 'astro-i18n'
 import { marked } from 'marked'
@@ -18,11 +19,19 @@ import { marked } from 'marked'
     />
   </div>
   <div class="footnote">
-    <p
-      set:html={marked.parse(
-        t('component.footer.footnote', undefined, { locale: Astro.currentLocale })
-      )}
-    />
+    <div class="flatten">
+      <p
+        set:html={marked.parse(
+          t('component.footer.footnote.pre', undefined, { locale: Astro.currentLocale })
+        )}
+      />
+      <LanguageSelector />
+      <p
+        set:html={marked.parse(
+          t('component.footer.footnote.post', undefined, { locale: Astro.currentLocale })
+        )}
+      />
+    </div>
     <a
       href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`}
       target="_blank"
@@ -86,6 +95,17 @@ import { marked } from 'marked'
     @include layout(desktop) {
       flex-direction: column-reverse;
       align-items: flex-end;
+    }
+  }
+
+  .flatten {
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    align-items: baseline;
+
+    & > * {
+      display: inline-block;
     }
   }
 

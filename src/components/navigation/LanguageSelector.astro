@@ -1,0 +1,43 @@
+---
+import { getLanguageName } from '@/utils/i18n'
+import { getRelativeLocaleUrl, getRelativeLocaleUrlList } from 'astro:i18n'
+---
+
+<select name="language selector" id="language-selector">
+  {
+    getRelativeLocaleUrlList()
+      .toSorted()
+      .map((s) => s.replaceAll('/', ''))
+      .map((locale) => {
+        const path = getRelativeLocaleUrl(locale, Astro.locals.slug)
+        return (
+          <option value={path} selected={locale === Astro.currentLocale}>
+            {getLanguageName(locale, locale)}
+          </option>
+        )
+      })
+  }
+</select>
+
+<script>
+  import { navigate } from 'astro:transitions/client'
+
+  document.addEventListener('astro:page-load', onPageLoad)
+
+  function onPageLoad() {
+    const languageSelectors = document.querySelectorAll(
+      '#language-selector'
+    ) as NodeListOf<HTMLSelectElement>
+    languageSelectors.forEach((selector) => selector.addEventListener('change', onLanguageChange))
+  }
+
+  function onLanguageChange(event: Event) {
+    console.log(event)
+    const target = event.target as HTMLSelectElement
+    const path = target.value
+    console.log(path)
+    if (path) {
+      navigate(path)
+    }
+  }
+</script>

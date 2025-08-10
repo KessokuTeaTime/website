@@ -74,7 +74,7 @@ const pageName = computed(() => {
     to right,
     transparent 0%,
     white 2rem,
-    white calc(100% - 4px),
+    white calc(100% - 2px),
     transparent 100%
   );
 
