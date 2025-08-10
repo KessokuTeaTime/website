@@ -7,10 +7,11 @@ interface Props {
   title?: string
   description?: string
   slug?: string
+  navigationLabel?: string
   hasFooter?: boolean
 }
 
-const { title, description, slug, hasFooter = true } = Astro.props
+const { title, description, slug, navigationLabel, hasFooter = true } = Astro.props
 ---
 
 <Layout title={title} description={description}>
@@ -21,7 +22,7 @@ const { title, description, slug, hasFooter = true } = Astro.props
     <div class="page-container">
       <header transition:name="header">
         <nav>
-          <NavigationBar slug={slug} />
+          <NavigationBar label={navigationLabel} slug={slug} />
         </nav>
       </header>
       <div class="content-container" transition:name="content">

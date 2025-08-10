@@ -9,10 +9,9 @@ const props = defineProps({
     type: String,
     required: false
   },
-  fallbackLabel: {
+  label: {
     type: String,
-    required: false,
-    default: 'Navigation Menu'
+    required: true
   },
   slug: {
     type: String,
@@ -23,7 +22,7 @@ const props = defineProps({
 const isExpanded = ref(false)
 
 const pageInfo = computed(() => {
-  if (!props.slug || !config.pageInfo) return undefined
+  if (props.slug == null || config.pageInfo == null) return undefined
 
   return config.pageInfo.find((info) => {
     if (info.target.type == 'slug') {
@@ -39,7 +38,7 @@ const pageName = computed(() => {
   if (name) {
     return getLocalizedValue(name, props.locale)
   } else {
-    return props.fallbackLabel
+    return props.label
   }
 })
 </script>

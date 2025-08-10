@@ -6,7 +6,7 @@
       .getPropertyValue('--color-background')
       .trim()
     const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta && color) {
+    if (meta != null && color != null) {
       meta.setAttribute('content', color)
     }
   }

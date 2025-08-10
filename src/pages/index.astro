@@ -3,9 +3,15 @@ import IndexLayout from '@/layouts/IndexLayout.astro'
 import Footer from '@/components/Footer.astro'
 import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.vue'
 import Overview from '@/components/attachments/index/Overview.mdx'
+
+interface Props {
+  navigationLabel?: string
+}
+
+const { navigationLabel } = Astro.props
 ---
 
-<IndexLayout slug="/">
+<IndexLayout slug="/" navigationLabel={navigationLabel}>
   <Fragment slot="background">
     <div class="background">
       <MerryGoRound client:only="vue" />

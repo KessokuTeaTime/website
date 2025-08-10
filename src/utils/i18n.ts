@@ -6,9 +6,9 @@ export type Localized<T> =
     }
 
 export function getLocalizedValue<T>(from: Localized<T>, locale?: string): T {
-  if (typeof from === 'object' && from && 'fallback' in from) {
+  if (typeof from === 'object' && from != null && 'fallback' in from) {
     let fallback = from.fallback
-    if (locale && from.localizations) {
+    if (locale != null && from.localizations != null) {
       let result = from.localizations[locale] ?? fallback
       return result
     } else {

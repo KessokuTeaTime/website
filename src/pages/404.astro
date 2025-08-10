@@ -5,8 +5,10 @@ import { makeTitle } from '@/config'
 
 <IndexLayout title={makeTitle('404')} description="Page not found">
   <div class="error-container">
-    <h1>404</h1>
-    <p>Not our band.</p>
+    <slot>
+      <h1>404</h1>
+      <p>Not our band.</p>
+    </slot>
   </div>
 </IndexLayout>
 

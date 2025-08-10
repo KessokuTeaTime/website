@@ -2,28 +2,32 @@
 import ColoredBars from '@/components/decorations/ColoredBars.vue'
 import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 
 interface Props {
-  fallbackLabel?: string
+  label?: string
   slug?: string
 }
 
-const { fallbackLabel = 'Navigation Menu', slug } = Astro.props
+const { label = 'Navigation Menu', slug } = Astro.props
+
+function getRootHref(): string {
+  if (Astro.currentLocale != null) {
+    return getRelativeLocaleUrl(Astro.currentLocale, '/')
+  } else {
+    return '/'
+  }
+}
 ---
 
 <div class="nav-container">
   <div class="left">
     <div class="logo">
-      <a href="/"><Logo /></a>
+      <a href={getRootHref()}><Logo /></a>
     </div>
   </div>
   <div class="center disable-scrollbars">
-    <NavigationMenu
-      client:load
-      locale={Astro.currentLocale}
-      fallbackLabel={fallbackLabel}
-      slug={slug}
-    />
+    <NavigationMenu client:load locale={Astro.currentLocale} label={label} slug={slug} />
   </div>
   <div class="right">
     <div class="bars">

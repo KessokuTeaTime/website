@@ -34,7 +34,7 @@ const gapSemantic = '1rem'
 const linksContainer = useTemplateRef('links-container')
 const links = useTemplateRef('links')
 const sortedLinks = computed(() => {
-  if (links.value) {
+  if (links.value != null) {
     return Array.from(links.value).sort((a, b) => {
       const indexA = parseInt(a.dataset.index || '0')
       const indexB = parseInt(b.dataset.index || '0')
@@ -46,7 +46,7 @@ const sortedLinks = computed(() => {
 })
 
 const leadingLinkWidth = computed(() => {
-  if (sortedLinks.value && sortedLinks.value.length > 0) {
+  if (sortedLinks.value != null && sortedLinks.value.length > 0) {
     return sortedLinks.value[0].clientWidth
   } else {
     return 0
@@ -57,7 +57,7 @@ const leadingLinkWidthSemantic = computed(() => {
 })
 
 const trailingLinkWidth = computed(() => {
-  if (sortedLinks.value && sortedLinks.value.length > 0) {
+  if (sortedLinks.value != null && sortedLinks.value.length > 0) {
     return sortedLinks.value[sortedLinks.value.length - 1].clientWidth
   } else {
     return 0
@@ -68,7 +68,7 @@ const trailingLinkWidthSemantic = computed(() => {
 })
 
 const selectedIndex = computed(() => {
-  if (props.pageInfo) {
+  if (props.pageInfo != null) {
     return config.pageInfo.indexOf(props.pageInfo)
   } else {
     return undefined
@@ -78,7 +78,7 @@ const alignmentIndex = computed(() => {
   return selectedIndex.value ?? 0
 })
 const alignmentElement = computed(() => {
-  if (links.value && links.value.length > 0) {
+  if (links.value != null && links.value.length > 0) {
     return links.value[alignmentIndex.value]
   } else {
     return undefined
@@ -94,24 +94,22 @@ onMounted(() => {
 // Functions
 
 function getHref(pageInfo: PageInfo): string {
-  let path = (function () {
-    switch (pageInfo.target.type) {
-      case 'slug':
-        return pageInfo.target.slug
-      case 'link':
-        return pageInfo.target.link
-    }
-  })()
+  switch (pageInfo.target.type) {
+    case 'slug':
+      let path = pageInfo.target.slug
 
-  if (props.locale) {
-    return getRelativeLocaleUrl(props.locale, path)
-  } else {
-    return path
+      if (props.locale != null) {
+        return getRelativeLocaleUrl(props.locale, path)
+      } else {
+        return path
+      }
+    case 'link':
+      return pageInfo.target.link
   }
 }
 
 function scrollToAlignmentElement() {
-  if (linksContainer.value && alignmentElement.value && alignmentIndex.value > 0) {
+  if (linksContainer.value != null && alignmentElement.value != null && alignmentIndex.value > 0) {
     const gapsWidth = alignmentIndex.value * remToPx(1)
     const linksWidth = sortedLinks.value
       .slice(0, alignmentIndex.value)
