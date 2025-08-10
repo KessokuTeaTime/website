@@ -1,0 +1,15 @@
+---
+import Parent from '../index.astro'
+import Footer from '@/components/Footer.astro'
+import Overview from '@/components/attachments/index/en/Overview.mdx'
+import FooterContent from '@/components/attachments/en/FooterContent.mdx'
+import FooterFootnote from '@/components/attachments/en/FooterFootnote.mdx'
+---
+
+<Parent locale="en">
+  <Overview />
+  <Footer slot="footer">
+    <FooterContent slot="content" />
+    <FooterFootnote slot="footnote" />
+  </Footer>
+</Parent>

@@ -10,10 +10,10 @@ import { commitHash, commitHashShort } from '@/components/consts/CommitHash.astr
     <Logo />
   </div>
   <div class="content">
-    <FooterContent />
+    <slot name="content"><FooterContent /></slot>
   </div>
   <div class="footnote">
-    <FooterFootnote />
+    <slot name="footnote"><FooterFootnote /></slot>
     <a
       href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`}
       target="_blank"

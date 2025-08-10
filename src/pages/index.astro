@@ -1,10 +1,17 @@
 ---
-import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.vue'
 import IndexLayout from '@/layouts/IndexLayout.astro'
+import Footer from '@/components/Footer.astro'
+import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.vue'
 import Overview from '@/components/attachments/index/Overview.mdx'
+
+interface Props {
+  locale?: string
+}
+
+const { locale } = Astro.props
 ---
 
-<IndexLayout slug="/">
+<IndexLayout locale={locale} slug="/">
   <Fragment slot="background">
     <div class="background">
       <MerryGoRound client:only="vue" />
@@ -13,9 +20,14 @@ import Overview from '@/components/attachments/index/Overview.mdx'
   <Fragment>
     <div class="merry-go-round-placeholder"></div>
     <div class="content-container prose">
-      <Overview />
+      <slot>
+        <Overview />
+      </slot>
     </div>
   </Fragment>
+  <slot slot="footer" name="footer">
+    <Footer />
+  </slot>
 </IndexLayout>
 
 <style lang="scss">

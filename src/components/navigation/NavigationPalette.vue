@@ -5,10 +5,16 @@ import { config } from '@/config'
 import { useWindowSize } from '@vueuse/core'
 import { layoutWidth } from '@/utils/consts'
 import { remToPx } from '@/utils/conversion'
+import { getLocalizedValue } from '@/utils/i18n'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 
 // Definitions
 
 const props = defineProps({
+  locale: {
+    type: String,
+    required: false
+  },
   pageInfo: {
     type: Object as PropType<PageInfo>,
     required: false
@@ -88,11 +94,19 @@ onMounted(() => {
 // Functions
 
 function getHref(pageInfo: PageInfo): string {
-  switch (pageInfo.target.type) {
-    case 'slug':
-      return pageInfo.target.slug
-    case 'link':
-      return pageInfo.target.link
+  let path = (function () {
+    switch (pageInfo.target.type) {
+      case 'slug':
+        return pageInfo.target.slug
+      case 'link':
+        return pageInfo.target.link
+    }
+  })()
+
+  if (props.locale) {
+    return getRelativeLocaleUrl(props.locale, path)
+  } else {
+    return path
   }
 }
 
@@ -110,6 +124,10 @@ function scrollToAlignmentElement() {
     }
   }
 }
+
+function getPageName(pageInfo: PageInfo): string {
+  return getLocalizedValue(pageInfo.name, props.locale)
+}
 </script>
 
 <template>
@@ -124,9 +142,9 @@ function scrollToAlignmentElement() {
       :type="pageInfo.target.type"
     >
       <button v-if="index == selectedIndex" class="selected" @click="$emit('back')">
-        {{ pageInfo.name }}
+        {{ getPageName(pageInfo) }}
       </button>
-      <a :href="getHref(pageInfo)" v-else>{{ pageInfo.name }}</a>
+      <a :href="getHref(pageInfo)" v-else>{{ getPageName(pageInfo) }}</a>
     </div>
     <div spacer="trailing"></div>
   </div>
@@ -168,7 +186,7 @@ function scrollToAlignmentElement() {
 
 .target[type='link']::after {
   content: '↗';
-  display: inline;
+  display: inline-block;
   font-family: var(--font-mono);
   font-variant-ligatures: none;
   color: var(--color-text-soft);

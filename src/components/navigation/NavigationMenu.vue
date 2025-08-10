@@ -2,8 +2,18 @@
 import { ref, computed } from 'vue'
 import NavigationPalette from './NavigationPalette.vue'
 import { config } from '@/config'
+import { getLocalizedValue } from '@/utils/i18n'
 
 const props = defineProps({
+  locale: {
+    type: String,
+    required: false
+  },
+  fallbackLabel: {
+    type: String,
+    required: false,
+    default: 'Navigation Menu'
+  },
   slug: {
     type: String,
     required: false
@@ -23,15 +33,30 @@ const pageInfo = computed(() => {
     }
   })
 })
+
+const pageName = computed(() => {
+  let name = pageInfo.value?.name
+  if (name) {
+    return getLocalizedValue(name, props.locale)
+  } else {
+    return props.fallbackLabel
+  }
+})
 </script>
 
 <template>
   <div class="menu-container" :class="{ masked: isExpanded }">
     <Transition name="fade">
       <button v-if="!isExpanded" @click="isExpanded = true">
-        {{ pageInfo?.name ?? 'Navigation Menu' }}
+        {{ pageName }}
       </button>
-      <NavigationPalette :page-info="pageInfo" v-else class="palette" @back="isExpanded = false" />
+      <NavigationPalette
+        :locale="locale"
+        :page-info="pageInfo"
+        v-else
+        class="palette"
+        @back="isExpanded = false"
+      />
     </Transition>
   </div>
 </template>

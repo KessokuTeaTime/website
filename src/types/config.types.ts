@@ -1,3 +1,5 @@
+import type { Localized } from '@/utils/i18n'
+
 export interface SiteInfo {
   title: string
   description: string
@@ -19,7 +21,7 @@ export interface PageInfoTargetLink extends PageInfoTarget {
 }
 
 export interface PageInfo {
-  name: string
+  name: Localized<string>
   target: PageInfoTargetSlug | PageInfoTargetLink
 }
 

@@ -8,35 +8,65 @@ export const config: Config = {
   },
   pageInfo: [
     {
-      name: 'About',
+      name: {
+        fallback: 'About',
+        localizations: {
+          en: 'About',
+          zh: '关于'
+        }
+      },
       target: {
         type: 'slug',
         slug: '/'
       }
     },
     {
-      name: 'People',
+      name: {
+        fallback: 'People',
+        localizations: {
+          en: 'People',
+          zh: '成员'
+        }
+      },
       target: {
         type: 'slug',
         slug: '/people'
       }
     },
     {
-      name: 'Works',
+      name: {
+        fallback: 'Works',
+        localizations: {
+          en: 'Works',
+          zh: '作品'
+        }
+      },
       target: {
         type: 'slug',
         slug: '/works'
       }
     },
     {
-      name: 'Blog',
+      name: {
+        fallback: 'Blog',
+        localizations: {
+          en: 'Blog',
+          zh: '博客'
+        }
+      },
       target: {
         type: 'link',
         link: 'https://blog.kessokuteatime.work'
       }
     },
     {
-      name: 'Documentation',
+      name: {
+        fallback: 'Documentation',
+        localizations: {
+          en: 'Documentation',
+          zh: '文档'
+        }
+      },
       target: {
         type: 'link',
         link: 'https://docs.kessokuteatime.work'
