@@ -4,12 +4,11 @@ import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
 
 interface Props {
-  locale?: string
   fallbackLabel?: string
   slug?: string
 }
 
-const { locale, fallbackLabel = 'Navigation Menu', slug } = Astro.props
+const { fallbackLabel = 'Navigation Menu', slug } = Astro.props
 ---
 
 <div class="nav-container">
@@ -19,7 +18,12 @@ const { locale, fallbackLabel = 'Navigation Menu', slug } = Astro.props
     </div>
   </div>
   <div class="center disable-scrollbars">
-    <NavigationMenu client:load locale={locale} fallbackLabel={fallbackLabel} slug={slug} />
+    <NavigationMenu
+      client:load
+      locale={Astro.currentLocale}
+      fallbackLabel={fallbackLabel}
+      slug={slug}
+    />
   </div>
   <div class="right">
     <div class="bars">

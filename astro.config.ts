@@ -6,25 +6,12 @@ import mdx from '@astrojs/mdx'
 export default defineConfig({
   integrations: [vue(), mdx()],
   i18n: {
-    locales: [
-      {
-        path: 'en',
-        codes: ['en']
-      },
-      {
-        path: 'zh',
-        codes: ['zh']
-      }
-    ],
+    locales: ['en', 'zh'],
     defaultLocale: 'en',
     fallback: {
       zh: 'en'
     },
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: true,
-      fallbackType: 'rewrite'
-    }
+    routing: 'manual'
   },
   vite: {
     resolve: {

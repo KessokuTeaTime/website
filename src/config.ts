@@ -4,7 +4,8 @@ export const config: Config = {
   siteInfo: {
     title: '結束ティータイム',
     description: '下北沢で本当人気なバンド。',
-    website: 'https://kessokuteatime.work'
+    website: 'https://kessokuteatime.work',
+    defaultLocale: 'en'
   },
   pageInfo: [
     {

@@ -4,14 +4,13 @@ import Layout from './Layout.astro'
 import Footer from '@/components/Footer.astro'
 
 interface Props {
-  locale?: string
   title?: string
   description?: string
   slug?: string
   hasFooter?: boolean
 }
 
-const { locale, title, description, slug, hasFooter = true } = Astro.props
+const { title, description, slug, hasFooter = true } = Astro.props
 ---
 
 <Layout title={title} description={description}>
@@ -22,7 +21,7 @@ const { locale, title, description, slug, hasFooter = true } = Astro.props
     <div class="page-container">
       <header transition:name="header">
         <nav>
-          <NavigationBar locale={locale} slug={slug} />
+          <NavigationBar slug={slug} />
         </nav>
       </header>
       <div class="content-container" transition:name="content">

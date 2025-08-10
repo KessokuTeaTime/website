@@ -4,6 +4,7 @@ export interface SiteInfo {
   title: string
   description: string
   website: string
+  defaultLocale?: string
 }
 
 export interface PageInfoTarget {
