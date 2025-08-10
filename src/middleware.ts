@@ -1,6 +1,7 @@
 import { getRelativeLocaleUrl, middleware } from 'astro:i18n'
 import { defineMiddleware, sequence } from 'astro:middleware'
 import { config } from './config'
+import { useAstroI18n } from 'astro-i18n'
 
 export const sluggingMiddleware = defineMiddleware(async (context, next) => {
   const locale = context.currentLocale
@@ -24,6 +25,7 @@ export const sluggingMiddleware = defineMiddleware(async (context, next) => {
 })
 
 export const onRequest = sequence(
+  useAstroI18n(),
   sluggingMiddleware,
   middleware({
     prefixDefaultLocale: true,

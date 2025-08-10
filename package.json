@@ -26,6 +26,7 @@
 		"esbuild": "^0.25.8",
 		"marked": "^16.1.2",
 		"tsx": "^4.20.3",
+		"vite-plugin-devtools-json": "^0.4.1",
 		"vue": "^3.5.18"
 	},
 	"devDependencies": {
