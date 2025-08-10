@@ -46,7 +46,7 @@ export const sluggingMiddleware = defineMiddleware(async (context, next) => {
 
 export const onRequest = sequence(
   useAstroI18n(),
-  redirectWithLocalMiddleware,
+  // redirectWithLocalMiddleware,
   sluggingMiddleware,
   middleware({
     prefixDefaultLocale: true,
