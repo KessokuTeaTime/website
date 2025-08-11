@@ -22,6 +22,14 @@
         "pre": "用",
         "post": "阅读"
       }
+    },
+    "people": {
+      "title": "成员",
+      "description": "{# #}"
+    },
+    "works": {
+      "title": "作品",
+      "description": "{# #}"
     }
   }
 }

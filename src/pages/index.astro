@@ -25,21 +25,9 @@ const { title, description } = Astro.props
     <div class="merry-go-round-placeholder"></div>
     <div class="content-container prose">
       <h5 class="language-selector">
-        <p
-          set:html={marked.parse(
-            t('page.index.language_selector.pre', undefined, {
-              locale: Astro.currentLocale
-            })
-          )}
-        />
+        <p set:html={marked.parse(t('page.index.language_selector.pre'))} />
         <LanguageSelector />
-        <p
-          set:html={marked.parse(
-            t('page.index.language_selector.post', undefined, {
-              locale: Astro.currentLocale
-            })
-          )}
-        />
+        <p set:html={marked.parse(t('page.index.language_selector.post'))} />
       </h5>
       <slot>
         <Overview />

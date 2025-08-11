@@ -9,7 +9,7 @@
       "content": "[Open source](https://github.com/KessokuTeaTime/website) · [GNU Public License v3.0](https://github.com/KessokuTeaTime/website/blob/main/LICENSE) · Self-hosted",
       "footnote": {
         "pre": "Built using [Astro](https://astro.build) · Read in",
-        "post": "&ZeroWidthSpace;"
+        "post": "{# #}"
       }
     }
   },
@@ -20,8 +20,16 @@
     "index": {
       "language_selector": {
         "pre": "Read in",
-        "post": "&ZeroWidthSpace;"
+        "post": "{# #}"
       }
+    },
+    "people": {
+      "title": "People",
+      "description": "{# #}"
+    },
+    "works": {
+      "title": "Works",
+      "description": "{# #}"
     }
   }
 }

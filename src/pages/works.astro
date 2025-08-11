@@ -1,19 +1,15 @@
 ---
-import { makeTitle } from '@/config'
 import IndexLayout from '@/layouts/IndexLayout.astro'
-
-interface Props {
-  title?: string
-  description?: string
-}
-
-const { title, description } = Astro.props
+import { makeTitle } from '@/config'
+import { t } from 'astro-i18n'
 ---
 
-<IndexLayout title={title ?? makeTitle('Works')} , description={description}>
+<IndexLayout title={makeTitle(t('page.works.title'))} , description={t('page.works.description')}>
   <Fragment>
     <div class="content-container prose">
-      <slot />
+      <slot>
+        <h1>Works</h1>
+      </slot>
     </div>
   </Fragment>
 </IndexLayout>
