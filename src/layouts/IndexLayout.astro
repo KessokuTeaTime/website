@@ -7,9 +7,10 @@ interface Props {
   title?: string
   description?: string
   hasFooter?: boolean
+  fallbackNavigationLabel?: string
 }
 
-const { title, description, hasFooter = true } = Astro.props
+const { title, description, hasFooter = true, fallbackNavigationLabel } = Astro.props
 ---
 
 <Layout title={title} description={description}>
@@ -20,7 +21,7 @@ const { title, description, hasFooter = true } = Astro.props
     <div class="page-container">
       <header transition:name="header">
         <nav>
-          <NavigationBar />
+          <NavigationBar fallbackLabel={fallbackNavigationLabel} />
         </nav>
       </header>
       <div class="content-container" transition:name="content">

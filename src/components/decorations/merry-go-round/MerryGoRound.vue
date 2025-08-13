@@ -107,7 +107,7 @@ function stopWindowMoveDetection() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .merry-go-round-container {
   width: 100%;
   height: v-bind(heightSemantic);

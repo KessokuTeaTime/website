@@ -30,6 +30,9 @@
     "works": {
       "title": "Works",
       "description": "{# #}"
+    },
+    "wordle": {
+      "fallback_navigation_label": "Wordle"
     }
   }
 }

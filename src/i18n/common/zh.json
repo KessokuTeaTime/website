@@ -30,6 +30,9 @@
     "works": {
       "title": "作品",
       "description": "{# #}"
+    },
+    "wordle": {
+      "fallback_navigation_label": "猜词游戏"
     }
   }
 }

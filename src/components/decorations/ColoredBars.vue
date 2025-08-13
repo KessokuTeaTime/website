@@ -7,7 +7,7 @@
   ></div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .block {
   flex-grow: 1;
   background-color: var(--tint);

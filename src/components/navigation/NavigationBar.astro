@@ -3,6 +3,12 @@ import ColoredBars from '@/components/decorations/ColoredBars.vue'
 import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
 import { t } from 'astro-i18n'
+
+interface Props {
+  fallbackLabel?: string
+}
+
+const { fallbackLabel } = Astro.props
 ---
 
 <div class="nav-container">
@@ -15,9 +21,10 @@ import { t } from 'astro-i18n'
     <NavigationMenu
       client:load
       locale={Astro.currentLocale}
-      label={t('component.navigation.navigation_menu.label', undefined, {
-        locale: Astro.currentLocale
-      })}
+      label={fallbackLabel ??
+        t('component.navigation.navigation_menu.label', undefined, {
+          locale: Astro.currentLocale
+        })}
       slug={Astro.locals.slug}
     />
   </div>

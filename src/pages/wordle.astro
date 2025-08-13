@@ -1,0 +1,30 @@
+---
+import { makeTitle } from '@/config'
+import IndexLayout from '@/layouts/IndexLayout.astro'
+import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
+import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
+import { t } from 'astro-i18n'
+---
+
+<IndexLayout
+  title={makeTitle('Wordle')}
+  fallbackNavigationLabel={t('page.wordle.fallback_navigation_label', undefined, {
+    locale: Astro.currentLocale
+  })}
+>
+  <div class="content-container">
+    <WordlePanel />
+    <WordleKeyboard />
+  </div>
+</IndexLayout>
+
+<style lang="scss">
+  .content-container {
+    padding: 6rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+  }
+</style>
