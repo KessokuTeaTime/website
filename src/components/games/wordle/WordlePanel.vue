@@ -4,7 +4,7 @@ import type { Word } from '@/utils/wordle'
 const props = defineProps<{
   words: Word[]
   input: string
-  remainingTurns: number
+  remainingTries: number
 }>()
 </script>
 
@@ -26,7 +26,9 @@ const props = defineProps<{
         {{ input[i - 1] }}
       </div>
     </div>
-    <div v-for="i in remainingTurns" class="wordle-row placeholder" />
+    <div v-for="i in remainingTries" class="remaining-try" :data-try="i">
+      <div class="placeholder" />
+    </div>
   </div>
 </template>
 
@@ -34,6 +36,7 @@ const props = defineProps<{
 .wordle-panel {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: min-content;
   height: min-content;
@@ -52,10 +55,17 @@ const props = defineProps<{
   height: min-content;
   margin: 4px;
   border-radius: 8px;
+}
 
-  &.placeholder {
+.remaining-try {
+  width: 100%;
+  height: 16px;
+  padding: 4px;
+
+  .placeholder {
     width: 100%;
-    height: 12px;
+    height: 100%;
+    border-radius: 8px;
     background: var(--color-background-soft);
   }
 }

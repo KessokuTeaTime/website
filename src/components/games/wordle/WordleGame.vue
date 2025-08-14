@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
 import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
-import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useSound } from '@vueuse/sound'
 import typeSoundFile from '/sounds/keyboard-type-1.mp3'
 import pressSoundFile from '/sounds/button-press-1.mp3'
-import { keyboardRows } from '@/utils/wordle'
+import { keyboardRows, match, type Word } from '@/utils/wordle'
 
 const typeDownSound = useSound(typeSoundFile, {
   sprite: {
@@ -28,13 +28,29 @@ const pressUpSound = useSound(pressSoundFile, {
   }
 })
 
+const solution = 'memes'
+
 const input = ref('')
+const words = ref<Word[]>([])
 
 const canDelete = computed(() => {
   return input.value.length > 0
 })
 const canSubmit = computed(() => {
   return input.value.length >= 5
+})
+const keys = computed(() => {
+  function find(matches: 'yes' | 'partial' | 'no'): string[] {
+    return words.value.flatMap((letters) =>
+      letters.filter((letter) => letter.matches == matches).map((letter) => letter.letter)
+    )
+  }
+
+  return {
+    found: find('yes').join(),
+    misplaced: find('partial').join(),
+    notFound: find('no').join()
+  }
 })
 
 onMounted(() => {
@@ -108,6 +124,8 @@ function onDeleteUp() {
 function onSubmitDown() {
   if (input.value.length == 5) {
     pressDownSound.play({ id: '1' })
+    words.value.push(match(input.value, solution))
+    input.value = ''
   }
 }
 
@@ -118,26 +136,10 @@ function onSubmitUp() {
 
 <template>
   <div class="wordle-container">
-    <WordlePanel
-      :words="[
-        [
-          { letter: 'r', matches: 'yes' },
-          { letter: 'u', matches: 'partial' },
-          { letter: 's', matches: 'no' },
-          { letter: 't', matches: 'partial' },
-          { letter: 'y', matches: 'no' }
-        ]
-      ]"
-      :input="input"
-      :remainingTurns="4"
-    />
+    <WordlePanel :words="words" :input="input" :remainingTries="4" />
     <WordleKeyboard
       client:visible
-      :keys="{
-        found: 'r',
-        misplaced: 'ut',
-        notFound: 'sy'
-      }"
+      :keys="keys"
       :canDelete="canDelete"
       :canSubmit="canSubmit"
       @typeDown="onTypeDown"
