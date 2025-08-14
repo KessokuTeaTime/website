@@ -1,10 +1,8 @@
 ---
 import { makeTitle } from '@/config'
 import IndexLayout from '@/layouts/IndexLayout.astro'
-import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
-import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
+import WordleGame from '@/components/games/wordle/WordleGame.vue'
 import { t } from 'astro-i18n'
-import { notFound } from 'astro:i18n'
 ---
 
 <IndexLayout
@@ -14,42 +12,12 @@ import { notFound } from 'astro:i18n'
   })}
 >
   <div class="content-container">
-    <WordlePanel
-      client:visible
-      words={[
-        [
-          { letter: 'r', matches: 'yes' },
-          { letter: 'u', matches: 'partial' },
-          { letter: 's', matches: 'no' },
-          { letter: 't', matches: 'partial' },
-          { letter: 'y', matches: 'no' }
-        ]
-      ]}
-      input={'cra'}
-      remainingTurns={4}
-    />
-    <WordleKeyboard
-      client:visible
-      keys={{
-        found: 'r',
-        misplaced: 'ut',
-        notFound: 'sy'
-      }}
-    />
+    <WordleGame class="wordle" client:visible />
   </div>
 </IndexLayout>
 
 <style lang="scss">
   .content-container {
     padding: 6rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6rem;
-
-    --tint: var(--color-tint-pink);
-    --tint-soft: var(--color-tint-pink-soft);
-    --tint-mute: var(--color-tint-pink-mute);
   }
 </style>

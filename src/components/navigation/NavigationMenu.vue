@@ -4,20 +4,11 @@ import { ref, computed } from 'vue'
 import { config } from '@/config'
 import { getLocalizedValue } from '@/utils/i18n'
 
-const props = defineProps({
-  locale: {
-    type: String,
-    required: false
-  },
-  label: {
-    type: String,
-    required: true
-  },
-  slug: {
-    type: String,
-    required: false
-  }
-})
+const props = defineProps<{
+  locale?: string
+  label: string
+  slug?: string
+}>()
 
 const isExpanded = ref(false)
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, useTemplateRef, type PropType } from 'vue'
+import { computed, onMounted, useTemplateRef } from 'vue'
 import { type PageInfo } from '@/types'
 import { config } from '@/config'
 import { useWindowSize } from '@vueuse/core'
@@ -10,16 +10,10 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 
 // Definitions
 
-const props = defineProps({
-  locale: {
-    type: String,
-    required: false
-  },
-  pageInfo: {
-    type: Object as PropType<PageInfo>,
-    required: false
-  }
-})
+const props = defineProps<{
+  locale?: string
+  pageInfo?: PageInfo
+}>()
 
 const emit = defineEmits({
   back: null

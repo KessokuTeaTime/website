@@ -1,29 +1,21 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
-import { useSound } from '@vueuse/sound'
-import type { PropType } from 'vue'
-import typingSoundFile from '/sounds/typing.mp3'
-import _ from 'lodash'
+import { keyboardRows } from '@/utils/wordle'
 
-const props = defineProps({
-  keys: {
-    type: Object as PropType<{ found: string; misplaced: string; notFound: string }>,
-    required: false
-  }
-})
+const props = defineProps<{
+  keys?: { found: string; misplaced: string; notFound: string }
+  canDelete?: boolean
+  canSubmit?: boolean
+}>()
 
-const rows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM']
-
-const typingSound = useSound(typingSoundFile, {
-  sprite: {
-    1: [459, 94],
-    2: [1337, 239],
-    3: [1966, 431],
-    4: [2670, 330],
-    5: [3337, 260],
-    6: [3982, 207]
-  }
-})
+const emit = defineEmits<{
+  typeDown: [key: string]
+  typeUp: [key: string]
+  deleteDown: []
+  deleteUp: []
+  submitDown: []
+  submitUp: []
+}>()
 
 function getState(key: string): 'found' | 'misplaced' | 'not-found' | undefined {
   if (props.keys != null) {
@@ -36,20 +28,17 @@ function getState(key: string): 'found' | 'misplaced' | 'not-found' | undefined 
     }
   }
 }
-
-function onType(key: string) {
-  typingSound.play({ id: _.sample([1, 2, 3, 4, 5, 6]).toString() })
-}
 </script>
 
 <template>
   <div class="keyboard-container">
     <div class="keyboard-main">
-      <div v-for="(row, index) in rows" class="keyboard-row" :data-row="index">
+      <div v-for="(row, index) in keyboardRows" class="keyboard-row" :data-row="index">
         <div class="key-spacer" data-side="left"></div>
         <button
-          v-for="c in row"
-          @click="onType(c)"
+          v-for="c in row.toLowerCase()"
+          @mousedown="emit('typeDown', c)"
+          @mouseup="emit('typeUp', c)"
           class="key"
           :data-state="getState(c)"
           :data-key="c"
@@ -59,16 +48,29 @@ function onType(key: string) {
         <div class="key-spacer" data-side="right"></div>
       </div>
       <div class="keyboard-row" data-row="4">
-        <button class="key" :style="{ '--span': 3.5 }" data-key="backspace">
+        <button
+          @mousedown="emit('deleteDown')"
+          @mouseup="emit('deleteUp')"
+          class="key"
+          :style="{ '--span': 3.5 }"
+          data-key="backspace"
+          :disabled="!canDelete"
+        >
           <Icon icon="f7:delete-left-fill" />
         </button>
         <div class="key" :style="{ '--span': 2 }" hidden />
-        <button class="key" :style="{ '--span': 3.5 }" data-key="return">
+        <button
+          @mousedown="emit('submitDown')"
+          @mouseup="emit('submitUp')"
+          class="key"
+          :style="{ '--span': 3.5 }"
+          data-key="return"
+          :disabled="!canSubmit"
+        >
           <Icon icon="f7:return" />
         </button>
       </div>
     </div>
-    <div class="keyboard-auxiliary"></div>
   </div>
 </template>
 
@@ -118,11 +120,11 @@ function onType(key: string) {
   width: calc(max(var(--span), 1) * var(--cell-width) + max(var(--span) - 1, 0) * var(--gap));
   background: var(--color-background-mute);
   border-radius: 6px;
-  transition: scale var(--duration-fast) cubic-bezier(0.3, 0.96, 0.48, 1.11);
+  transition: all var(--duration-fast) cubic-bezier(0.3, 0.96, 0.48, 1.11);
 
   --cell-width: min(3rem, calc(100vw / 11 - var(--gap)));
 
-  &:active {
+  &:not([disabled]):active {
     scale: 0.9;
   }
 
@@ -131,9 +133,19 @@ function onType(key: string) {
     opacity: 0;
   }
 
+  &[disabled] {
+    color: var(--color-border);
+    background: var(--color-background-soft);
+  }
+
   &[data-key='return'] {
     color: var(--color-background);
     background: var(--tint);
+
+    &[disabled] {
+      color: var(--tint);
+      background: var(--tint-mute);
+    }
   }
 
   &[data-state='found'] {

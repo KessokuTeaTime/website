@@ -1,22 +1,11 @@
 <script setup lang="ts">
 import type { Word } from '@/utils/wordle'
-import type { PropType } from 'vue'
 
-const props = defineProps({
-  words: {
-    type: Object as PropType<Word[]>,
-    required: true
-  },
-  input: {
-    type: String,
-    required: false,
-    default: ''
-  },
-  remainingTurns: {
-    type: Number,
-    required: false
-  }
-})
+const props = defineProps<{
+  words: Word[]
+  input: string
+  remainingTurns: number
+}>()
 </script>
 
 <template>
