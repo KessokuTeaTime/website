@@ -4,34 +4,35 @@
       <div class="keyboard-row" data-row="1">
         <!--QWERTYUIOP-->
         <div class="key-spacer" data-side="left"></div>
-        <div v-for="c in 'QWERTYUIOP'" class="key" :data-key="c">
+        <button v-for="c in 'QWERTYUIOP'" class="key" :data-key="c">
           {{ c }}
-        </div>
+        </button>
         <div class="key-spacer" data-side="right"></div>
       </div>
 
       <div class="keyboard-row" data-row="2">
         <div class="key-spacer" data-side="left"></div>
         <!--ASDFGHJKL-->
-        <div v-for="c in 'ASDFGHJKL'" class="key" :data-key="c">
+        <button v-for="c in 'ASDFGHJKL'" class="key" :data-key="c">
           {{ c }}
-        </div>
+        </button>
         <div class="key-spacer" data-side="right"></div>
       </div>
 
       <div class="keyboard-row" data-row="3">
         <div class="key-spacer" data-side="left"></div>
         <!--ZXCVBNM-->
-        <div v-for="c in 'ZXCVBNM'" class="key" :data-key="c">
+        <button v-for="c in 'ZXCVBNM'" class="key" :data-key="c">
           {{ c }}
-        </div>
+        </button>
         <div class="key-spacer" data-side="right"></div>
       </div>
 
       <div class="keyboard-row" data-row="4">
         <div class="key-spacer" data-side="left"></div>
-        <div class="key" data-key="backspace"></div>
-        <div class="key" data-key="return"></div>
+        <button class="key" :style="{ '--span': 3.5 }" data-key="backspace"></button>
+        <div class="key" :style="{ '--span': 2 }" hidden />
+        <button class="key" :style="{ '--span': 3.5 }" data-key="return"></button>
         <div class="key-spacer" data-side="right"></div>
       </div>
     </div>
@@ -44,13 +45,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  --gap: 8px;
+  --span: 1;
 }
 
 .keyboard-main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 8px;
+  gap: var(--gap);
 }
 
 .keyboard-row {
@@ -60,7 +68,7 @@
   justify-content: center;
   width: 100vw;
   height: min-content;
-  gap: 8px;
+  gap: var(--gap);
 }
 
 .key,
@@ -69,14 +77,26 @@
 }
 
 .key {
-  color: var(--color-text-soft);
   font-family: var(--font-mono);
+  font-size: medium;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(3rem, calc(100vw / 11 - 8px));
+  width: calc(max(var(--span), 1) * var(--cell-width) + max(var(--span) - 1, 0) * var(--gap));
   background: var(--color-background-mute);
   border-radius: 6px;
+  transition: scale var(--duration-fast) cubic-bezier(0.3, 0.96, 0.48, 1.11);
+
+  --cell-width: min(3rem, calc(100vw / 11 - var(--gap)));
+
+  &:active {
+    scale: 0.9;
+  }
+
+  &[hidden] {
+    background: none;
+    opacity: 0;
+  }
 }
 
 .key-spacer {

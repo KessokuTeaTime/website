@@ -1,7 +1,36 @@
+<script setup lang="ts">
+import type { Word } from '@/utils/wordle'
+import type { PropType } from 'vue'
+
+const props = defineProps({
+  words: {
+    type: Object as PropType<Word[]>,
+    required: true
+  },
+  input: {
+    type: String,
+    required: false,
+    default: ''
+  }
+})
+</script>
+
 <template>
   <div class="wordle-panel">
-    <div v-for="row in 6" class="wordle-row" :class="{ alternate: row % 2 == 0 }">
-      <div v-for="column in 5" class="wordle-letter" :data-row="row" :data-column="column"></div>
+    <div v-for="word in words" class="wordle-row">
+      <button
+        v-for="i in 5"
+        class="wordle-letter"
+        :data-column="i"
+        :data-letter="word[i - 1]?.letter"
+      >
+        {{ word[i - 1]?.letter }}
+      </button>
+    </div>
+    <div class="wordle-row input">
+      <button v-for="i in 5" class="wordle-letter" :data-column="i" :data-letter="input[i]">
+        {{ input[i - 1] }}
+      </button>
     </div>
   </div>
 </template>
@@ -13,6 +42,10 @@
   justify-content: center;
   width: min-content;
   height: min-content;
+
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .wordle-row {
@@ -24,24 +57,20 @@
   height: min-content;
   margin: 4px;
   border-radius: 8px;
-
-  &:not(:nth-of-type(1)) {
-    background: var(--color-background-mute);
-
-    &.alternate {
-      background: var(--color-background-soft);
-    }
-  }
 }
 
 .wordle-letter {
+  font-family: var(--font-mono);
+  font-size: larger;
+  font-weight: bold;
+  text-transform: uppercase;
   width: 3.6rem;
   aspect-ratio: 1/1;
   grid-row: var(--row);
   grid-column: var(--column);
   border-radius: 6px;
 
-  .wordle-row:nth-of-type(1) > & {
+  .input > & {
     background: var(--color-background-mute);
   }
 }

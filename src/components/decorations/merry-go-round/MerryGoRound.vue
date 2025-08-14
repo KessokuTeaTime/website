@@ -91,17 +91,17 @@ function stopWindowMoveDetection() {
   <div class="merry-go-round-container">
     <div class="text-container">
       <template v-for="i in count + 2" :key="i">
-        <TextTime class="stroke" :style="`--index: ${i}`" text="time" />
+        <TextTime class="stroke" :style="{ '--index': i }" text="time" />
       </template>
     </div>
     <div class="text-container">
       <template v-for="i in count + 2" :key="i">
-        <TextTea class="stroke" :style="`--index: ${i}`" text="tea" />
+        <TextTea class="stroke" :style="{ '--index': i }" text="tea" />
       </template>
     </div>
     <div class="text-container">
       <template v-for="i in count + 2" :key="i">
-        <TextKessoku class="stroke" :style="`--index: ${i}`" text="kessoku" />
+        <TextKessoku class="stroke" :style="{ '--index': i }" text="kessoku" />
       </template>
     </div>
   </div>

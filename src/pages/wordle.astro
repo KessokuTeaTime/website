@@ -13,7 +13,19 @@ import { t } from 'astro-i18n'
   })}
 >
   <div class="content-container">
-    <WordlePanel />
+    <WordlePanel
+      words={[
+        [
+          { letter: 'r', matches: 'yes' },
+          { letter: 'u', matches: 'partial' },
+          { letter: 's', matches: 'no' },
+          { letter: 't', matches: 'partial' },
+          { letter: 'y', matches: 'no' }
+        ]
+      ]}
+      ,
+      input={'cra'}
+    />
     <WordleKeyboard />
   </div>
 </IndexLayout>
