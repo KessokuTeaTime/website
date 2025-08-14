@@ -1,41 +1,37 @@
 .tint-kita {
-  --tint: var(--color-tint-red);
   color: var(--tint);
 
-  &::selection,
-  *::selection {
-    background: var(--color-tint-red-mute);
-  }
+  --tint: var(--color-tint-red);
+  --tint-soft: var(--color-tint-red-soft);
+  --tint-mute: var(--color-tint-red-mute);
+  --color-selection: var(--color-tint-red-mute);
 }
 
 .tint-ryo {
-  --tint: var(--color-tint-blue);
   color: var(--tint);
 
-  &::selection,
-  *::selection {
-    background: var(--color-tint-blue-mute);
-  }
+  --tint: var(--color-tint-blue);
+  --tint-soft: var(--color-tint-blue-soft);
+  --tint-mute: var(--color-tint-blue-mute);
+  --color-selection: var(--color-tint-blue-mute);
 }
 
 .tint-bocchi {
-  --tint: var(--color-tint-pink);
   color: var(--tint);
 
-  &::selection,
-  *::selection {
-    background: var(--color-tint-pink-mute);
-  }
+  --tint: var(--color-tint-pink);
+  --tint-soft: var(--color-tint-pink-soft);
+  --tint-mute: var(--color-tint-pink-mute);
+  --color-selection: var(--color-tint-pink-mute);
 }
 
 .tint-nijika {
-  --tint: var(--color-tint-yellow);
   color: var(--tint);
 
-  &::selection,
-  *::selection {
-    background: var(--color-tint-yellow-mute);
-  }
+  --tint: var(--color-tint-yellow);
+  --tint-soft: var(--color-tint-yellow-soft);
+  --tint-mute: var(--color-tint-yellow-mute);
+  --color-selection: var(--color-tint-yellow-mute);
 }
 
 ::selection {

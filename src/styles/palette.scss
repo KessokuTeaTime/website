@@ -1,13 +1,13 @@
 /* color palette referencing <https://github.com/vuejs/theme> */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8db;
-  --vt-c-white-mute: #f2f2f2db;
+  --vt-c-white: rgb(255, 255, 255);
+  --vt-c-white-soft: rgba(248, 248, 248, 0.855);
+  --vt-c-white-mute: rgba(242, 242, 242, 0.855);
   --vt-c-white-transparent: rgba(255, 255, 255, 0.113);
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #1a1a1aa4;
-  --vt-c-black-mute: #202020a4;
+  --vt-c-black: rgb(18, 18, 18);
+  --vt-c-black-soft: rgba(26, 26, 26, 0.64);
+  --vt-c-black-mute: rgba(32, 32, 32, 0.64);
   --vt-c-black-transparent: rgba(0, 0, 0, 0.084);
 
   --vt-c-divider-light-1: rgb(222, 222, 222);
@@ -81,6 +81,8 @@
 
 :root {
   --tint: var(--color-text);
+  --tint-soft: var(--color-text-soft);
+  --tint-mute: var(--color-border);
 
   --color-selection: var(--vt-c-black-transparent);
 

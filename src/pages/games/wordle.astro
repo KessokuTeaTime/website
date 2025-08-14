@@ -14,6 +14,7 @@ import { t } from 'astro-i18n'
 >
   <div class="content-container">
     <WordlePanel
+      client:visible
       words={[
         [
           { letter: 'r', matches: 'yes' },
@@ -23,10 +24,16 @@ import { t } from 'astro-i18n'
           { letter: 'y', matches: 'no' }
         ]
       ]}
-      ,
       input={'cra'}
+      remainingTurns={4}
     />
-    <WordleKeyboard />
+    <WordleKeyboard
+      client:visible
+      keys={{
+        found: 'r',
+        misplaced: 'ut'
+      }}
+    />
   </div>
 </IndexLayout>
 
@@ -37,6 +44,10 @@ import { t } from 'astro-i18n'
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4rem;
+    gap: 6rem;
+
+    --tint: var(--color-tint-pink);
+    --tint-soft: var(--color-tint-pink-soft);
+    --tint-mute: var(--color-tint-pink-mute);
   }
 </style>
