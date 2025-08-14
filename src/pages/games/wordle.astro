@@ -4,6 +4,7 @@ import IndexLayout from '@/layouts/IndexLayout.astro'
 import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
 import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
 import { t } from 'astro-i18n'
+import { notFound } from 'astro:i18n'
 ---
 
 <IndexLayout
@@ -31,7 +32,8 @@ import { t } from 'astro-i18n'
       client:visible
       keys={{
         found: 'r',
-        misplaced: 'ut'
+        misplaced: 'ut',
+        notFound: 'sy'
       }}
     />
   </div>

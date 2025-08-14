@@ -1,55 +1,63 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { useSound } from '@vueuse/sound'
 import type { PropType } from 'vue'
+import typingSoundFile from '/sounds/typing.mp3'
+import _ from 'lodash'
 
 const props = defineProps({
   keys: {
-    type: Object as PropType<{ found: string; misplaced: string }>,
+    type: Object as PropType<{ found: string; misplaced: string; notFound: string }>,
     required: false
   }
 })
 
-function getState(key: string): 'found' | 'misplaced' | undefined {
+const rows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM']
+
+const typingSound = useSound(typingSoundFile, {
+  sprite: {
+    1: [459, 94],
+    2: [1337, 239],
+    3: [1966, 431],
+    4: [2670, 330],
+    5: [3337, 260],
+    6: [3982, 207]
+  }
+})
+
+function getState(key: string): 'found' | 'misplaced' | 'not-found' | undefined {
   if (props.keys != null) {
     if (props.keys.found.includes(key.toLowerCase())) {
       return 'found'
     } else if (props.keys.misplaced.includes(key.toLowerCase())) {
       return 'misplaced'
+    } else if (props.keys.notFound.includes(key.toLowerCase())) {
+      return 'not-found'
     }
   }
+}
+
+function onType(key: string) {
+  typingSound.play({ id: _.sample([1, 2, 3, 4, 5, 6]).toString() })
 }
 </script>
 
 <template>
   <div class="keyboard-container">
     <div class="keyboard-main">
-      <div class="keyboard-row" data-row="1">
-        <!--QWERTYUIOP-->
+      <div v-for="(row, index) in rows" class="keyboard-row" :data-row="index">
         <div class="key-spacer" data-side="left"></div>
-        <button v-for="c in 'QWERTYUIOP'" class="key" :data-state="getState(c)" :data-key="c">
+        <button
+          v-for="c in row"
+          @click="onType(c)"
+          class="key"
+          :data-state="getState(c)"
+          :data-key="c"
+        >
           {{ c }}
         </button>
         <div class="key-spacer" data-side="right"></div>
       </div>
-
-      <div class="keyboard-row" data-row="2">
-        <div class="key-spacer" data-side="left"></div>
-        <!--ASDFGHJKL-->
-        <button v-for="c in 'ASDFGHJKL'" class="key" :data-state="getState(c)" :data-key="c">
-          {{ c }}
-        </button>
-        <div class="key-spacer" data-side="right"></div>
-      </div>
-
-      <div class="keyboard-row" data-row="3">
-        <div class="key-spacer" data-side="left"></div>
-        <!--ZXCVBNM-->
-        <button v-for="c in 'ZXCVBNM'" class="key" :data-state="getState(c)" :data-key="c">
-          {{ c }}
-        </button>
-        <div class="key-spacer" data-side="right"></div>
-      </div>
-
       <div class="keyboard-row" data-row="4">
         <button class="key" :style="{ '--span': 3.5 }" data-key="backspace">
           <Icon icon="f7:delete-left-fill" />
@@ -137,6 +145,11 @@ function getState(key: string): 'found' | 'misplaced' | undefined {
   &[data-state='misplaced'] {
     color: var(--tint);
     background: var(--tint-mute);
+  }
+
+  &[data-state='not-found'] {
+    color: var(--color-border);
+    background: var(--color-background-soft);
   }
 }
 </style>
