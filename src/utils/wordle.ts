@@ -1,44 +1,69 @@
+import camelcaseKeys from 'camelcase-keys'
+import { toQueryRecord, withQuery } from './api'
+import decamelcaseKeys from 'decamelcase-keys'
+
+export const keyboardRows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'].map((s) => s.toLowerCase())
+
 export interface Letter {
   letter: string
-  matches: 'yes' | 'partial' | 'no'
+  matches: '+' | '?' | '-'
 }
 
 export type Word = Letter[]
 
-export const keyboardRows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'].map((s) => s.toLowerCase())
+export interface WordleParams {
+  date: String
+}
 
-export function match(input: string, solution: string): Word {
-  let word: Word = [...input].map((c) => {
-    return {
-      letter: c,
-      matches: 'no'
-    }
-  })
+export interface WordlePayload {
+  answer: String
+}
 
-  let unmatchedLetters: Record<string, number> = {}
-  ;[...solution].forEach((c) => {
-    unmatchedLetters[c] = (unmatchedLetters[c] ?? 0) + 1
-  })
+export interface WordleResponse {
+  remainingTries: number
+  isDirty: boolean
+  isCompleted: boolean
+  history: Word[]
+}
 
-  // 1. Marks letters that match exactly
-  word = word.map((letter, index) => {
-    if (letter.letter == solution[index]) {
-      letter.matches = 'yes'
-      unmatchedLetters[letter.letter]--
-    }
-    return letter
-  })
+export class SessionContext {
+  private baseUrl: string
 
-  // 2. Marks letters that match partially in an ordered sequence
-  word = word.map((letter, index) => {
-    if (letter.matches != 'yes' && unmatchedLetters[letter.letter] > 0) {
-      letter.matches = 'partial'
-      unmatchedLetters[letter.letter]--
-      return letter
-    } else {
-      return letter
-    }
-  })
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl
+  }
 
-  return word
+  async init(): Promise<void> {
+    const res = await fetch(`${this.baseUrl}/play/session`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+    if (!res.ok) throw new Error('Failed to init session context')
+  }
+
+  async start(params: WordleParams): Promise<WordleResponse> {
+    const res = await fetch(
+      withQuery(`${this.baseUrl}/play/start`, toQueryRecord(decamelcaseKeys(params))),
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+    return camelcaseKeys(await res.json())
+  }
+
+  async submit(params: WordleParams, payload: WordlePayload): Promise<WordleResponse> {
+    const res = await fetch(
+      withQuery(`${this.baseUrl}/play/submit`, toQueryRecord(decamelcaseKeys(params))),
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(decamelcaseKeys(payload))
+      }
+    )
+    return camelcaseKeys(await res.json())
+  }
 }

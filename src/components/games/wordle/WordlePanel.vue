@@ -2,15 +2,16 @@
 import type { Word } from '@/utils/wordle'
 
 const props = defineProps<{
-  words: Word[]
+  history: Word[]
   input: string
   remainingTries: number
+  isCompleted: boolean
 }>()
 </script>
 
 <template>
   <div class="wordle-panel">
-    <div v-for="word in words" class="wordle-row">
+    <div v-for="word in history" class="wordle-row">
       <div
         v-for="i in 5"
         class="wordle-letter"
@@ -21,12 +22,17 @@ const props = defineProps<{
         {{ word[i - 1]?.letter }}
       </div>
     </div>
-    <div class="wordle-row input">
+    <div class="wordle-row input" :hidden="remainingTries <= 0 || isCompleted">
       <div v-for="i in 5" class="wordle-letter" :data-column="i" :data-letter="input[i]">
         {{ input[i - 1] }}
       </div>
     </div>
-    <div v-for="i in remainingTries" class="remaining-try" :data-try="i">
+    <div
+      v-if="remainingTries > 0 && !isCompleted"
+      v-for="i in remainingTries - 1"
+      class="remaining-try"
+      :data-try="i"
+    >
       <div class="placeholder" />
     </div>
   </div>
@@ -70,6 +76,10 @@ const props = defineProps<{
   }
 }
 
+.input[hidden] {
+  display: none;
+}
+
 .wordle-letter {
   display: flex;
   align-items: center;
@@ -88,13 +98,13 @@ const props = defineProps<{
     background: var(--color-background-mute);
   }
 
-  &[data-matches='yes'] {
+  &[data-matches='+'] {
     font-weight: 900;
     color: var(--color-background);
     background: var(--tint);
   }
 
-  &[data-matches='partial'] {
+  &[data-matches='?'] {
     color: var(--tint);
     background: var(--tint-mute);
   }

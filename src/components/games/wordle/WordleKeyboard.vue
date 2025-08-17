@@ -6,6 +6,7 @@ const props = defineProps<{
   keys?: { found: string; misplaced: string; notFound: string }
   canDelete?: boolean
   canSubmit?: boolean
+  isFinished: boolean
 }>()
 
 const emit = defineEmits<{
@@ -17,13 +18,14 @@ const emit = defineEmits<{
   submitUp: []
 }>()
 
-function getState(key: string): 'found' | 'misplaced' | 'not-found' | undefined {
+function getState(_key: string): 'found' | 'misplaced' | 'not-found' | undefined {
+  const key = _key.toLowerCase()
   if (props.keys != null) {
-    if (props.keys.found.includes(key.toLowerCase())) {
+    if (props.keys.found.includes(key)) {
       return 'found'
-    } else if (props.keys.misplaced.includes(key.toLowerCase())) {
+    } else if (props.keys.misplaced.includes(key)) {
       return 'misplaced'
-    } else if (props.keys.notFound.includes(key.toLowerCase())) {
+    } else if (props.keys.notFound.includes(key)) {
       return 'not-found'
     }
   }
@@ -47,6 +49,8 @@ function getState(key: string): 'found' | 'misplaced' | 'not-found' | undefined 
         </button>
         <div class="key-spacer" data-side="right"></div>
       </div>
+    </div>
+    <div class="keyboard-actions" :hidden="isFinished">
       <div class="keyboard-row" data-row="4">
         <button
           @mousedown="emit('deleteDown')"
@@ -79,6 +83,7 @@ function getState(key: string): 'found' | 'misplaced' | 'not-found' | undefined 
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: var(--gap);
 
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -88,11 +93,16 @@ function getState(key: string): 'found' | 'misplaced' | 'not-found' | undefined 
   --span: 1;
 }
 
-.keyboard-main {
+.keyboard-main,
+.keyboard-actions {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--gap);
+
+  &[hidden] {
+    display: none;
+  }
 }
 
 .keyboard-row {
