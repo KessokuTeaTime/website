@@ -1,19 +1,20 @@
 <script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import { useSound } from '@vueuse/sound'
 import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
 import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
-import { computed, nextTick, onMounted, onUnmounted, ref, watchEffect } from 'vue'
-import { useSound } from '@vueuse/sound'
 import typeSoundFile from '/sounds/keyboard-type-1.mp3'
 import pressSoundFile from '/sounds/button-press-1.mp3'
 import {
   keyboardRows,
   SessionContext,
-  SessionError,
   SessionSubmitError,
-  type Word,
+  WordleDate,
   type WordleResponse
 } from '@/utils/wordle'
 import { AnimateOneShot } from '@/utils/animate'
+import WordleDatePicker from './WordleDatePicker.vue'
+import { navigate } from 'astro:transitions/client'
 
 // Sounds
 
@@ -30,20 +31,24 @@ const pressSound = useSound(pressSoundFile, {
   }
 })
 
-// Constants
-
-const date = '1970-01-01'
-
 // Reactives
 
 const context = ref(new SessionContext('https://api.kessokuteatime.work/wordle'))
 const response = ref<WordleResponse | null>(null)
 const input = ref('')
-
 const isPending = ref(false)
 
 const history = computed(() => {
   return response.value?.history ?? []
+})
+
+const date = computed(() => {
+  const query = new URL(window.location.href).searchParams.get('date')
+  if (query != null) {
+    return WordleDate.fromString(query)
+  } else {
+    return WordleDate.today()
+  }
 })
 
 // Reactives: animate
@@ -124,14 +129,14 @@ watchEffect(() => {
 async function start() {
   isPending.value = true
   await context.value.init()
-  response.value = await context.value.start({ date })
+  response.value = await context.value.start({ date: date.value })
   isPending.value = false
 }
 
 async function submit() {
   try {
     isPending.value = true
-    response.value = await context.value.submit({ date }, { answer: input.value })
+    response.value = await context.value.submit({ date: date.value }, { answer: input.value })
     input.value = ''
   } catch (err: any) {
     switch (err.kind) {
@@ -145,6 +150,18 @@ async function submit() {
   } finally {
     isPending.value = false
   }
+}
+
+function onSelectDate(date: WordleDate) {
+  let url = new URL(window.location.href)
+
+  if (date.isToday()) {
+    url.searchParams.delete('date')
+  } else {
+    url.searchParams.set('date', date.toString())
+  }
+
+  navigate(url.toString())
 }
 
 // Functions: keyboard events
@@ -259,6 +276,7 @@ function onSubmitUp() {
       @submitDown="onSubmitDown"
       @submitUp="onSubmitUp"
     />
+    <WordleDatePicker :date="date" @selectDate="onSelectDate" />
   </div>
 </template>
 
