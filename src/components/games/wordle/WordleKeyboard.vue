@@ -35,10 +35,11 @@ function getState(_key: string): 'found' | 'misplaced' | 'not-found' | undefined
 <template>
   <div class="keyboard-container">
     <div class="keyboard-main">
-      <div v-for="(row, index) in keyboardRows" class="keyboard-row" :data-row="index">
+      <div v-for="(row, index) in keyboardRows" :key="index" class="keyboard-row" :data-row="index">
         <div class="key-spacer" data-side="left"></div>
         <button
           v-for="c in row.toLowerCase()"
+          :key="c"
           @mousedown="emit('typeDown', c)"
           @mouseup="emit('typeUp', c)"
           class="key"

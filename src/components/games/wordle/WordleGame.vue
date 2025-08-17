@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
 import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import { useSound } from '@vueuse/sound'
 import typeSoundFile from '/sounds/keyboard-type-1.mp3'
 import pressSoundFile from '/sounds/button-press-1.mp3'
-import { keyboardRows, SessionContext, type Word, type WordleResponse } from '@/utils/wordle'
+import {
+  keyboardRows,
+  SessionContext,
+  SessionError,
+  SessionSubmitError,
+  type Word,
+  type WordleResponse
+} from '@/utils/wordle'
+import { AnimateOneShot } from '@/utils/animate'
+
+// Sounds
 
 const typeSound = useSound(typeSoundFile, {
   sprite: {
@@ -20,31 +30,55 @@ const pressSound = useSound(pressSoundFile, {
   }
 })
 
+// Constants
+
 const date = '1970-01-01'
+
+// Reactives
 
 const context = ref(new SessionContext('https://api.kessokuteatime.work/wordle'))
 const response = ref<WordleResponse | null>(null)
 const input = ref('')
 
-const canDelete = computed(() => {
-  return input.value.length > 0
-})
-const canSubmit = computed(() => {
-  return input.value.length >= 5
-})
+const isPending = ref(false)
+
 const history = computed(() => {
-  console.log(response.value?.history)
   return response.value?.history ?? []
 })
+
+// Reactives: animate
+
+const animateInvalidAnswer = ref(new AnimateOneShot())
+const animateConfetti = ref(new AnimateOneShot())
+
+// Reactives: game state
+
+const lettersCount = computed(() => {
+  return response.value?.lettersCount ?? 0
+})
+
 const remainingTries = computed(() => {
   return response.value?.remainingTries ?? 0
 })
+
+const canDelete = computed(() => {
+  return input.value.length > 0
+})
+
+const canSubmit = computed(() => {
+  return input.value.length >= 5
+})
+
 const isCompleted = computed(() => {
   return response.value?.isCompleted ?? false
 })
+
 const isFinished = computed(() => {
   return remainingTries.value <= 0 || isCompleted.value
 })
+
+// Reactives: keyboard
+
 const keys = computed(() => {
   function find(matches: '+' | '?' | '-'): string[] {
     if (response.value != null) {
@@ -63,20 +97,57 @@ const keys = computed(() => {
   }
 })
 
+// Hooks
+
 onMounted(() => {
   document.addEventListener('keydown', onKeyDown)
   document.addEventListener('keyup', onKeyUp)
 })
 
-onMounted(async () => {
-  await context.value.init()
-  response.value = await context.value.start({ date })
-})
+onMounted(start)
 
 onUnmounted(() => {
   document.removeEventListener('keydown', onKeyDown)
   document.removeEventListener('keyup', onKeyUp)
 })
+
+// Watch effects
+
+watchEffect(() => {
+  if (isCompleted.value) {
+    animateConfetti.value.trigger()
+  }
+})
+
+// Functions
+
+async function start() {
+  isPending.value = true
+  await context.value.init()
+  response.value = await context.value.start({ date })
+  isPending.value = false
+}
+
+async function submit() {
+  try {
+    isPending.value = true
+    response.value = await context.value.submit({ date }, { answer: input.value })
+    input.value = ''
+  } catch (err: any) {
+    switch (err.kind) {
+      case SessionSubmitError.NotInitialized:
+        await start()
+        break
+      case SessionSubmitError.InvalidAnswer:
+        animateInvalidAnswer.value.trigger()
+        break
+    }
+  } finally {
+    isPending.value = false
+  }
+}
+
+// Functions: keyboard events
 
 function onKeyDown(event: KeyboardEvent) {
   if (!isFinished.value && !event.repeat) {
@@ -149,10 +220,9 @@ function onDeleteUp() {
 }
 
 async function onSubmitDown() {
-  if (remainingTries.value > 0 && input.value.length == 5) {
+  if (remainingTries.value > 0 && input.value.length == response.value?.lettersCount) {
     pressSound.play({ id: 'on' })
-    response.value = await context.value.submit({ date }, { answer: input.value })
-    input.value = ''
+    await submit()
   }
 }
 
@@ -168,8 +238,13 @@ function onSubmitUp() {
     <WordlePanel
       :history="history"
       :input="input"
+      :lettersCount="lettersCount"
       :remainingTries="remainingTries"
+      :isPending="isPending"
       :isCompleted="isCompleted"
+      :animate="{
+        invalidAnswer: animateInvalidAnswer.animate
+      }"
     />
     <WordleKeyboard
       client:visible

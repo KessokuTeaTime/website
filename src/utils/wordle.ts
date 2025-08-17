@@ -20,10 +20,31 @@ export interface WordlePayload {
 }
 
 export interface WordleResponse {
+  lettersCount: number
   remainingTries: number
   isDirty: boolean
   isCompleted: boolean
   history: Word[]
+}
+
+export enum SessionStartError {
+  NotInitialized = 404,
+  Failed = 500
+}
+
+export enum SessionSubmitError {
+  NotInitialized = 404,
+  InvalidAnswer = 400
+}
+
+export class SessionError {
+  kind: SessionStartError | SessionSubmitError | unknown
+  msg: string
+
+  constructor(kind: SessionStartError | SessionSubmitError | unknown, msg: string) {
+    this.kind = kind
+    this.msg = msg
+  }
 }
 
 export class SessionContext {
@@ -38,7 +59,10 @@ export class SessionContext {
       method: 'GET',
       credentials: 'include'
     })
-    if (!res.ok) throw new Error('Failed to init session context')
+
+    if (!res.ok) {
+      throw new SessionError(undefined, await res.text())
+    }
   }
 
   async start(params: WordleParams): Promise<WordleResponse> {
@@ -49,7 +73,19 @@ export class SessionContext {
         credentials: 'include'
       }
     )
-    return camelcaseKeys(await res.json())
+
+    if (!res.ok) {
+      switch (res.status) {
+        case SessionStartError.NotInitialized:
+          throw new SessionError(SessionStartError.NotInitialized, await res.text())
+        case SessionStartError.Failed:
+          throw new SessionError(SessionStartError.Failed, await res.text())
+        default:
+          throw new SessionError(undefined, await res.text())
+      }
+    } else {
+      return camelcaseKeys(await res.json())
+    }
   }
 
   async submit(params: WordleParams, payload: WordlePayload): Promise<WordleResponse> {
@@ -64,6 +100,17 @@ export class SessionContext {
         body: JSON.stringify(decamelcaseKeys(payload))
       }
     )
-    return camelcaseKeys(await res.json())
+    if (!res.ok) {
+      switch (res.status) {
+        case SessionSubmitError.NotInitialized:
+          throw new SessionError(SessionSubmitError.NotInitialized, await res.text())
+        case SessionSubmitError.InvalidAnswer:
+          throw new SessionError(SessionSubmitError.InvalidAnswer, await res.text())
+        default:
+          throw new SessionError(undefined, await res.text())
+      }
+    } else {
+      return camelcaseKeys(await res.json())
+    }
   }
 }
