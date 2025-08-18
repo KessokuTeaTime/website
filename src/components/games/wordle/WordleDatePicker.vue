@@ -70,8 +70,12 @@ function onPlay() {
       @click="isOpened = true"
     />
     <template v-else>
-      <button class="play-at-date" @click="onPlay" :disabled="selectedDate.is(date)">
-        <span v-html="t('page.games.wordle.date_picker.go_to', undefined, { locale })" />
+      <div class="date-picker-wrapper" :class="{ disabled: selectedDate.is(date) }">
+        <button
+          class="play-at-date"
+          v-html="t('page.games.wordle.date_picker.go_to', undefined, { locale })"
+          @click="onPlay"
+        />
         <div class="date-picker">
           <select class="year" v-model="year">
             <option v-for="year in WordlePartialDate.years().reverse()" :key="year" :value="year">
@@ -95,7 +99,7 @@ function onPlay() {
             </option>
           </select>
         </div>
-      </button>
+      </div>
     </template>
   </div>
 </template>
@@ -111,6 +115,40 @@ function onPlay() {
   gap: 0.4em;
 }
 
+.date-picker-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: baseline;
+  font-weight: 500;
+  color: var(--color-background);
+  padding: 2px 5px;
+  background: var(--tint);
+  border-radius: 6px;
+  transition: color var(--duration-fast) ease;
+
+  &.disabled {
+    color: var(--color-text-soft);
+    background: var(--color-selection);
+  }
+
+  .date-picker,
+  .play-at-date {
+    color: var(--color-background);
+  }
+
+  &.disabled :is(.date-picker, .play-at-date) {
+    color: var(--color-text);
+  }
+
+  .separator {
+    color: var(--color-background);
+  }
+
+  &.disabled .separator {
+    color: var(--color-text-soft);
+  }
+}
+
 .date-picker {
   display: flex;
   align-items: center;
@@ -123,46 +161,10 @@ function onPlay() {
   margin: 0 0.4em;
 }
 
-button {
+.open-date-picker {
   font-size: 0.8rem;
   color: var(--color-text-soft);
-
-  &.open-date-picker {
-    text-decoration: underline;
-  }
-
-  &.play-at-date {
-    display: flex;
-    align-items: center;
-    justify-content: baseline;
-    font-weight: 500;
-    color: var(--color-background);
-    padding: 2px 5px;
-    background: var(--tint);
-    border-radius: 6px;
-    transition: color var(--duration-fast) ease;
-
-    &[disabled] {
-      color: var(--color-text-soft);
-      background: var(--color-selection);
-    }
-
-    .date-picker {
-      color: var(--color-background);
-    }
-
-    &[disabled] .date-picker {
-      color: var(--color-text);
-    }
-
-    .separator {
-      color: var(--color-background);
-    }
-
-    &[disabled] .separator {
-      color: var(--color-text-soft);
-    }
-  }
+  text-decoration: underline;
 }
 
 select {
