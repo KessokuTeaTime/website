@@ -3,6 +3,7 @@ import { WordleDate, WordlePartialDate, type Month } from '@/utils/wordle'
 import { t } from 'astro-i18n'
 import { computed, onMounted, ref, watchEffect } from 'vue'
 import { marked } from 'marked'
+import { Icon } from '@iconify/vue'
 
 const props = defineProps<{
   locale?: string
@@ -49,57 +50,54 @@ function onPlay() {
 
 <template>
   <div class="date-picker-container">
-    <span
-      v-html="
-        marked.parseInline(
-          t(
-            'page.games.wordle.date_picker.description',
-            { date: date.toDate().toLocaleDateString() },
-            { locale }
+    <p v-if="!isOpened">
+      <span
+        v-html="
+          marked.parseInline(
+            t(
+              'page.games.wordle.date_picker.description',
+              { date: date.toDate().toLocaleDateString() },
+              { locale }
+            )
           )
-        )
-      "
-    />
-    <span class="separator">·</span>
-    <button
-      v-if="!isOpened"
-      class="open-date-picker"
-      v-html="
-        marked.parseInline(t('page.games.wordle.date_picker.play_another', undefined, { locale }))
-      "
-      @click="isOpened = true"
-    />
+        "
+      />
+      <span class="separator">·</span>
+      <button
+        class="underline"
+        v-html="
+          marked.parseInline(t('page.games.wordle.date_picker.play_another', undefined, { locale }))
+        "
+        @click="isOpened = true"
+      />
+    </p>
     <template v-else>
-      <div class="date-picker-wrapper" :class="{ disabled: selectedDate.is(date) }">
-        <button
-          class="play-at-date"
-          v-html="t('page.games.wordle.date_picker.go_to', undefined, { locale })"
-          @click="onPlay"
-        />
-        <div class="date-picker">
-          <select class="year" v-model="year">
-            <option v-for="year in WordlePartialDate.years().reverse()" :key="year" :value="year">
-              {{ year }}
-            </option>
-          </select>
-          <span class="separator">/</span>
-          <select class="month" v-model="month">
-            <option
-              v-for="month in WordlePartialDate.months(year).reverse()"
-              :key="month"
-              :value="month"
-            >
-              {{ month }}
-            </option>
-          </select>
-          <span class="separator">/</span>
-          <select class="day" v-model="day">
-            <option v-for="day in selectedDate.partial.days().reverse()" :key="day" :value="day">
-              {{ day }}
-            </option>
-          </select>
-        </div>
+      <div class="date-picker">
+        <select class="year" v-model="year">
+          <option v-for="year in WordlePartialDate.years().reverse()" :key="year" :value="year">
+            {{ year }}
+          </option>
+        </select>
+        <span class="separator">/</span>
+        <select class="month" v-model="month">
+          <option
+            v-for="month in WordlePartialDate.months(year).reverse()"
+            :key="month"
+            :value="month"
+          >
+            {{ month }}
+          </option>
+        </select>
+        <span class="separator">/</span>
+        <select class="day" v-model="day">
+          <option v-for="day in selectedDate.partial.days().reverse()" :key="day" :value="day">
+            {{ day }}
+          </option>
+        </select>
       </div>
+      <button class="play" @click="onPlay" :disabled="selectedDate.is(date)">
+        <Icon icon="mi:arrow-right" />
+      </button>
     </template>
   </div>
 </template>
@@ -115,45 +113,30 @@ function onPlay() {
   gap: 0.4em;
 }
 
-.date-picker-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: baseline;
-  font-weight: 500;
-  color: var(--color-background);
-  padding: 2px 5px;
-  background: var(--tint);
-  border-radius: 6px;
-  transition: color var(--duration-fast) ease;
-
-  &.disabled {
-    color: var(--color-text-soft);
-    background: var(--color-selection);
-  }
-
-  .date-picker,
-  .play-at-date {
-    color: var(--color-background);
-  }
-
-  &.disabled :is(.date-picker, .play-at-date) {
-    color: var(--color-text);
-  }
-
-  .separator {
-    color: var(--color-background);
-  }
-
-  &.disabled .separator {
-    color: var(--color-text-soft);
-  }
-}
-
 .date-picker {
   display: flex;
   align-items: center;
-  justify-content: baseline;
+  justify-content: center;
   font-family: var(--font-mono);
+}
+
+.play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background);
+  background: var(--tint);
+  border-radius: 50%;
+  height: 1.5em;
+  aspect-ratio: 1/1;
+  transition:
+    color var(--duration-fast) ease,
+    background var(--duration-fast) ease;
+
+  &[disabled] {
+    color: var(--color-border);
+    background: transparent;
+  }
 }
 
 .separator {
@@ -161,10 +144,13 @@ function onPlay() {
   margin: 0 0.4em;
 }
 
-.open-date-picker {
+.underline {
+  text-decoration: underline;
+}
+
+button {
   font-size: 0.8rem;
   color: var(--color-text-soft);
-  text-decoration: underline;
 }
 
 select {

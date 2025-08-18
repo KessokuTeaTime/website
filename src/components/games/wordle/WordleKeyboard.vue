@@ -146,12 +146,14 @@ function getState(_key: string): 'found' | 'misplaced' | 'not-found' | undefined
 
   &[disabled] {
     color: var(--color-border);
-    background: var(--color-background-soft);
+    background: transparent;
+    border: 1px solid var(--color-border);
   }
 
   &[data-key='return'] {
     color: var(--color-background);
     background: var(--tint);
+    border: none;
 
     &[disabled] {
       color: var(--tint);
