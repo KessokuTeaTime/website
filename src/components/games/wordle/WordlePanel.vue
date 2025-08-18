@@ -156,6 +156,11 @@ const props = defineProps<{
     color: var(--tint);
     background: var(--tint-mute);
   }
+
+  &[data-matches='-'] {
+    color: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
 }
 
 @keyframes wiggle {

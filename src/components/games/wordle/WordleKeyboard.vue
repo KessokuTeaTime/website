@@ -172,7 +172,8 @@ function getState(_key: string): 'found' | 'misplaced' | 'not-found' | undefined
 
   &[data-state='not-found'] {
     color: var(--color-border);
-    background: var(--color-background-soft);
+    background: none;
+    border: 1px solid var(--color-border);
   }
 }
 </style>
