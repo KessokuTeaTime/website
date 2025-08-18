@@ -31,8 +31,15 @@
       "title": "作品",
       "description": "{# #}"
     },
-    "wordle": {
-      "fallback_navigation_label": "猜词游戏"
+    "games": {
+      "wordle": {
+        "fallback_navigation_label": "猜词游戏",
+        "date_picker": {
+          "description": "游玩日期：{# date #}",
+          "play_another": "选择其它日期…",
+          "play": "开始"
+        }
+      }
     }
   }
 }

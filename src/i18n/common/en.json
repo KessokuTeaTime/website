@@ -31,8 +31,15 @@
       "title": "Works",
       "description": "{# #}"
     },
-    "wordle": {
-      "fallback_navigation_label": "Wordle"
+    "games": {
+      "wordle": {
+        "fallback_navigation_label": "Wordle",
+        "date_picker": {
+          "description": "Currently playing at {# date #}",
+          "play_another": "Play another…",
+          "play": "Play"
+        }
+      }
     }
   }
 }

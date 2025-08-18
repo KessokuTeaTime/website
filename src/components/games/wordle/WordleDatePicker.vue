@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { WordleDate, WordlePartialDate, type Month } from '@/utils/wordle'
+import { t } from 'astro-i18n'
 import { computed, onMounted, ref, watchEffect } from 'vue'
 
 const props = defineProps<{
@@ -48,9 +49,13 @@ function onPlay() {
 <template>
   <div class="date-picker-container">
     <p v-if="!isOpened">
-      Currently playing at {{ date.toDate().toDateString() }}
+      {{
+        t('page.games.wordle.date_picker.description', { date: date.toDate().toLocaleDateString() })
+      }}
       <span class="separator left-margin-fix">·</span>
-      <button class="open-date-picker" @click="isOpened = true">Play another…</button>
+      <button class="open-date-picker" @click="isOpened = true">
+        {{ t('page.games.wordle.date_picker.play_another') }}
+      </button>
     </p>
     <template v-else>
       <div class="date-picker">
@@ -77,7 +82,9 @@ function onPlay() {
         </select>
       </div>
       <span class="separator">·</span>
-      <button class="play-at-date" @click="onPlay" :disabled="selectedDate.is(date)">Play</button>
+      <button class="play-at-date" @click="onPlay" :disabled="selectedDate.is(date)">
+        {{ t('page.games.wordle.date_picker.play') }}
+      </button>
     </template>
   </div>
 </template>
