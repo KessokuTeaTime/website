@@ -56,6 +56,9 @@ dependencies:
   vue:
     specifier: ^3.5.18
     version: 3.5.18(typescript@5.8.3)
+  vue-confetti-explosion:
+    specifier: ^1.0.2
+    version: 1.0.2(vue@3.5.18)
 
 devDependencies:
   '@eslint/js':
@@ -5606,6 +5609,15 @@ packages:
         optional: true
     dependencies:
       vite: 6.3.5(sass-embedded@1.89.2)(tsx@4.20.3)
+    dev: false
+
+  /vue-confetti-explosion@1.0.2(vue@3.5.18):
+    resolution: {integrity: sha512-80OboM3/6BItIoZ6DpNcZFqGpF607kjIVc5af56oKgtFmt5yWehvJeoYhkzYlqxrqdBe0Ko4Ie3bWrmLau+dJw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: ^3.0.5
+    dependencies:
+      vue: 3.5.18(typescript@5.8.3)
     dev: false
 
   /vue-demi@0.14.10(vue@3.5.18):

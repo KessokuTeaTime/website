@@ -37,8 +37,7 @@
         "fallback_navigation_label": "猜词游戏",
         "date_picker": {
           "description": "正在游玩：{# date #}",
-          "play_another": "选择其它日期…",
-          "go_to": "前往"
+          "play_another": "选择其它日期…"
         }
       }
     }

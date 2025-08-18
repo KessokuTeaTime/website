@@ -3,6 +3,8 @@ import { computed, onMounted, onUnmounted, reactive, ref, watchEffect } from 'vu
 import { useSound } from '@vueuse/sound'
 import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
 import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
+import WordleDatePicker from './WordleDatePicker.vue'
+import ConfettiExplosion from 'vue-confetti-explosion'
 import typeSoundFile from '/sounds/keyboard-type-1.mp3'
 import pressSoundFile from '/sounds/button-press-1.mp3'
 import {
@@ -13,7 +15,6 @@ import {
   type WordleResponse
 } from '@/utils/wordle'
 import { AnimateOneShot } from '@/utils/animate'
-import WordleDatePicker from './WordleDatePicker.vue'
 import { navigate } from 'astro:transitions/client'
 
 const props = defineProps<{
@@ -260,6 +261,13 @@ function onSubmitUp() {
 
 <template>
   <div class="wordle-container">
+    <div class="confetti">
+      <ConfettiExplosion
+        v-if="animateConfetti.animate"
+        :colors="['var(--tint)', 'var(--tint-soft)', 'var(--tint-mute)']"
+        class="confetti"
+      />
+    </div>
     <WordlePanel
       v-if="isInitialized"
       :history="history"
@@ -305,5 +313,10 @@ function onSubmitUp() {
   --tint: var(--color-tint-pink);
   --tint-soft: var(--color-tint-pink-soft);
   --tint-mute: var(--color-tint-pink-mute);
+}
+
+.confetti {
+  position: fixed;
+  top: 5rem;
 }
 </style>
