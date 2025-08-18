@@ -47,49 +47,49 @@ function onPlay() {
 
 <template>
   <div class="date-picker-container">
-    <span>Currently playing at {{ date.toDate().toDateString() }}</span>
-    <button v-if="!isOpened" class="open-date-picker" @click="isOpened = true">
-      Play another…
-    </button>
-    <div v-else class="date-picker">
-      <span>Year</span>
-      <select class="year" v-model="year">
-        <option v-for="year in WordlePartialDate.years().reverse()" :key="year" :value="year">
-          {{ year }}
-        </option>
-      </select>
+    <p v-if="!isOpened">
+      Currently playing at {{ date.toDate().toDateString() }}
+      <span class="separator left-margin-fix">·</span>
+      <button class="open-date-picker" @click="isOpened = true">Play another…</button>
+    </p>
+    <template v-else>
+      <div class="date-picker">
+        <select class="year" v-model="year">
+          <option v-for="year in WordlePartialDate.years().reverse()" :key="year" :value="year">
+            {{ year }}
+          </option>
+        </select>
+        <span class="separator">/</span>
+        <select class="month" v-model="month">
+          <option
+            v-for="month in WordlePartialDate.months(year).reverse()"
+            :key="month"
+            :value="month"
+          >
+            {{ month }}
+          </option>
+        </select>
+        <span class="separator">/</span>
+        <select class="day" v-model="day">
+          <option v-for="day in selectedDate.partial.days().reverse()" :key="day" :value="day">
+            {{ day }}
+          </option>
+        </select>
+      </div>
       <span class="separator">·</span>
-      <span>Month</span>
-      <select class="month" v-model="month">
-        <option
-          v-for="month in WordlePartialDate.months(year).reverse()"
-          :key="month"
-          :value="month"
-        >
-          {{ month }}
-        </option>
-      </select>
-      <span class="separator">·</span>
-      <span>Day</span>
-      <select class="day" v-model="day">
-        <option v-for="day in selectedDate.partial.days().reverse()" :key="day" :value="day">
-          {{ day }}
-        </option>
-      </select>
-      <span class="separator">·</span>
-      <button class="play-at-date" @click="onPlay" :disabled="selectedDate.is(date)">Go</button>
-    </div>
+      <button class="play-at-date" @click="onPlay" :disabled="selectedDate.is(date)">Play</button>
+    </template>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .date-picker-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   color: var(--color-text-soft);
+  height: 2em;
   gap: 0.4em;
 }
 
@@ -97,12 +97,19 @@ function onPlay() {
   display: flex;
   align-items: center;
   justify-content: baseline;
-  gap: 0.4em;
-  height: 2rem;
+  padding: 2px 6px;
+  margin: -2px 0;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
 }
 
 .separator {
   color: var(--color-border);
+  margin: 0 0.4em;
+
+  &.left-margin-fix {
+    margin-left: 0;
+  }
 }
 
 button {
@@ -111,16 +118,20 @@ button {
 
   &.open-date-picker {
     text-decoration: underline;
-    height: 2rem;
   }
 
   &.play-at-date {
     font-weight: 500;
     color: var(--tint);
+    transition: color var(--duration-fast) ease;
 
     &[disabled] {
       color: var(--tint-mute);
     }
   }
+}
+
+select {
+  border: none;
 }
 </style>

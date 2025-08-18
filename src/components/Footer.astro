@@ -25,7 +25,9 @@ import { marked } from 'marked'
           t('component.footer.footnote.pre', undefined, { locale: Astro.currentLocale })
         )}
       />
-      <LanguageSelector />
+      <div class="select-wrapper">
+        <LanguageSelector />
+      </div>
       <p
         set:html={marked.parse(
           t('component.footer.footnote.post', undefined, { locale: Astro.currentLocale })
