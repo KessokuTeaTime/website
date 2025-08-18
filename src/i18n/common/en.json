@@ -33,11 +33,12 @@
     },
     "games": {
       "wordle": {
+        "title": "Wordle",
         "fallback_navigation_label": "Wordle",
         "date_picker": {
           "description": "Currently playing at {# date #}",
           "play_another": "Play another…",
-          "play": "Play"
+          "go_to": "Go to&ensp;"
         }
       }
     }

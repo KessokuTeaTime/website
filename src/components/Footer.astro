@@ -13,27 +13,27 @@ import { marked } from 'marked'
   <div class="content">
     <p>&copy;{new Date().getFullYear()}&emsp;結束ティータイム</p>
     <p
-      set:html={marked.parse(
+      set:html={marked.parseInline(
         t('component.footer.content', undefined, { locale: Astro.currentLocale })
       )}
     />
   </div>
   <div class="footnote">
-    <div class="flatten">
-      <p
-        set:html={marked.parse(
+    <p>
+      <span
+        set:html={marked.parseInline(
           t('component.footer.footnote.pre', undefined, { locale: Astro.currentLocale })
         )}
       />
-      <div class="select-wrapper">
+      <span class="select-wrapper">
         <LanguageSelector />
-      </div>
-      <p
-        set:html={marked.parse(
+      </span>
+      <span
+        set:html={marked.parseInline(
           t('component.footer.footnote.post', undefined, { locale: Astro.currentLocale })
         )}
       />
-    </div>
+    </p>
     <a
       href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`}
       target="_blank"
@@ -100,20 +100,13 @@ import { marked } from 'marked'
     }
   }
 
-  .flatten {
-    display: flex;
-    height: fit-content;
-    width: fit-content;
-    align-items: baseline;
-
-    & > * {
-      display: inline-block;
-    }
-  }
-
   .commit-hash {
     color: var(--color-border);
     font-family: var(--font-mono);
     text-decoration: none;
+  }
+
+  .select-wrapper {
+    margin: 0 -4px;
   }
 </style>

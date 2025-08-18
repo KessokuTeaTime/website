@@ -8,7 +8,9 @@ import { t } from 'astro-i18n'
 <IndexLayout title={makeTitle('404')} description="Page not found">
   <div class="error-container">
     <slot
-      set:html={marked.parse(t('page.404.content', undefined, { locale: Astro.currentLocale }))}
+      set:html={marked.parseInline(
+        t('page.404.content', undefined, { locale: Astro.currentLocale })
+      )}
     />
   </div>
 </IndexLayout>

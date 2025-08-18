@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watchEffect } from 'vue'
 import { useSound } from '@vueuse/sound'
 import WordlePanel from '@/components/games/wordle/WordlePanel.vue'
 import WordleKeyboard from '@/components/games/wordle/WordleKeyboard.vue'
@@ -15,6 +15,10 @@ import {
 import { AnimateOneShot } from '@/utils/animate'
 import WordleDatePicker from './WordleDatePicker.vue'
 import { navigate } from 'astro:transitions/client'
+
+const props = defineProps<{
+  locale?: string
+}>()
 
 // Sounds
 
@@ -33,13 +37,15 @@ const pressSound = useSound(pressSoundFile, {
 
 // Reactives
 
-const context = ref(new SessionContext('https://api.kessokuteatime.work/wordle'))
-const response = ref<WordleResponse | null>(null)
+const context = reactive(new SessionContext('https://api.kessokuteatime.work/wordle'))
+const response = reactive<{ inner: WordleResponse | null }>({ inner: null })
+
 const input = ref('')
+const isInitialized = ref(false)
 const isPending = ref(false)
 
 const history = computed(() => {
-  return response.value?.history ?? []
+  return response.inner?.history ?? []
 })
 
 const date = computed(() => {
@@ -59,11 +65,11 @@ const animateConfetti = ref(new AnimateOneShot())
 // Reactives: game state
 
 const lettersCount = computed(() => {
-  return response.value?.lettersCount ?? 0
+  return response.inner?.lettersCount ?? 0
 })
 
 const remainingTries = computed(() => {
-  return response.value?.remainingTries ?? 0
+  return response.inner?.remainingTries ?? 0
 })
 
 const canDelete = computed(() => {
@@ -75,7 +81,7 @@ const canSubmit = computed(() => {
 })
 
 const isCompleted = computed(() => {
-  return response.value?.isCompleted ?? false
+  return response.inner?.isCompleted ?? false
 })
 
 const isFinished = computed(() => {
@@ -86,8 +92,8 @@ const isFinished = computed(() => {
 
 const keys = computed(() => {
   function find(matches: '+' | '?' | '-'): string[] {
-    if (response.value != null) {
-      return response.value.history.flatMap((letters) =>
+    if (history.value != null) {
+      return history.value.flatMap((letters) =>
         letters.filter((letter) => letter.matches == matches).map((letter) => letter.letter)
       )
     } else {
@@ -128,15 +134,17 @@ watchEffect(() => {
 
 async function start() {
   isPending.value = true
-  await context.value.init()
-  response.value = await context.value.start({ date: date.value })
+  await context.init()
+  response.inner = await context.start({ date: date.value })
+
   isPending.value = false
+  isInitialized.value = true
 }
 
 async function submit() {
   try {
     isPending.value = true
-    response.value = await context.value.submit({ date: date.value }, { answer: input.value })
+    response.inner = await context.submit({ date: date.value }, { answer: input.value })
     input.value = ''
   } catch (err: any) {
     switch (err.kind) {
@@ -167,7 +175,7 @@ function onSelectDate(date: WordleDate) {
 // Functions: keyboard events
 
 function onKeyDown(event: KeyboardEvent) {
-  if (!isFinished.value && !event.repeat) {
+  if (!isPending.value && !isFinished.value && !event.repeat) {
     if (
       keyboardRows.filter(
         (s) =>
@@ -192,7 +200,7 @@ function onKeyDown(event: KeyboardEvent) {
 }
 
 function onKeyUp(event: KeyboardEvent) {
-  if (!isFinished.value && !event.repeat) {
+  if (!isPending.value && !isFinished.value && !event.repeat) {
     if (keyboardRows.filter((s) => s.includes(event.key)).length > 0) {
       onTypeUp(event.key)
     } else {
@@ -237,7 +245,7 @@ function onDeleteUp() {
 }
 
 async function onSubmitDown() {
-  if (remainingTries.value > 0 && input.value.length == response.value?.lettersCount) {
+  if (remainingTries.value > 0 && input.value.length == lettersCount.value) {
     pressSound.play({ id: 'on' })
     await submit()
   }
@@ -253,6 +261,7 @@ function onSubmitUp() {
 <template>
   <div class="wordle-container">
     <WordlePanel
+      v-if="isInitialized"
       :history="history"
       :input="input"
       :lettersCount="lettersCount"
@@ -276,7 +285,12 @@ function onSubmitUp() {
       @submitDown="onSubmitDown"
       @submitUp="onSubmitUp"
     />
-    <WordleDatePicker :date="date" @selectDate="onSelectDate" />
+    <WordleDatePicker
+      v-if="isInitialized"
+      :locale="locale"
+      :date="date"
+      @selectDate="onSelectDate"
+    />
   </div>
 </template>
 

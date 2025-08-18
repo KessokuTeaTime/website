@@ -25,11 +25,11 @@ const { title, description } = Astro.props
     <div class="merry-go-round-placeholder"></div>
     <div class="content-container prose">
       <h5 class="language-selector">
-        <p set:html={marked.parse(t('page.index.language_selector.pre'))} />
-        <div class="select-wrapper">
+        <span set:html={marked.parseInline(t('page.index.language_selector.pre'))} />
+        <span class="select-wrapper">
           <LanguageSelector />
-        </div>
-        <p set:html={marked.parse(t('page.index.language_selector.post'))} />
+        </span>
+        <span set:html={marked.parseInline(t('page.index.language_selector.post'))} />
       </h5>
       <slot>
         <Overview />
@@ -74,14 +74,9 @@ const { title, description } = Astro.props
     height: fit-content;
     width: fit-content;
     align-items: baseline;
-    font-style: italic;
 
     color: var(--color-text-soft);
     padding-top: 4rem;
     margin-bottom: -2.75rem;
-
-    & > * {
-      display: inline-block;
-    }
   }
 </style>

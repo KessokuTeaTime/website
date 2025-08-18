@@ -6,13 +6,13 @@ import { t } from 'astro-i18n'
 ---
 
 <IndexLayout
-  title={makeTitle('Wordle')}
+  title={makeTitle(t('page.games.wordle.title'))}
   fallbackNavigationLabel={t('page.games.wordle.fallback_navigation_label', undefined, {
     locale: Astro.currentLocale
   })}
 >
   <div class="content-container">
-    <WordleGame class="wordle" client:only="vue" />
+    <WordleGame locale={Astro.currentLocale} client:only="vue" />
   </div>
 </IndexLayout>
 
