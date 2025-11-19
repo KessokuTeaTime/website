@@ -19,7 +19,7 @@ env:
 
 jobs:
   build:
-    name: Build image
+    name: Build the image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
