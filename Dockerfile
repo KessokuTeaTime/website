@@ -8,7 +8,7 @@ FROM base AS prod
 
 WORKDIR /app
 COPY pnpm-lock.yaml ./
-RUN pnpm fetch --prod
+RUN pnpm fetch
 
 COPY . /app
 RUN pnpm run build
