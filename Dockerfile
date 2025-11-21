@@ -18,4 +18,3 @@ RUN pnpm run build
 
 FROM nginx:alpine AS runtime
 COPY --from=build /app/dist /var/html
-RUN ls /var/html
