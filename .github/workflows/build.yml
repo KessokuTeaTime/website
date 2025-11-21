@@ -61,5 +61,5 @@ jobs:
           payload: |
             {
               "image": "${{ secrets.DOCKER_HUB_USERNAME }}/${{ vars.DOCKER_IMAGE_NAME }}:latest",
-              "target": "www",
+              "target": "www"
             }
