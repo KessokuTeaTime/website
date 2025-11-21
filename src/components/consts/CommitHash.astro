@@ -1,6 +1,16 @@
 ---
-import * as child from 'child_process'
+import { execSync } from 'node:child_process'
 
-export const commitHash = child.execSync('git rev-parse HEAD').toString()
-export const commitHashShort = child.execSync('git rev-parse --short HEAD').toString()
+function safeExec(cmd: string): string {
+  try {
+    return execSync(cmd).toString().trim()
+  } catch {
+    return 'unknown'
+  }
+}
+
+export const commitHash = process.env.GIT_COMMIT ?? safeExec('git rev-parse HEAD')
+
+export const commitHashShort =
+  process.env.GIT_COMMIT_SHORT ?? safeExec('git rev-parse --short HEAD')
 ---
