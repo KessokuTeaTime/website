@@ -17,4 +17,5 @@ COPY . .
 RUN pnpm run build
 
 FROM nginx:alpine AS runtime
-COPY --from=build /app/dist /var/html
+COPY --from=build /app/dist /app/dist
+RUN echo "listing /app/dist:" && ls /app/dist
