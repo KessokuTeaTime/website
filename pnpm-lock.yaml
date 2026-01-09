@@ -50,6 +50,9 @@ importers:
       marked:
         specifier: ^16.4.2
         version: 16.4.2
+      serve:
+        specifier: ^14.2.5
+        version: 14.2.5
       tsx:
         specifier: ^4.20.6
         version: 4.20.6
@@ -84,9 +87,6 @@ importers:
       sass-embedded:
         specifier: ^1.93.3
         version: 1.93.3
-      serve:
-        specifier: ^14.2.5
-        version: 14.2.5
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
