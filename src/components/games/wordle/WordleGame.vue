@@ -13,8 +13,8 @@ import {
   SessionSubmitError,
   WordleDate,
   type WordleResponse
-} from '@/utils/wordle'
-import { AnimateOneShot } from '@/utils/animate'
+} from '@/lib/wordle'
+import { AnimateOneShot } from '@/lib/animate'
 import { navigate } from 'astro:transitions/client'
 
 const props = defineProps<{

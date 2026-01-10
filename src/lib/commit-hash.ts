@@ -1,4 +1,3 @@
----
 import { execSync } from 'node:child_process'
 
 function safeExec(cmd: string): string {
@@ -13,4 +12,3 @@ export const commitHash = process.env.GIT_COMMIT ?? safeExec('git rev-parse HEAD
 
 export const commitHashShort =
   process.env.GIT_COMMIT_SHORT ?? safeExec('git rev-parse --short HEAD')
----

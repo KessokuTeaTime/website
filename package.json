@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "serve": "serve dist -l $PORT -s",
+    "serve": "serve dist -l $PORT",
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

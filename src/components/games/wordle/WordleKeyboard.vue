@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
-import { keyboardRows } from '@/utils/wordle'
+import { keyboardRows } from '@/lib/wordle'
 
 const props = defineProps<{
   keys?: { found: string; misplaced: string; notFound: string }

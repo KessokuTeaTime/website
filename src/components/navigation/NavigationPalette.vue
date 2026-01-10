@@ -3,9 +3,9 @@ import { computed, onMounted, useTemplateRef } from 'vue'
 import { type PageInfo } from '@/types'
 import { config } from '@/config'
 import { useWindowSize } from '@vueuse/core'
-import { layoutWidth } from '@/utils/consts'
-import { remToPx } from '@/utils/conversion'
-import { getLocalizedValue } from '@/utils/i18n'
+import { layoutWidth } from '@/lib/consts'
+import { remToPx } from '@/lib/conversion'
+import { getLocalizedValue } from '@/lib/i18n'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 
 // Definitions

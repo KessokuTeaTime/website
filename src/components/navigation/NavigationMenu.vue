@@ -2,7 +2,7 @@
 import NavigationPalette from './NavigationPalette.vue'
 import { ref, computed } from 'vue'
 import { config } from '@/config'
-import { getLocalizedValue } from '@/utils/i18n'
+import { getLocalizedValue } from '@/lib/i18n'
 
 const props = defineProps<{
   locale?: string

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { WordleDate, WordlePartialDate, type Month } from '@/utils/wordle'
+import { WordleDate, WordlePartialDate, type Month } from '@/lib/wordle'
 import { t } from 'astro-i18n'
 import { computed, onMounted, ref, watchEffect } from 'vue'
 import { marked } from 'marked'

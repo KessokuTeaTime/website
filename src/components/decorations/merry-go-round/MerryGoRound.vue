@@ -3,8 +3,8 @@ import TextKessoku from './TextKessoku.vue'
 import TextTea from './TextTea.vue'
 import TextTime from './TextTime.vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { remToPx } from '@/utils/conversion'
-import { Lerp } from '@/utils/lerp'
+import { remToPx } from '@/lib/conversion'
+import { Lerp } from '@/lib/lerp'
 
 // Constants
 

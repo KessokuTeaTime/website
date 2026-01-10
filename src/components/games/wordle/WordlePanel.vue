@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Word } from '@/utils/wordle'
+import type { Word } from '@/lib/wordle'
 
 const props = defineProps<{
   history: Word[]

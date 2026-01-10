@@ -1,4 +1,4 @@
-import type { Localized } from '@/utils/i18n'
+import type { Localized } from '@/lib/i18n'
 
 export interface SiteInfo {
   title: string
