@@ -1,7 +1,15 @@
 ---
 import Parent from '@/pages/index.astro'
+import Overview from '@/components/Overview.astro'
+import Title from '@/components/attachments/index/en/Title.mdx'
+import Description from '@/components/attachments/index/en/Description.mdx'
 
 const props = Astro.props
 ---
 
-<Parent {...props} />
+<Parent {...props}>
+  <Overview>
+    <Title slot="title" />
+    <Description slot="description" />
+  </Overview>
+</Parent>

@@ -3,7 +3,9 @@ import IndexLayout from '@/layouts/IndexLayout.astro'
 import Footer from '@/components/Footer.astro'
 import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.vue'
 import LanguageSelector from '@/components/navigation/LanguageSelector.astro'
-import Overview from '@/components/attachments/index/Overview.mdx'
+import Overview from '@/components/Overview.astro'
+import Title from '@/components/attachments/index/Title.mdx'
+import Description from '@/components/attachments/index/Description.mdx'
 import { t } from 'astro-i18n'
 import { marked } from 'marked'
 
@@ -32,7 +34,10 @@ const { title, description } = Astro.props
         <span set:html={marked.parseInline(t('page.index.language_selector.post'))} />
       </h5>
       <slot>
-        <Overview />
+        <Overview>
+          <Title slot="title" />
+          <Description slot="description" />
+        </Overview>
       </slot>
     </div>
   </Fragment>

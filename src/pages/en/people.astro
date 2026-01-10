@@ -1,7 +1,10 @@
 ---
 import Parent from '@/pages/people.astro'
+import Title from '@/components/attachments/people/en/Title.mdx'
 
 const props = Astro.props
 ---
 
-<Parent {...props} />
+<Parent {...props}>
+  <Title slot="title" />
+</Parent>

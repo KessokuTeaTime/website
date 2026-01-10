@@ -1,9 +1,11 @@
 ---
 import { getLanguageName } from '@/lib/i18n'
 import { getRelativeLocaleUrl, getRelativeLocaleUrlList } from 'astro:i18n'
+
+const props = Astro.props
 ---
 
-<select name="language selector" id="language-selector">
+<select name="language selector" id="language-selector" {...props}>
   {
     getRelativeLocaleUrlList()
       .toSorted()

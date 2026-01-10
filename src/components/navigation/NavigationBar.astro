@@ -1,17 +1,18 @@
 ---
+import type { HTMLAttributes } from 'astro/types'
 import ColoredBars from '@/components/decorations/ColoredBars.vue'
 import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
 import { t } from 'astro-i18n'
 
-interface Props {
+interface Props extends HTMLAttributes<'div'> {
   fallbackLabel?: string
 }
 
-const { fallbackLabel } = Astro.props
+const { fallbackLabel, ...props } = Astro.props
 ---
 
-<div class="nav-container">
+<div class:list={['nav-container', props.class]} {...props}>
   <div class="left">
     <di class="logo">
       <a href={Astro.locals.root}><Logo /></a>

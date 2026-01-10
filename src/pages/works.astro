@@ -1,5 +1,6 @@
 ---
 import IndexLayout from '@/layouts/IndexLayout.astro'
+import Title from '@/components/attachments/works/Title.mdx'
 import { makeTitle } from '@/config'
 import { t } from 'astro-i18n'
 ---
@@ -7,8 +8,8 @@ import { t } from 'astro-i18n'
 <IndexLayout title={makeTitle(t('page.works.title'))} , description={t('page.works.description')}>
   <Fragment>
     <div class="content-container prose">
-      <slot>
-        <h1>Works</h1>
+      <slot name="title">
+        <Title />
       </slot>
     </div>
   </Fragment>

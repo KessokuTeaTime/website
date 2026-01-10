@@ -1,0 +1,71 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'div'> {
+  borderThickness?: string
+  cornerSize?: string
+}
+
+const { borderThickness = '1px', cornerSize = '3.25em', ...props } = Astro.props
+---
+
+<div
+  class:list={['card', props.class]}
+  style={`--border-thickness: ${borderThickness}; --corner-size: ${cornerSize}`}
+  {...props}
+>
+  <div class="content"><slot /></div>
+  <div class="corner" data-corner="lt"></div>
+  <div class="corner" data-corner="rt"></div>
+  <div class="corner" data-corner="rb"></div>
+  <div class="corner" data-corner="lb"></div>
+</div>
+
+<style lang="scss">
+  .card {
+    position: relative;
+    overflow: hidden;
+
+    & > .content {
+      padding: 2em;
+      border-left: var(--border-thickness) solid var(--color-border);
+      border-right: var(--border-thickness) solid var(--color-border);
+      border-top: var(--border-thickness) dashed var(--color-border);
+      border-bottom: var(--border-thickness) dashed var(--color-border);
+      box-sizing: border-box;
+    }
+
+    & > .corner {
+      position: absolute;
+      width: var(--corner-size);
+      height: var(--corner-size);
+      background: radial-gradient(
+        circle at center,
+        var(--color-background) 0%,
+        var(--color-background) calc(var(--corner-size) / 2 - var(--border-thickness)),
+        var(--color-border) calc(var(--corner-size) / 2 - var(--border-thickness))
+      );
+      border-radius: 50%;
+
+      &[data-corner='lt'] {
+        top: calc(var(--corner-size) / -2);
+        left: calc(var(--corner-size) / -2);
+      }
+
+      &[data-corner='rt'] {
+        top: calc(var(--corner-size) / -2);
+        right: calc(var(--corner-size) / -2);
+      }
+
+      &[data-corner='rb'] {
+        bottom: calc(var(--corner-size) / -2);
+        right: calc(var(--corner-size) / -2);
+      }
+
+      &[data-corner='lb'] {
+        bottom: calc(var(--corner-size) / -2);
+        left: calc(var(--corner-size) / -2);
+      }
+    }
+  }
+</style>

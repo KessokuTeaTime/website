@@ -1,9 +1,10 @@
 ---
 import Parent from '@/pages/people.astro'
+import Title from '@/components/attachments/people/zh/Title.mdx'
+
+const props = Astro.props
 ---
 
-<Parent>
-  <Fragment>
-    <h1>成员</h1>
-  </Fragment>
+<Parent {...props}>
+  <Title slot="title" />
 </Parent>
