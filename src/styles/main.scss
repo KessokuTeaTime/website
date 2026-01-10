@@ -428,7 +428,7 @@ img {
 
   &[loading='lazy'] {
     opacity: 0;
-    animation: fadeIn var(--duration-fast) ease-out forwards;
+    animation: fade-in var(--duration-fast) ease-out forwards;
   }
 }
 
@@ -437,7 +437,7 @@ img {
   display: block;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }

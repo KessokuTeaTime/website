@@ -4,6 +4,7 @@ import LanguageSelector from './navigation/LanguageSelector.astro'
 import { commitHash, commitHashShort } from '@/lib/commit-hash'
 import { t } from 'astro-i18n'
 import { marked } from 'marked'
+import { getCopyrightSpan } from '@/lib/copyright'
 ---
 
 <div class="container">
@@ -11,7 +12,7 @@ import { marked } from 'marked'
     <Logo />
   </div>
   <div class="content">
-    <p>&copy;{new Date().getFullYear()}&emsp;結束ティータイム</p>
+    <p>&copy; {getCopyrightSpan(2024)}&emsp;結束ティータイム</p>
     <p
       set:html={marked.parseInline(
         t('component.footer.content', undefined, { locale: Astro.currentLocale })

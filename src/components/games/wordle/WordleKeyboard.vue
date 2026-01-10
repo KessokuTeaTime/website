@@ -111,7 +111,7 @@ function getState(_key: string): 'found' | 'misplaced' | 'not-found' | undefined
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  width: 100svw;
   height: min-content;
   gap: var(--gap);
 }

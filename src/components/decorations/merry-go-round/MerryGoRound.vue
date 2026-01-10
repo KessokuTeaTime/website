@@ -111,7 +111,7 @@ function stopWindowMoveDetection() {
 .merry-go-round-container {
   width: 100%;
   height: v-bind(heightSemantic);
-  overflow: hidden;
+  overflow: visible;
   margin-top: v-bind(marginSemantic);
   --text-width: calc(v-bind(heightSemantic) / v-bind(aspectRatio));
   --offset: mod(
