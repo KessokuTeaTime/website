@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { WordleDate, WordlePartialDate, type Month } from '@/lib/wordle'
+import { renderInline } from '@/lib/markdown'
 import { t } from 'astro-i18n'
 import { computed, onMounted, ref, watchEffect } from 'vue'
-import { marked } from 'marked'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps<{
@@ -53,7 +53,7 @@ function onPlay() {
     <p v-if="!isOpened">
       <span
         v-html="
-          marked.parseInline(
+          renderInline(
             t(
               'page.games.wordle.date_picker.description',
               { date: date.toDate().toLocaleDateString() },
@@ -66,7 +66,7 @@ function onPlay() {
       <button
         class="underline"
         v-html="
-          marked.parseInline(t('page.games.wordle.date_picker.play_another', undefined, { locale }))
+          renderInline(t('page.games.wordle.date_picker.play_another', undefined, { locale }))
         "
         @click="isOpened = true"
       />

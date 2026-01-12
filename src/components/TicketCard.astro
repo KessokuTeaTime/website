@@ -14,7 +14,8 @@ const { borderThickness = '1px', cornerSize = '3.25em', ...props } = Astro.props
   style={`--border-thickness: ${borderThickness}; --corner-size: ${cornerSize}`}
   {...props}
 >
-  <div class="content"><slot /></div>
+  <slot />
+  <div class="border"></div>
   <div class="corner" data-corner="lt"></div>
   <div class="corner" data-corner="rt"></div>
   <div class="corner" data-corner="rb"></div>
@@ -25,14 +26,23 @@ const { borderThickness = '1px', cornerSize = '3.25em', ...props } = Astro.props
   .card {
     position: relative;
     overflow: hidden;
+    min-width: calc(var(--corner-size) * 2);
+    min-height: calc(var(--corner-size) * 2);
 
-    & > .content {
-      padding: 2em;
+    & > .border {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+
       border-left: var(--border-thickness) solid var(--color-border);
       border-right: var(--border-thickness) solid var(--color-border);
       border-top: var(--border-thickness) dashed var(--color-border);
       border-bottom: var(--border-thickness) dashed var(--color-border);
       box-sizing: border-box;
+
+      pointer-events: none;
     }
 
     & > .corner {

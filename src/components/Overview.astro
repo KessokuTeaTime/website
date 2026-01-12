@@ -6,25 +6,67 @@ const props = Astro.props
 
 <div {...props}>
   <slot name="title" />
-  <TicketCard class="description-card" borderThickness="1px" cornerSize="3.25em">
+  <div class="spacing" data-spacing="1"></div>
+  <TicketCard class="card description-card" borderThickness="1px" cornerSize="3.25em">
     <slot name="description" />
   </TicketCard>
-  <TicketCard class="portfolio-card" borderThickness="1px" cornerSize="3.25em">
+  <TicketCard class="card portfolio-card" borderThickness="1px" cornerSize="3.25em">
     <slot name="portfolio" />
   </TicketCard>
 </div>
 
 <style lang="scss">
+  @use '@/styles/mixins' as *;
+
+  .spacing {
+    &[data-spacing='1'] {
+      height: 2.5rem;
+
+      @include layout(desktop) {
+        height: 0;
+      }
+    }
+  }
+
+  .card {
+    padding: 1.5em 1em;
+
+    --hr-spacing: 2em;
+    --hr-padding: 1em;
+
+    @include layout(compact) {
+      padding: 2em 1px;
+      margin: 0 -1px;
+
+      --hr-spacing: 2em;
+      --hr-padding: 0;
+
+      &:last-child {
+        mask: linear-gradient(to bottom, black calc(100% - 2em), transparent calc(100% - 2em));
+      }
+    }
+
+    @include layout(desktop) {
+      padding: 2em;
+      margin: 4.25em 2.5em;
+
+      --hr-spacing: 3em;
+      --hr-padding: 2em;
+    }
+  }
+
   .description-card {
-    margin: 4.25em 2.5em;
-    rotate: -3.27deg;
-    transform: translateX(-2.1%);
+    @include layout(desktop) {
+      rotate: -3.27deg;
+      transform: translateX(-3.8%);
+    }
   }
 
   .portfolio-card {
-    margin: 4.25em 2.5em;
-    rotate: 1.97deg;
-    transform: translateX(3.2%);
+    @include layout(desktop) {
+      rotate: 2.15deg;
+      transform: translateX(4.2%);
+    }
   }
 
   .links {

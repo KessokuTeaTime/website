@@ -7,8 +7,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -22,7 +20,7 @@ html {
 body {
   margin: 0;
   width: 100%;
-  height: max(100%, fit-content);
+  height: fit-content;
   color: var(--color-text);
   background: var(--color-background);
   transition:

@@ -134,3 +134,9 @@
     --color-text-soft: var(--vt-c-text-dark-2);
   }
 }
+
+/* custom properties for main.scss */
+:root {
+  --hr-spacing: 3.75rem;
+  --hr-padding: 0;
+}

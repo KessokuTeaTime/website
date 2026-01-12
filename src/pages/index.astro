@@ -7,7 +7,7 @@ import Overview from '@/components/Overview.astro'
 import Title from '@/components/attachments/index/Title.mdx'
 import Description from '@/components/attachments/index/Description.mdx'
 import { t } from 'astro-i18n'
-import { marked } from 'marked'
+import { renderInline } from '@/lib/markdown'
 
 interface Props {
   title?: string
@@ -27,11 +27,11 @@ const { title, description } = Astro.props
     <div class="merry-go-round-placeholder"></div>
     <div class="content-container prose">
       <h5 class="language-selector">
-        <span set:html={marked.parseInline(t('page.index.language_selector.pre'))} />
+        <span set:html={renderInline(t('page.index.language_selector.pre'))} />
         <span class="select-wrapper">
           <LanguageSelector />
         </span>
-        <span set:html={marked.parseInline(t('page.index.language_selector.post'))} />
+        <span set:html={renderInline(t('page.index.language_selector.post'))} />
       </h5>
       <slot>
         <Overview>
@@ -47,6 +47,8 @@ const { title, description } = Astro.props
 </IndexLayout>
 
 <style lang="scss">
+  @use '@/styles/mixins' as *;
+
   .background {
     position: fixed;
     top: 0;
@@ -76,6 +78,14 @@ const { title, description } = Astro.props
       var(--color-background) 4rem,
       var(--color-background) 100%
     );
+
+    --hr-padding: 2rem;
+
+    @include layout(compact) {
+      padding: 2rem 0;
+
+      --hr-padding: 0;
+    }
   }
 
   .language-selector {

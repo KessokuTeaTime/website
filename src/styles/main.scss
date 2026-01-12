@@ -48,7 +48,7 @@ h6 {
   font-stretch: expanded;
 }
 
-.disable-scrollbars {
+.scrollbars-disabled {
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -167,26 +167,19 @@ kbd {
 }
 
 hr {
-  margin: 3.75em 0;
+  margin: var(--hr-spacing) calc(-1 * var(--hr-padding));
+  width: calc(100% + (2 * var(--hr-padding)));
   height: auto;
-  border: none;
   background: none;
-  text-align: center;
   position: relative;
 
-  &::before {
-    content: '***';
-    font-family: var(--font-mono);
-    color: var(--color-border);
-    font-size: 0.875em;
-    letter-spacing: 0.25em;
-  }
+  border: none;
+  border-top: 1px dashed var(--color-border);
 }
 
 sup,
 sub,
 sup a {
-  margin: 0 0.125em;
   font-size: 0.875em;
   line-height: 1;
 }

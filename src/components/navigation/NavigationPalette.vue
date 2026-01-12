@@ -123,7 +123,7 @@ function getPageName(pageInfo: PageInfo): string {
 </script>
 
 <template>
-  <div class="links-container disable-scrollbars" ref="links-container">
+  <div class="links-container scrollbars-disabled" ref="links-container">
     <div spacer="leading"></div>
     <div
       v-for="(pageInfo, index) in config.pageInfo"
