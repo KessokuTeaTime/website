@@ -1,27 +1,16 @@
 import { defineConfig } from 'astro/config'
+import node from '@astrojs/node'
 import path from 'path'
 import vue from '@astrojs/vue'
 import mdx from '@astrojs/mdx'
-import devtoolsJson from 'vite-plugin-devtools-json'
-import type { Extension } from 'micromark-util-types'
-import { micromarkExtensions } from '@/lib/markdown'
 import remarkGfm from 'remark-gfm'
 
 export default defineConfig({
+  adapter: node({ mode: 'standalone' }),
   integrations: [
     vue(),
     mdx({
-      remarkPlugins: [
-        remarkGfm,
-        (_tree, file) => {
-          const data = file.data as {
-            micromarkExtensions?: Extension[]
-          }
-
-          data.micromarkExtensions ??= []
-          data.micromarkExtensions.push(...micromarkExtensions)
-        }
-      ]
+      remarkPlugins: [remarkGfm]
     })
   ],
   i18n: {
@@ -37,11 +26,7 @@ export default defineConfig({
       alias: {
         '@': path.resolve('./src')
       }
-    },
-    plugins: [
-      // https://github.com/Alexandre-Fernandez/astro-i18n/issues/87#issuecomment-2929474869
-      devtoolsJson()
-    ]
+    }
   },
   devToolbar: {
     enabled: false

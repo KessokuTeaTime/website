@@ -1,25 +1,62 @@
 ---
-import IndexLayout from '@/layouts/IndexLayout.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
 import Title from '@/components/attachments/people/Title.mdx'
 import { makeTitle } from '@/config'
 import { t } from 'astro-i18n'
+import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.vue'
 ---
 
-<IndexLayout title={makeTitle(t('page.people.title'))} , description={t('page.people.description')}>
+<BaseLayout title={makeTitle(t('page.people.title'))} , description={t('page.people.description')}>
+  <Fragment slot="background">
+    <div class="background" transition:name="background">
+      <MerryGoRound client:idle size={{ width: 'window', height: { fixed: [60, 'vh'] } }} />
+    </div>
+  </Fragment>
   <Fragment>
+    <div class="merry-go-round-placeholder"></div>
     <div class="content-container prose">
       <slot name="title">
         <Title />
       </slot>
     </div>
   </Fragment>
-</IndexLayout>
+</BaseLayout>
 
 <style lang="scss">
+  @use '@/styles/mixins' as *;
+
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100svw;
+    height: 45svh;
+    z-index: -1;
+  }
+
+  .merry-go-round-placeholder {
+    height: 60vh;
+    margin-bottom: -12rem;
+  }
+
   .content-container {
     padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--color-background) 4rem,
+      var(--color-background) 100%
+    );
+
+    --hr-padding: 2rem;
+
+    @include layout(compact) {
+      padding: 2rem 0;
+
+      --hr-padding: 0;
+    }
   }
 </style>

@@ -3,21 +3,13 @@ import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
-import { cjkFriendlyExtension } from 'micromark-extension-cjk-friendly'
-import { gfmStrikethroughCjkFriendly } from 'micromark-extension-cjk-friendly-gfm-strikethrough'
-
-export const micromarkExtensions = [cjkFriendlyExtension(), gfmStrikethroughCjkFriendly()]
 
 // processor
 
-let processor: ReturnType<typeof createProcessor /* myth */> | null = null
+let processor: ReturnType<typeof createProcessor> | null = null
 
 function createProcessor() {
-  return unified()
-    .use(remarkParse, { extensions: micromarkExtensions })
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeStringify)
+  return unified().use(remarkParse).use(remarkGfm).use(remarkRehype).use(rehypeStringify)
 }
 
 function getProcessor() {

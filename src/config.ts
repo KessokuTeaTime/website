@@ -77,5 +77,9 @@ export const config: Config = {
 }
 
 export const makeTitle = (subtitle: string): string => {
-  return `${subtitle} - ${config.siteInfo.title}`
+  if (subtitle.trim() !== '') {
+    return `${subtitle} - ${config.siteInfo.title}`
+  } else {
+    return config.siteInfo.title
+  }
 }

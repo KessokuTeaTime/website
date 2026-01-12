@@ -2,9 +2,28 @@
 import TextKessoku from './TextKessoku.vue'
 import TextTea from './TextTea.vue'
 import TextTime from './TextTime.vue'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { remToPx } from '@/lib/conversion'
+import { computed, onMounted, onUnmounted, ref, type PropType } from 'vue'
 import { Lerp } from '@/lib/lerp'
+import unitFlip from 'unitflip'
+import type { Unit } from '@/lib/conversion'
+
+// Props
+
+interface Props {
+  margin?: [number, Unit]
+  size?: {
+    width: 'window' | { fixed: [number, Unit] }
+    height: 'window' | { fixed: [number, Unit] }
+  }
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  margin: () => [3.2, 'rem'],
+  size: () => ({
+    width: 'window',
+    height: 'window'
+  })
+})
 
 // Constants
 
@@ -20,7 +39,6 @@ const timeThicknessFactor = 69.72
 const aspectRatio =
   (kessokuLengthFactor + teaLengthFactor + timeLengthFactor) /
   Math.max(kessokuThicknessFactor, teaThicknessFactor, timeThicknessFactor)
-const marginSemantic = `3.2rem`
 
 // Variables
 
@@ -34,6 +52,7 @@ const height = ref(0)
 const count = ref(1)
 const offsetLerp = ref(new Lerp())
 
+const marginSemantic = computed(() => `${props.margin[0]}${props.margin[1]}`)
 const heightSemantic = computed(() => `${height.value}px`)
 const offsetSemantic = computed(() => `${offsetLerp.value.value}px`)
 
@@ -56,10 +75,25 @@ onUnmounted(() => {
 
 // Functions
 
+function getWidth(): number {
+  if (props.size.width === 'window') {
+    return window.innerWidth
+  } else {
+    return unitFlip(props.size.width.fixed[0], props.size.width.fixed[1], 'px')
+  }
+}
+function getHeight(): number {
+  if (props.size.height === 'window') {
+    return window.innerHeight
+  } else {
+    return unitFlip(props.size.height.fixed[0], props.size.height.fixed[1], 'px')
+  }
+}
+
 function updateCount() {
-  let margin = remToPx(marginSemantic)
-  height.value = window.innerHeight - margin
-  count.value = Math.floor(window.innerWidth / ((window.innerHeight - margin) / aspectRatio)) + 1
+  let margin = unitFlip(props.margin[0], props.margin[1], 'px')
+  height.value = getHeight() - margin
+  count.value = Math.floor(getWidth() / ((getHeight() - margin) / aspectRatio)) + 1
 }
 
 function updateOffset() {

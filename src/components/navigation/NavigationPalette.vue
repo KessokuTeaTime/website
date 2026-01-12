@@ -4,26 +4,30 @@ import { type PageInfo } from '@/types'
 import { config } from '@/config'
 import { useWindowSize } from '@vueuse/core'
 import { layoutWidth } from '@/lib/consts'
-import { remToPx } from '@/lib/conversion'
 import { getLocalizedValue } from '@/lib/i18n'
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import unitFlip from 'unitflip'
+import type { Unit } from '@/lib/conversion'
 
 // Definitions
 
-const props = defineProps<{
+interface Props {
   locale?: string
   pageInfo?: PageInfo
-}>()
+  gap?: [number, Unit]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  gap: () => [1, 'rem']
+})
 
 const emit = defineEmits({
   back: null
 })
 
-// Constants
-
-const gapSemantic = '1rem'
-
 // Reactives
+
+const gapSemantic = computed(() => `${props.gap[0]}${props.gap[1]}`)
 
 const linksContainer = useTemplateRef('links-container')
 const links = useTemplateRef('links')
@@ -104,7 +108,7 @@ function getUrl(pageInfo: PageInfo): string {
 
 function scrollToAlignmentElement() {
   if (linksContainer.value != null && alignmentElement.value != null && alignmentIndex.value > 0) {
-    const gapsWidth = alignmentIndex.value * remToPx(1)
+    const gapsWidth = alignmentIndex.value * unitFlip(props.gap[0], props.gap[1], 'px')
     const linksWidth = sortedLinks.value
       .slice(0, alignmentIndex.value)
       .reduce((sum, element) => sum + element.clientWidth, 0)

@@ -15,9 +15,11 @@
   },
   "page": {
     "404": {
-      "content": "<h1>404</h1><p>Not our band.</p>"
+      "content": "<h1>404</h1><p>Not in our band.</p>"
     },
     "index": {
+      "title": "{# #}",
+      "description": "A cybershelter with tea, music and love.",
       "language_selector": {
         "pre": "Read in&ensp;",
         "post": "{# #}"

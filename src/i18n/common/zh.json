@@ -18,6 +18,8 @@
       "content": "<h1>404</h1><p>你确信在找我们乐队？</p>"
     },
     "index": {
+      "title": "{# #}",
+      "description": "互联网神秘打野点⁈",
       "language_selector": {
         "pre": "用",
         "post": "阅读"
