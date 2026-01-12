@@ -52,6 +52,10 @@ const props = Astro.props
 <style lang="scss">
   @use '@/styles/mixins' as *;
 
+  :global(p) {
+    margin: 0;
+  }
+
   .container {
     position: relative;
     display: grid;

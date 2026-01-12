@@ -28,13 +28,13 @@ function getProcessor() {
 // rendering
 
 export function renderBlock(markdown: string): string {
-  return getProcessor().processSync(markdown).toString()
+  return getProcessor().processSync(`\n\n${markdown}\n\n`).toString().trim()
 }
 
 export function renderInline(markdown: string): string {
-  const html = renderBlock(markdown).trim()
-  if (html.startsWith('<p>') && html.endsWith('</p>\n')) {
-    return html.slice(3, -5)
+  const html = renderBlock(markdown)
+  if (html.startsWith('<p>') && html.endsWith('</p>')) {
+    return html.slice(3, -4)
   }
   return html
 }
