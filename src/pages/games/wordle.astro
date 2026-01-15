@@ -1,11 +1,11 @@
 ---
 import { makeTitle } from '@/config'
-import IndexLayout from '@/layouts/IndexLayout.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
 import WordleGame from '@/components/games/wordle/WordleGame.vue'
 import { t } from 'astro-i18n'
 ---
 
-<IndexLayout
+<BaseLayout
   title={makeTitle(t('page.games.wordle.title'))}
   fallbackNavigationLabel={t('page.games.wordle.fallback_navigation_label', undefined, {
     locale: Astro.currentLocale
@@ -14,7 +14,7 @@ import { t } from 'astro-i18n'
   <div class="content-container">
     <WordleGame locale={Astro.currentLocale} client:only="vue" />
   </div>
-</IndexLayout>
+</BaseLayout>
 
 <style lang="scss">
   .content-container {

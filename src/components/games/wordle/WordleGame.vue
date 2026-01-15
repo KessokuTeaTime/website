@@ -21,7 +21,7 @@ const props = defineProps<{
   locale?: string
 }>()
 
-// Sounds
+// sounds
 
 const typeSound = useSound(typeSoundFile, {
   sprite: {
@@ -36,7 +36,7 @@ const pressSound = useSound(pressSoundFile, {
   }
 })
 
-// Reactives
+// reactives
 
 const context = reactive(new SessionContext('https://api.kessokuteatime.work/wordle'))
 const response = reactive<{ inner: WordleResponse | null }>({ inner: null })
@@ -58,12 +58,12 @@ const date = computed(() => {
   }
 })
 
-// Reactives: animate
+// reactives: animate
 
 const animateInvalidAnswer = ref(new AnimateOneShot())
 const animateConfetti = ref(new AnimateOneShot())
 
-// Reactives: game state
+// reactives: game state
 
 const lettersCount = computed(() => {
   return response.inner?.lettersCount ?? 0
@@ -89,7 +89,7 @@ const isFinished = computed(() => {
   return remainingTries.value <= 0 || isCompleted.value
 })
 
-// Reactives: keyboard
+// reactives: keyboard
 
 const keys = computed(() => {
   function find(matches: '+' | '?' | '-'): string[] {
@@ -109,7 +109,7 @@ const keys = computed(() => {
   }
 })
 
-// Hooks
+// hooks
 
 onMounted(() => {
   document.addEventListener('keydown', onKeyDown)
@@ -123,7 +123,7 @@ onUnmounted(() => {
   document.removeEventListener('keyup', onKeyUp)
 })
 
-// Watch effects
+// watch effects
 
 watchEffect(() => {
   if (isCompleted.value) {
@@ -131,7 +131,7 @@ watchEffect(() => {
   }
 })
 
-// Functions
+// functions
 
 async function start() {
   isPending.value = true
@@ -173,7 +173,7 @@ function onSelectDate(date: WordleDate) {
   navigate(url.toString())
 }
 
-// Functions: keyboard events
+// functions: keyboard events
 
 function onKeyDown(event: KeyboardEvent) {
   if (!isPending.value && !isFinished.value && !event.repeat) {
@@ -221,6 +221,7 @@ function onKeyUp(event: KeyboardEvent) {
 function onTypeDown(_key: string) {
   const key = _key.toLowerCase()
   if (remainingTries.value > 0 && input.value.length < 5) {
+    // @ts-ignore: play method signature issue
     typeSound.play({ id: 'on' })
     input.value += key
   }
@@ -228,12 +229,14 @@ function onTypeDown(_key: string) {
 
 function onTypeUp(_key: string) {
   if (remainingTries.value > 0) {
+    // @ts-ignore: play method signature issue
     typeSound.play({ id: 'off' })
   }
 }
 
 function onDeleteDown() {
   if (remainingTries.value > 0 && input.value.length > 0) {
+    // @ts-ignore: play method signature issue
     pressSound.play({ id: 'on' })
     input.value = input.value.substring(0, input.value.length - 1)
   }
@@ -241,12 +244,14 @@ function onDeleteDown() {
 
 function onDeleteUp() {
   if (remainingTries.value > 0) {
+    // @ts-ignore: play method signature issue
     pressSound.play({ id: 'off' })
   }
 }
 
 async function onSubmitDown() {
   if (remainingTries.value > 0 && input.value.length == lettersCount.value) {
+    // @ts-ignore: play method signature issue
     pressSound.play({ id: 'on' })
     await submit()
   }
@@ -254,6 +259,7 @@ async function onSubmitDown() {
 
 function onSubmitUp() {
   if (remainingTries.value > 0) {
+    // @ts-ignore: play method signature issue
     pressSound.play({ id: 'off' })
   }
 }
@@ -265,7 +271,6 @@ function onSubmitUp() {
       <ConfettiExplosion
         v-if="animateConfetti.animate"
         :colors="['var(--tint)', 'var(--tint-soft)', 'var(--tint-mute)']"
-        class="confetti"
       />
     </div>
     <WordlePanel
@@ -318,5 +323,13 @@ function onSubmitUp() {
 .confetti {
   position: fixed;
   top: 5rem;
+  width: 100%;
+  height: 100%;
+  mask: linear-gradient(to bottom, white 0%, transparent 50%);
+
+  > * {
+    position: absolute;
+    left: 50%;
+  }
 }
 </style>
