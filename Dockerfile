@@ -15,6 +15,7 @@ WORKDIR /app
 
 # install deps (better cache)
 COPY pnpm-lock.yaml package.json pnpm-workspace.yaml ./
+RUN pnpm -v
 RUN pnpm install --frozen-lockfile
 
 # build
@@ -34,7 +35,7 @@ WORKDIR /app
 
 # only runtime essentials
 COPY --from=builder /app/dist ./dist
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 RUN pnpm install --prod
 
