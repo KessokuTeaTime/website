@@ -27,7 +27,6 @@
     "@vueuse/core": "^13.9.0",
     "@vueuse/sound": "^2.1.3",
     "astro": "^5.18.2",
-    "astro-i18n": "^2.2.4",
     "camelcase-keys": "^9.1.3",
     "decamelcase-keys": "^1.1.1",
     "esbuild": "^0.25.12",
@@ -46,6 +45,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@inlang/paraglide-js": "^2.22.0",
     "@types/node": "^26.1.1",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
