@@ -37,6 +37,7 @@
     "remark-mdx": "^3.1.1",
     "serve": "^14.2.6",
     "tsx": "^4.23.1",
+    "unified": "^9.2.2",
     "unitflip": "^1.4.1",
     "vue": "^3.5.39",
     "vue-confetti-explosion": "^1.0.2"
