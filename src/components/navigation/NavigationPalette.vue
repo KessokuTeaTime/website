@@ -5,14 +5,15 @@ import { config } from '@/config'
 import { useWindowSize } from '@vueuse/core'
 import { layoutWidth } from '@/lib/consts'
 import { getLocalizedValue } from '@/lib/i18n'
+import { formSlug } from '@/lib/slug'
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import { getLocale } from '@/paraglide/runtime'
 import unitFlip from 'unitflip'
 import type { Unit } from '@/lib/conversion'
 
 // Definitions
 
 interface Props {
-  locale?: string
   pageInfo?: PageInfo
   gap?: [number, Unit]
 }
@@ -94,10 +95,10 @@ onMounted(() => {
 function getUrl(pageInfo: PageInfo): string {
   switch (pageInfo.target.type) {
     case 'slug':
-      let path = pageInfo.target.slug
+      let path = formSlug(pageInfo.target.slugParts)
 
-      if (props.locale != null) {
-        return getRelativeLocaleUrl(props.locale, path)
+      if (getLocale() != null) {
+        return getRelativeLocaleUrl(getLocale(), path)
       } else {
         return path
       }
@@ -122,7 +123,7 @@ function scrollToAlignmentElement() {
 }
 
 function getPageName(pageInfo: PageInfo): string {
-  return getLocalizedValue(pageInfo.name, props.locale)
+  return getLocalizedValue(pageInfo.name, getLocale())
 }
 </script>
 

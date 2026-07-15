@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config'
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import node from '@astrojs/node'
 import path from 'path'
 import vue from '@astrojs/vue'
@@ -22,6 +23,13 @@ export default defineConfig({
     routing: 'manual'
   },
   vite: {
+    plugins: [
+      paraglideVitePlugin({
+        project: './project.inlang',
+        outdir: './src/paraglide',
+        strategy: ['url', 'baseLocale']
+      })
+    ],
     resolve: {
       alias: {
         '@': path.resolve('./src')

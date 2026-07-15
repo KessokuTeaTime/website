@@ -2,10 +2,10 @@
   "packageManager": "pnpm@11.13.0",
   "name": "website",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && astro build",
     "preview": "astro preview",
     "serve": "node ./dist/server/entry.mjs",
     "astro": "astro",
@@ -13,10 +13,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "i18n:extract": "astro-i18n extract",
-    "i18n:generate:pages": "astro-i18n generate:pages --purge",
-    "i18n:generate:types": "astro-i18n generate:types",
-    "i18n:sync": "npm run i18n:generate:pages && npm run i18n:generate:types"
+    "paraglide:build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.14",

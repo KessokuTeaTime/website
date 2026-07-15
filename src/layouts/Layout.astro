@@ -2,6 +2,7 @@
 import '@/styles/global.css'
 import { config } from '@/config'
 import { ClientRouter, fade } from 'astro:transitions'
+import { getLocale, getTextDirection } from '@/paraglide/runtime'
 import ThemeColor from '@/components/meta/ThemeColor.astro'
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 const { title = config.siteInfo.title, description } = Astro.props
 ---
 
-<html lang="en-US" transition:animate={fade({ duration: '0.5s' })}>
+<html lang={getLocale()} dir={getTextDirection()} transition:animate={fade({ duration: '0.5s' })}>
   <head>
     <slot name="head" />
     <meta charset="UTF-8" />

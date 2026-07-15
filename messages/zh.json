@@ -1,0 +1,25 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "component_navigation_menu_label": "导航菜单",
+  "component_footer_content": "[开源](https://github.com/KessokuTeaTime/website) · [GNU通用许可证v3.0](https://github.com/KessokuTeaTime/website/blob/main/LICENSE) · 自托管",
+  "component_footer_footnote_pre": "由[Astro](https://astro.build)构建 · 用",
+  "component_footer_footnote_post": "阅读",
+
+  "page_404_content": "<h1>404</h1><p>你确信在找我们乐队？</p>",
+
+  "page_index_title": "",
+  "page_index_description": "互联网神秘打野点？！",
+  "page_index_language_selector_pre": "用",
+  "page_index_language_selector_post": "阅读",
+
+  "page_people_title": "成员",
+  "page_people_description": "",
+
+  "page_works_title": "作品",
+  "page_works_description": "",
+
+  "page_games_wordle_title": "猜词游戏",
+  "page_games_wordle_fallback_navigation_label": "猜词游戏",
+  "page_games_wordle_date_picker_description": "正在游玩：{date}",
+  "page_games_wordle_date_picker_play_another": "选择其它日期…"
+}

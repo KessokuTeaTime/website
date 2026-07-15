@@ -3,9 +3,10 @@ import NavigationPalette from './NavigationPalette.vue'
 import { ref, computed } from 'vue'
 import { config } from '@/config'
 import { getLocalizedValue } from '@/lib/i18n'
+import { formSlug, sanitizeSlug } from '@/lib/slug.ts'
+import { getLocale } from '@/paraglide/runtime'
 
 const props = defineProps<{
-  locale?: string
   label: string
   slug?: string
 }>()
@@ -17,7 +18,7 @@ const pageInfo = computed(() => {
 
   return config.pageInfo.find((info) => {
     if (info.target.type == 'slug') {
-      return info.target.slug === props.slug
+      return formSlug(info.target.slugParts) === sanitizeSlug(props.slug ?? '')
     } else {
       return false
     }
@@ -26,8 +27,9 @@ const pageInfo = computed(() => {
 
 const pageName = computed(() => {
   let name = pageInfo.value?.name
+
   if (name) {
-    return getLocalizedValue(name, props.locale)
+    return getLocalizedValue(name, getLocale())
   } else {
     return props.label
   }
@@ -40,13 +42,7 @@ const pageName = computed(() => {
       <button v-if="!isExpanded" @click="isExpanded = true">
         {{ pageName }}
       </button>
-      <NavigationPalette
-        :locale="locale"
-        :page-info="pageInfo"
-        v-else
-        class="palette"
-        @back="isExpanded = false"
-      />
+      <NavigationPalette :page-info="pageInfo" v-else class="palette" @back="isExpanded = false" />
     </Transition>
   </div>
 </template>

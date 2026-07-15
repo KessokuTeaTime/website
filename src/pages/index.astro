@@ -6,12 +6,12 @@ import LanguageSelector from '@/components/navigation/LanguageSelector.astro'
 import Overview from '@/components/Overview.astro'
 import Title from '@/components/attachments/index/Title.mdx'
 import Description from '@/components/attachments/index/Description.mdx'
-import { t } from 'astro-i18n'
+import { m } from '@/paraglide/messages'
 import { renderInline } from '@/lib/markdown'
 import { makeTitle } from '@/config'
 ---
 
-<BaseLayout title={makeTitle(t('page.index.title'))} description={t('page.index.description')}>
+<BaseLayout title={makeTitle(m.page_index_title())} description={m.page_index_description()}>
   <Fragment slot="background">
     <div class="background" transition:name="background">
       <MerryGoRound client:idle />
@@ -21,11 +21,11 @@ import { makeTitle } from '@/config'
     <div class="merry-go-round-placeholder"></div>
     <div class="content-container prose">
       <h5 class="language-selector">
-        <span set:html={renderInline(t('page.index.language_selector.pre'))} />
+        <span set:html={renderInline(m.page_index_language_selector_pre())} />
         <span class="select-wrapper">
           <LanguageSelector />
         </span>
-        <span set:html={renderInline(t('page.index.language_selector.post'))} />
+        <span set:html={renderInline(m.page_index_language_selector_post())} />
       </h5>
       <slot>
         <Overview>

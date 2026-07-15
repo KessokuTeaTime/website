@@ -2,7 +2,7 @@
 import Logo from '@/assets/logo.svg'
 import LanguageSelector from './navigation/LanguageSelector.astro'
 import { commitHash, commitHashShort } from '@/lib/commit-hash'
-import { t } from 'astro-i18n'
+import { m } from '@/paraglide/messages'
 
 import { getCopyrightSpan } from '@/lib/copyright'
 import { renderInline } from '@/lib/markdown'
@@ -16,27 +16,15 @@ const props = Astro.props
   </div>
   <div class="content">
     <p>&copy; {getCopyrightSpan(2024)}&emsp;結束ティータイム</p>
-    <p
-      set:html={renderInline(
-        t('component.footer.content', undefined, { locale: Astro.currentLocale })
-      )}
-    />
+    <p set:html={renderInline(m.component_footer_content())} />
   </div>
   <div class="footnote">
     <p>
-      <span
-        set:html={renderInline(
-          t('component.footer.footnote.pre', undefined, { locale: Astro.currentLocale })
-        )}
-      />
+      <span set:html={renderInline(m.component_footer_footnote_pre())} />
       <span class="select-wrapper">
         <LanguageSelector />
       </span>
-      <span
-        set:html={renderInline(
-          t('component.footer.footnote.post', undefined, { locale: Astro.currentLocale })
-        )}
-      />
+      <span set:html={renderInline(m.component_footer_footnote_post())} />
     </p>
     <a
       href={`https://github.com/KessokuTeaTime/website/commit/${commitHash}`}

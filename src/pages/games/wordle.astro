@@ -2,17 +2,15 @@
 import { makeTitle } from '@/config'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import WordleGame from '@/components/games/wordle/WordleGame.vue'
-import { t } from 'astro-i18n'
+import { m } from '@/paraglide/messages'
 ---
 
 <BaseLayout
-  title={makeTitle(t('page.games.wordle.title'))}
-  fallbackNavigationLabel={t('page.games.wordle.fallback_navigation_label', undefined, {
-    locale: Astro.currentLocale
-  })}
+  title={makeTitle(m.page_games_wordle_title())}
+  fallbackNavigationLabel={m.page_games_wordle_fallback_navigation_label()}
 >
   <div class="content-container">
-    <WordleGame locale={Astro.currentLocale} client:only="vue" />
+    <WordleGame client:only="vue" />
   </div>
 </BaseLayout>
 

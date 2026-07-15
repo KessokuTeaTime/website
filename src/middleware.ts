@@ -1,22 +1,18 @@
-import { getRelativeLocaleUrl, middleware } from 'astro:i18n'
+import { getRelativeLocaleUrl, middleware as i18nMiddleware } from 'astro:i18n'
 import { defineMiddleware, sequence } from 'astro:middleware'
-import { config } from './config'
-import { useAstroI18n } from 'astro-i18n'
-import i18nConfig from '../astro-i18n.config'
+import { paraglideMiddleware } from './paraglide/server'
+
+const paraglideAstroMiddleware = defineMiddleware((context, next) => {
+  return paraglideMiddleware(context.request, () => next())
+})
 
 export const sluggingMiddleware = defineMiddleware(async (context, next) => {
   const locale = context.currentLocale
-  const defaultLocale = config.siteInfo.defaultLocale
   const path = context.url.pathname
 
   if (locale != null) {
     context.locals.root = getRelativeLocaleUrl(locale, '/')
-
-    if (defaultLocale != null) {
-      context.locals.slug = path.replace(new RegExp(`^(/${locale})|(/${defaultLocale})`), '')
-    } else {
-      context.locals.slug = path.replace(new RegExp(`^/${locale}`), '')
-    }
+    context.locals.slug = path.replace(new RegExp(`^/${locale}`), '')
   } else {
     context.locals.root = '/'
     context.locals.slug = path
@@ -26,10 +22,10 @@ export const sluggingMiddleware = defineMiddleware(async (context, next) => {
 })
 
 export const onRequest = sequence(
-  useAstroI18n(i18nConfig),
+  paraglideAstroMiddleware,
   sluggingMiddleware,
-  middleware({
-    prefixDefaultLocale: true,
+  i18nMiddleware({
+    prefixDefaultLocale: false,
     redirectToDefaultLocale: false,
     fallbackType: 'rewrite'
   })

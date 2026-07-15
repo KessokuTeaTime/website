@@ -4,8 +4,7 @@ export const config: Config = {
   siteInfo: {
     title: '結束ティータイム',
     description: '下北沢で本当人気なバンド。',
-    website: 'https://kessokuteatime.work',
-    defaultLocale: 'en'
+    website: 'https://kessokuteatime.work'
   },
   pageInfo: [
     {
@@ -18,7 +17,7 @@ export const config: Config = {
       },
       target: {
         type: 'slug',
-        slug: '/'
+        slugParts: []
       }
     },
     {
@@ -31,7 +30,7 @@ export const config: Config = {
       },
       target: {
         type: 'slug',
-        slug: '/people/'
+        slugParts: ['people']
       }
     },
     {
@@ -44,7 +43,7 @@ export const config: Config = {
       },
       target: {
         type: 'slug',
-        slug: '/works/'
+        slugParts: ['works']
       }
     },
     {

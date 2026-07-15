@@ -1,15 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { makeTitle } from '@/config'
-import { t } from 'astro-i18n'
+import { m } from '@/paraglide/messages'
 import { renderInline } from '@/lib/markdown'
 ---
 
 <BaseLayout title={makeTitle('404')} description="Page not found">
   <div class="error-container">
-    <slot
-      set:html={renderInline(t('page.404.content', undefined, { locale: Astro.currentLocale }))}
-    />
+    <slot set:html={renderInline(m.page_404_content())} />
   </div>
 </BaseLayout>
 

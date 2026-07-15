@@ -2,11 +2,11 @@
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Title from '@/components/attachments/people/Title.mdx'
 import { makeTitle } from '@/config'
-import { t } from 'astro-i18n'
+import { m } from '@/paraglide/messages'
 import MerryGoRound from '@/components/decorations/merry-go-round/MerryGoRound.vue'
 ---
 
-<BaseLayout title={makeTitle(t('page.people.title'))} , description={t('page.people.description')}>
+<BaseLayout title={makeTitle(m.page_people_title())} description={m.page_people_description()}>
   <Fragment slot="background">
     <div class="background" transition:name="background">
       <MerryGoRound client:idle size={{ width: 'window', height: { fixed: [60, 'vh'] } }} />

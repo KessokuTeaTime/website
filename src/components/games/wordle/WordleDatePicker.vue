@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { WordleDate, WordlePartialDate, type Month } from '@/lib/wordle'
 import { renderInline } from '@/lib/markdown'
-import { t } from 'astro-i18n'
+import { m } from '@/paraglide/messages'
 import { computed, onMounted, ref, watchEffect } from 'vue'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps<{
-  locale?: string
   date: WordleDate
 }>()
 
@@ -54,20 +53,16 @@ function onPlay() {
       <span
         v-html="
           renderInline(
-            t(
-              'page.games.wordle.date_picker.description',
-              { date: date.toDate().toLocaleDateString() },
-              { locale }
-            )
+            m.page_games_wordle_date_picker_description({
+              date: date.toDate().toLocaleDateString()
+            })
           )
         "
       />
       <span class="separator">·</span>
       <button
         class="underline"
-        v-html="
-          renderInline(t('page.games.wordle.date_picker.play_another', undefined, { locale }))
-        "
+        v-html="renderInline(m.page_games_wordle_date_picker_play_another())"
         @click="isOpened = true"
       />
     </p>

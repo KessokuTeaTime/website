@@ -4,7 +4,6 @@ interface SiteInfo {
   title: string
   description: string
   website: string
-  defaultLocale?: string
 }
 
 interface PageInfoTarget {
@@ -13,7 +12,7 @@ interface PageInfoTarget {
 
 interface PageInfoTargetSlug extends PageInfoTarget {
   type: 'slug'
-  slug: string
+  slugParts: string[]
 }
 
 interface PageInfoTargetLink extends PageInfoTarget {

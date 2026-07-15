@@ -1,23 +1,21 @@
 ---
 import { getLanguageName } from '@/lib/i18n'
-import { getRelativeLocaleUrl, getRelativeLocaleUrlList } from 'astro:i18n'
+import { getLocale, localizeHref, locales } from '@/paraglide/runtime'
 
 const props = Astro.props
+const currentLocale = getLocale()
 ---
 
 <select name="language selector" id="language-selector" {...props}>
   {
-    getRelativeLocaleUrlList()
-      .toSorted()
-      .map((s) => s.replaceAll('/', ''))
-      .map((locale) => {
-        const path = getRelativeLocaleUrl(locale, Astro.locals.slug)
-        return (
-          <option value={path} selected={locale === Astro.currentLocale}>
-            {getLanguageName(locale, locale)}
-          </option>
-        )
-      })
+    locales.toSorted().map((locale) => {
+      const path = localizeHref(Astro.locals.slug, { locale })
+      return (
+        <option value={path} selected={locale === currentLocale}>
+          {getLanguageName(locale, locale)}
+        </option>
+      )
+    })
   }
 </select>
 
@@ -34,10 +32,8 @@ const props = Astro.props
   }
 
   function onLanguageChange(event: Event) {
-    console.log(event)
     const target = event.target as HTMLSelectElement
     const path = target.value
-    console.log(path)
     if (path) {
       navigate(path)
     }

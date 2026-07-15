@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'astro/types'
 import ColoredBars from '@/components/decorations/ColoredBars.vue'
 import NavigationMenu from './NavigationMenu.vue'
 import Logo from '@/assets/logo.svg'
-import { t } from 'astro-i18n'
+import { m } from '@/paraglide/messages'
 
 interface Props extends HTMLAttributes<'div'> {
   fallbackLabel?: string
@@ -21,11 +21,7 @@ const { fallbackLabel, ...props } = Astro.props
   <div class="center scrollbars-disabled">
     <NavigationMenu
       client:load
-      locale={Astro.currentLocale}
-      label={fallbackLabel ??
-        t('component.navigation.navigation_menu.label', undefined, {
-          locale: Astro.currentLocale
-        })}
+      label={fallbackLabel ?? m.component_navigation_menu_label()}
       slug={Astro.locals.slug}
     />
   </div>

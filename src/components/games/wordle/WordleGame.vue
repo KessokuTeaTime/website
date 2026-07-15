@@ -17,10 +17,6 @@ import {
 import { AnimateOneShot } from '@/lib/animate'
 import { navigate } from 'astro:transitions/client'
 
-const props = defineProps<{
-  locale?: string
-}>()
-
 // sounds
 
 const typeSound = useSound(typeSoundFile, {
@@ -298,12 +294,7 @@ function onSubmitUp() {
       @submitDown="onSubmitDown"
       @submitUp="onSubmitUp"
     />
-    <WordleDatePicker
-      v-if="isInitialized"
-      :locale="locale"
-      :date="date"
-      @selectDate="onSelectDate"
-    />
+    <WordleDatePicker v-if="isInitialized" :date="date" @selectDate="onSelectDate" />
   </div>
 </template>
 
