@@ -1,22 +1,22 @@
 import type { Localized } from '@/lib/i18n'
 
-export interface SiteInfo {
+interface SiteInfo {
   title: string
   description: string
   website: string
   defaultLocale?: string
 }
 
-export interface PageInfoTarget {
+interface PageInfoTarget {
   type: 'slug' | 'link'
 }
 
-export interface PageInfoTargetSlug extends PageInfoTarget {
+interface PageInfoTargetSlug extends PageInfoTarget {
   type: 'slug'
   slug: string
 }
 
-export interface PageInfoTargetLink extends PageInfoTarget {
+interface PageInfoTargetLink extends PageInfoTarget {
   type: 'link'
   link: string
 }

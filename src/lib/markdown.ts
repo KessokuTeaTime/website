@@ -19,7 +19,7 @@ function getProcessor() {
 
 // rendering
 
-export function renderBlock(markdown: string): string {
+function renderBlock(markdown: string): string {
   return getProcessor().processSync(`\n\n${markdown}\n\n`).toString().trim()
 }
 

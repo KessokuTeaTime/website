@@ -17,6 +17,6 @@ export type Unit =
   | 'q'
   | 'rlh'
 
-export function fontSize(): number {
+function fontSize(): number {
   return parseFloat(getComputedStyle(document.documentElement).fontSize)
 }

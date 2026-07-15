@@ -6,7 +6,7 @@ import { clamp } from 'lodash'
 
 export const keyboardRows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'].map((s) => s.toLowerCase())
 
-export interface Letter {
+interface Letter {
   letter: string
   matches: '+' | '?' | '-'
 }
@@ -29,7 +29,7 @@ export interface WordleResponse {
   history: Word[]
 }
 
-export enum SessionStartError {
+enum SessionStartError {
   NotInitialized = 404,
   Failed = 500
 }
@@ -39,7 +39,7 @@ export enum SessionSubmitError {
   InvalidAnswer = 400
 }
 
-export class SessionError {
+class SessionError {
   kind: SessionStartError | SessionSubmitError | unknown
   msg: string
 
@@ -117,7 +117,7 @@ export class SessionContext {
   }
 }
 
-export const MIN_YEAR = 1970
+const MIN_YEAR = 1970
 
 export type Month = Exclude<RangeType<13>, 0>
 
